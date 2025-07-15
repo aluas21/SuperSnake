@@ -51,5 +51,5 @@ A modern, full-stack remake of the classic Snake game — reimagined with custom
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/supersnake-reloaded.git
+git clone https://github.com/aluas21/SuperSnake.git
 cd supersnake-reloaded
