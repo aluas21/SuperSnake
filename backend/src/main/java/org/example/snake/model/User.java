@@ -13,13 +13,14 @@ import lombok.Setter;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.Table;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name = "users")
 public class User{
 
     @Id
@@ -48,10 +49,10 @@ public class User{
     private boolean isAdmin;
 
     @ManyToMany
-@JoinTable(
-    name = "user_friends",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "friend_id")
-)
-private List<User> friends;
+    @JoinTable(
+        name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
 }
