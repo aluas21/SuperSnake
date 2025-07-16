@@ -10,6 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+
 
 @Entity
 @AllArgsConstructor
@@ -43,8 +47,11 @@ public class User{
 
     private boolean isAdmin;
 
-    // Store friend user IDs as a simple list (for now, not a relation)
-    @ElementCollection
-    private List<Long> friends;
-
+    @ManyToMany
+    @JoinTable(
+        name = "user_friends",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
 }
