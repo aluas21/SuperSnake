@@ -6,6 +6,7 @@ const ROWS = 30;
 const COLS = 30;
 const CANVAS_WIDTH = COLS * CELL_SIZE;
 const CANVAS_HEIGHT = ROWS * CELL_SIZE;
+const INITIAL_SNAKE_LENGTH = 3;
 
 const createSnake = (length: number): [number, number][] => {
   return Array.from({ length }, (_, i) => [10, 10 - i] as [number, number]);
