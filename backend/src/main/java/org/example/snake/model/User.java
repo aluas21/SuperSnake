@@ -47,11 +47,4 @@ public class User{
 
     private boolean isAdmin;
 
-    @ManyToMany
-    @JoinTable(
-        name = "user_friends",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private List<User> friends;
 }
