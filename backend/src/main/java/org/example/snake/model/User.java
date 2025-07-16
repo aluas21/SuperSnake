@@ -45,6 +45,6 @@ public class User{
 
     // Store friend user IDs as a simple list (for now, not a relation)
     @ElementCollection
-    private List<Long> friends;
+    private List<User> friends;
 
 }
