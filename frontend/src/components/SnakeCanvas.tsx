@@ -7,6 +7,7 @@ const COLS = 30;
 const CANVAS_WIDTH = COLS * CELL_SIZE;
 const CANVAS_HEIGHT = ROWS * CELL_SIZE;
 const INITIAL_SNAKE_LENGTH = 3;
+const SPEED = 100; // milliseconds
 
 const createSnake = (length: number): [number, number][] => {
   return Array.from({ length }, (_, i) => [10, 10 - i] as [number, number]);
@@ -29,6 +30,8 @@ const SnakeCanvas: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
 
   const directionRef = useRef<[number, number]>([0, 1]); // moving right by default
+	const nextDirectionRef = useRef<[number, number]>([0, 1]);
+
   const lastTimeRef = useRef<number | null>(null);
   const requestRef = useRef<number | null>(null);
 
@@ -45,36 +48,38 @@ const SnakeCanvas: React.FC = () => {
   // handle key events (avoid backward movement)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+			const [x, y] = directionRef.current;
+
       switch (event.key) {
         case 'w':
-          if (directionRef.current[0] === 0) directionRef.current = [-1, 0];
+          if (directionRef.current[0] === 0) nextDirectionRef.current = [-1, 0];
           break;
         case 's':
-          if (directionRef.current[0] === 0) directionRef.current = [1, 0];
+          if (directionRef.current[0] === 0) nextDirectionRef.current = [1, 0];
           break;
         case 'a':
-          if (directionRef.current[1] === 0) directionRef.current = [0, -1];
+          if (directionRef.current[1] === 0) nextDirectionRef.current = [0, -1];
           break;
         case 'd':
-          if (directionRef.current[1] === 0) directionRef.current = [0, 1];
+          if (directionRef.current[1] === 0) nextDirectionRef.current = [0, 1];
           break;
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [directionRef]);
+  }, []);
 
   // game loop
   useEffect(() => {
-    const speed = 100; // milliseconds
-
     const animate = (time: number) => {
       if (!lastTimeRef.current) {
         lastTimeRef.current = time;
       }
       const delta = time - lastTimeRef.current;
 
-      if (delta > speed) {
+      if (delta > SPEED) {
+				directionRef.current = nextDirectionRef.current;
+
         setSnake((prevSnake) => {
           const newSnake = [...prevSnake];
           const head = newSnake[0];
@@ -92,7 +97,7 @@ const SnakeCanvas: React.FC = () => {
     };
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current!);
-  }, [directionRef]);
+  }, []);
 
   // snake draw
   useEffect(() => {
