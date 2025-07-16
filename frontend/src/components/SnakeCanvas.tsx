@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 const CELL_SIZE = 20;
