@@ -34,7 +34,7 @@ const SnakeCanvas: React.FC = () => {
   const [apple, setApple] = useState<[number, number]>(createApple(snake));
 
   const resetGame = () => {
-    setSnake(createSnake(5));
+    setSnake(createSnake(INITIAL_SNAKE_LENGTH));
     directionRef.current = [0, 1];
     setApple(createApple([]));
     lastTimeRef.current = null;
