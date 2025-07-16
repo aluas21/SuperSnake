@@ -137,7 +137,7 @@ const SnakeCanvas: React.FC = () => {
     ctx.fill();
     ctx.strokeStyle = 'darkred';
     ctx.stroke();
-  }, [snake]);
+  }, [snake, apple]);
 
   // check for body collisions
   useEffect(() => {
