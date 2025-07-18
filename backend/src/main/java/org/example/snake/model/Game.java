@@ -12,22 +12,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name = "game", indexes = {
+        @Index(name = "idx_user_id", columnList = "user_id"),
+        @Index(name = "idx_opponent_id", columnList = "opponent_id")
+})
 public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // The user who played the game
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // The user who played the game
+    private User user;
 
+    // The opponent (optional)
     @ManyToOne
     @JoinColumn(name = "opponent_id", nullable = true)
-    private User opponent; // Optional opponent user
+    private User opponent;
 
     private int score;
 
     private String dateTime;
 }
-

@@ -8,13 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Table(name = "users")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,20 +40,23 @@ public class User{
 
     private int coins;
 
+    private int cash;
+
     private boolean isAdmin;
 
+    // Many-to-many self-reference for friends
     @ManyToMany
     @JoinTable(
-        name = "user_friends",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<User> friends;
 
+    // REMOVED THESE TO SAVE MEMORY
+    // @OneToMany(mappedBy = "user")
+    // private List<Game> gamesPlayed;
 
-    @OneToMany(mappedBy = "user")
-    private List<Game> gamesPlayed;
-
-    @OneToMany(mappedBy = "opponent")
-    private List<Game> gamesAsOpponent;
+    // @OneToMany(mappedBy = "opponent")
+    // private List<Game> gamesAsOpponent;
 }
