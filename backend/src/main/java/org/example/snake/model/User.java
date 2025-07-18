@@ -59,4 +59,8 @@ public class User {
 
     // @OneToMany(mappedBy = "opponent")
     // private List<Game> gamesAsOpponent;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Inventory> inventory;
+
 }
