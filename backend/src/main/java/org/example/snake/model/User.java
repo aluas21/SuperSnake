@@ -1,5 +1,6 @@
 package org.example.snake.model;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -21,46 +22,40 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
 
+    @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    // Store as URL or file path
     private String profilePicture;
 
     private String phone;
 
     private LocalDate dateOfBirth;
 
-    private int coins;
+    @Column(nullable = false)
+    private String userType; // e.g., "admin", "user", "guest"
 
-    private int cash;
-
-    private boolean isAdmin;
-
-    // Many-to-many self-reference for friends
     @ManyToMany
     @JoinTable(
             name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private List<User> friends;
+    private List<User> friends = new ArrayList<>();
 
-    // REMOVED THESE TO SAVE MEMORY
-    // @OneToMany(mappedBy = "user")
-    // private List<Game> gamesPlayed;
-
-    // @OneToMany(mappedBy = "opponent")
-    // private List<Game> gamesAsOpponent;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Inventory> inventory;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Inventory inventory;
 
 }
+

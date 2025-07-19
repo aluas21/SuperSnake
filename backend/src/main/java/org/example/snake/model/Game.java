@@ -35,4 +35,10 @@ public class Game {
     private int score;
 
     private String dateTime;
+
+    private int duration; // Duration of the game in seconds
+
+    @ManyToOne
+    @JoinColumn(name = "game_settings_id", nullable = false)
+    private GameSettings gameSettings; // Reference to the GameSettings object for this game
 }

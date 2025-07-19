@@ -19,14 +19,17 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false)
     private String image;
 
+    @Column(nullable = false)
     private int price;
-
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Inventory> ownedByUsers;
 
     // Additional fields can be added as needed, such as description, rarity, etc.
 }
