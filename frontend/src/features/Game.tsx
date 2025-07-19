@@ -134,22 +134,23 @@ const Game: React.FC = () => {
   }, []);
 
   const onAppleEaten = () => {
+    let newSnake;
     setSnake((prevSnake) => {
-      const newSnake = [...prevSnake];
+      newSnake = [...prevSnake];
       newSnake.push(newSnake[newSnake.length - 1]); // grow the snake
       return newSnake;
     });
 
-    setApple(createApple(snake));
+    setApple(createApple(newSnake));
     const newCount = applesEaten + 1;
     setApplesEaten(newCount);
 
     if (newCount % 5 === 0 && !coin && !cash) {
       if (Math.random() < CASH_CHANCE) {
-        setCash(createCash([...snake, apple]));
+        setCash(createCash([...newSnake, apple]));
         setCashTimer(CASH_TIMEOUT);
       } else {
-        setCoin(createCoin([...snake, apple]));
+        setCoin(createCoin([...newSnake, apple]));
         setCoinTimer(COIN_TIMEOUT);
       }
     }
