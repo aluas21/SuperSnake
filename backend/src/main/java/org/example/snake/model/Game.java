@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,9 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private Long gameCode;
+
     // The user who played the game
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,7 +39,9 @@ public class Game {
 
     private int score;
 
-    private String dateTime;
+    private int OpponentScore;
+
+    private LocalDateTime dateTime;
 
     private int duration; // Duration of the game in seconds
 
