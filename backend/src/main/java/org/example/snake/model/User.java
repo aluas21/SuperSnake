@@ -1,19 +1,14 @@
 package org.example.snake.model;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+
 
 @Entity
 @AllArgsConstructor
@@ -21,38 +16,46 @@ import jakarta.persistence.Table;
 @Setter
 @Getter
 @Table(name = "users")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String firstName;
 
+    @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    // Store as URL or file path
     private String profilePicture;
 
     private String phone;
 
     private LocalDate dateOfBirth;
 
-    private int coins;
-
-    private boolean isAdmin;
+    @Column(nullable = false)
+    private String userType; // e.g., "admin", "user", "guest"
 
     @ManyToMany
     @JoinTable(
-        name = "user_friends",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private List<User> friends;
+    private List<User> friends = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Inventory inventory;
+
 }
+
