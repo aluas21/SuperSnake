@@ -253,8 +253,8 @@ const Game: React.FC = () => {
       <h1>Super Snake</h1>
       <div>
         <progress value={applesEaten % 5} max={5} />
-        {coin && <p>Coin dissapears in {coinTimer / 1000}s</p>}
-        {cash && <p>Cash dissapears in {cashTimer / 1000}s</p>}
+        {coin && <p>Coin disappears in {coinTimer / 1000}s</p>}
+        {cash && <p>Cash disappears in {cashTimer / 1000}s</p>}
       </div>
       <GameCanvas
         snake={snake}
