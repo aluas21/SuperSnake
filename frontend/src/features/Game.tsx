@@ -208,7 +208,7 @@ const Game: React.FC = () => {
     return () => clearInterval(timer);
   }, [coin]);
 
-  // casb countdown
+  // cash countdown
   useEffect(() => {
     if (!cash) return;
     const timer = setInterval(() => {
