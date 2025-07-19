@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,11 +37,11 @@ public class Game {
     @JoinColumn(name = "opponent_id", nullable = true)
     private User opponent;
 
-    private int score1;
+    private int score;
 
-    private int score2;
+    private int OpponentScore;
 
-    private String dateTime;
+    private LocalDateTime dateTime;
 
     private int duration; // Duration of the game in seconds
 
