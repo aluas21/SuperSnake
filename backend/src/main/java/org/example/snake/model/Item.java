@@ -29,7 +29,10 @@ public class Item {
     private String image;
 
     @Column(nullable = false)
-    private int price;
+    private int priceCoins;
+
+    @Column(nullable = false)
+    private int priceCash;
 
     // Additional fields can be added as needed, such as description, rarity, etc.
 }

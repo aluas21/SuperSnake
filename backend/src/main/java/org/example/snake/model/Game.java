@@ -22,6 +22,9 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private Long gameCode;
+
     // The user who played the game
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -32,7 +35,9 @@ public class Game {
     @JoinColumn(name = "opponent_id", nullable = true)
     private User opponent;
 
-    private int score;
+    private int score1;
+
+    private int score2;
 
     private String dateTime;
 
