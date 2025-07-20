@@ -1,5 +1,5 @@
 package org.example.snake.model;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class User {
 
     private String phone;
 
-    private LocalDate dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
     @Column(nullable = false)
     private String userType; // e.g., "admin", "user", "guest"
