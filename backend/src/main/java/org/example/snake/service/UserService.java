@@ -40,7 +40,7 @@ public class UserService {
             throw new UserAlreadyExistsException("User already exists with this username or email");
         }
         // Create a new User using the convertor
-        User user = UserConvertor.fromDto(userDto);
+        User user = UserConvertor.toEntity(userDto);
         // Save the user entity to the database
         userRepository.save(user);
     }

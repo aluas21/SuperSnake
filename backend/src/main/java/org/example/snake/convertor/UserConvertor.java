@@ -4,7 +4,7 @@ import org.example.snake.dto.UserDto;
 import org.example.snake.model.User;
 
 public class UserConvertor {
-    public static User fromDto(UserDto userDto) {
+    public static User toEntity(UserDto userDto) {
         if (userDto == null) {
             return null;
         }
