@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 public class UserDto {
@@ -12,8 +14,9 @@ public class UserDto {
     private String lastName;
     private String username;
     private String email;
+    private String password;
     private String profilePicture;
     private String phone;
-    private String dateOfBirth;
+    private LocalDateTime dateOfBirth;
     private String userType; // e.g., "admin", "user", "guest"
 }
