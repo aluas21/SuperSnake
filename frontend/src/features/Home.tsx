@@ -16,7 +16,7 @@ const Home: React.FC = () => {
             title: "SHOP",
             description: "Buy new skins",
             buttonText: "View",
-            buttonLink: "/leaderboard",
+            buttonLink: "/shop",
             buttonbackground: "gold",
         },
         {
