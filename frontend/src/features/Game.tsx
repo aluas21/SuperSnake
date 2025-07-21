@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import GameCanvas from '../components/GameCanvas';
+import Header from '../components/Header/Header';
 
 const CELL_SIZE = 15;
 const ROWS = 30;
@@ -250,7 +251,7 @@ const Game: React.FC = () => {
 
   return (
     <div>
-      <h1>Super Snake</h1>
+      <Header pageTitle="Game" />
       <div>
         <progress value={applesEaten % 5} max={5} />
         {coin && <p>Coin disappears in {coinTimer / 1000}s</p>}

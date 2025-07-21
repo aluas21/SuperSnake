@@ -1,0 +1,49 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5em;
+  background-color: lightgray;
+  padding: 0 1em;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.header__logo {
+  width: 3em;
+  height: 3em;
+}
+
+.header__title {
+  font-family: 'Fira Code', monospace;
+  font-style: italic;
+  font-size: 2em;
+  color: darkslategray;
+  margin: 0;
+}
+
+.header__page-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Fira Code', monospace;
+  font-size: 1.75em;
+	font-weight: bolder;
+  color: darkslategray;
+  margin: 0;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+}
+
+.header__user-icon {
+  width: 3em;
+  height: 3em;
+}
