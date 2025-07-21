@@ -1,0 +1,65 @@
+.menu-button-card {
+  cursor: pointer;
+  padding: 16px;
+  border-radius: 8px;
+
+  width: 250px;     /* fixed width */
+  height: 150px;    /* fixed height */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  /* Background styles */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Make sure background clips to rounded corners */
+  overflow: hidden;
+
+  transition: box-shadow 0.2s ease;
+  color: white;   /* good contrast on backgrounds */
+
+  /* Optional: add a subtle overlay if background is image */
+  position: relative;
+}
+
+.menu-button-card:hover {
+  box-shadow: 0 4px 8px rgba(0.5, 0, 0, 1);
+}
+
+.menu-button-label {
+  background-color: rgba(0, 0, 0, 0.5); /* slightly darker overlay */
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.menu-button-card h2,
+.menu-button-card p {
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); /* improve text readability */
+}
+
+.menu-button-card h2 {
+  margin-bottom: 8px;
+}
+
+.menu-button-card p {
+  margin-bottom: 12px;
+}
+.menu-button-label {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+
+  /* ADD THESE TWO LINES ONLY: */
+  margin: 0 auto;      /* centers the div horizontally */
+  text-align: center;  /* centers text inside the div */
+}
