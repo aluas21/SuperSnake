@@ -52,14 +52,4 @@
 .menu-button-card p {
   margin-bottom: 12px;
 }
-.menu-button-label {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  display: inline-block;
-
-  /* ADD THESE TWO LINES ONLY: */
-  margin: 0 auto;      /* centers the div horizontally */
-  text-align: center;  /* centers text inside the div */
-}
+/* Removed duplicate .menu-button-label block */
