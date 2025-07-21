@@ -2,7 +2,6 @@ import Header from "../components/Header/Header";
 import Menu from "../components/Body/Menu"; // ✅ make sure path is correct
 
 
-
 const Home: React.FC = () => {
     const menuButtons = [
         {
@@ -30,7 +29,7 @@ const Home: React.FC = () => {
             title: "EXIT",
             description: "Logout from the game",
             buttonText: "Logout",
-            buttonLink: "/settings",
+            buttonLink: "handleLogout", // This should be a function or a route that handles logout
             buttonbackground: "red",
         }
     ];
@@ -38,7 +37,7 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            <Header pageTitle="Home page" />
+            <Header pageTitle="Home" />
             <Menu buttons={menuButtons} orientation="vertical" />
         </div>
     );

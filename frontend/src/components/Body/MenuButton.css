@@ -27,8 +27,7 @@
 }
 
 .menu-button-card:hover {
-  box-shadow: 0 4px 8px rgba(0.5, 0, 0, 1);
-}
+box-shadow: 0 4px 8px rgb(48, 23, 172);}
 
 .menu-button-label {
   background-color: rgba(0, 0, 0, 0.5); /* slightly darker overlay */
@@ -52,4 +51,15 @@
 .menu-button-card p {
   margin-bottom: 12px;
 }
-/* Removed duplicate .menu-button-label block */
+
+.menu-button-label {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+
+  /* ADD THESE TWO LINES ONLY: */
+  margin: 0 auto;      /* centers the div horizontally */
+  text-align: center;  /* centers text inside the div */
+}
