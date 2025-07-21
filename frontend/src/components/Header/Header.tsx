@@ -12,8 +12,8 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
     <header className="header">
       <div className="header__left">
         <img 
-					className="header__logo" 
-					src={AppLogo}
+          className="header__logo" 
+          src={AppLogo}
 					alt="Logo" />
         <h1 className="header__title">Super Snake</h1>
       </div>
