@@ -1,5 +1,5 @@
 import Header from "../components/Header/Header";
-import Menu from  "../components/Body/Menu"// ✅ make sure path is correct
+import Menu from "../components/Body/Menu"; // ✅ make sure path is correct
 
 
 
