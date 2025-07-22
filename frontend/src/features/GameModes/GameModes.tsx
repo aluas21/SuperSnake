@@ -38,7 +38,7 @@ const GameModes: React.FC = () => {
   return (
     <div>
       <Header pageTitle="Game Modes" />
-      <button className="back__button" onClick={() => window.history.back()}>
+      <button className="back__button" onClick={() => navigate(-1)}>
         Back
       </button>
       <Menu buttons={menuButtons} orientation="horizontal" />
