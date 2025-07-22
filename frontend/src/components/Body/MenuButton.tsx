@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MenuButton.css';
 
 interface MenuButtonProps {
@@ -15,10 +15,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   description,
   buttonText,
   buttonLink,
-  buttonbackground
+  buttonbackground,
 }) => {
   const navigate = useNavigate();
-  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>({});
+  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>(
+    {}
+  );
 
   useEffect(() => {
     const img = new Image();
@@ -33,12 +35,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({
     };
 
     img.onerror = () => {
-      const testEl = document.createElement("div");
+      const testEl = document.createElement('div');
       testEl.style.color = buttonbackground;
       if (testEl.style.color) {
         setBackgroundStyle({ backgroundColor: buttonbackground });
       } else {
-        setBackgroundStyle({ backgroundColor: "#888" });
+        setBackgroundStyle({ backgroundColor: '#888' });
       }
     };
   }, [buttonbackground]);
