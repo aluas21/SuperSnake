@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import MenuButton from "../Body/MenuButton";
+import React, { useEffect, useState } from 'react';
+import MenuButton from '../Body/MenuButton';
 import './Menu.css';
 
 interface MenuProps {
@@ -13,8 +13,13 @@ interface MenuProps {
   orientation?: 'horizontal' | 'vertical' | 'grid';
 }
 
-const Menu: React.FC<MenuProps> = ({ buttons = [], orientation: propOrientation }) => {
-  const [orientation, setOrientation] = useState<'horizontal' | 'vertical' | 'grid'>(propOrientation || 'horizontal');
+const Menu: React.FC<MenuProps> = ({
+  buttons = [],
+  orientation: propOrientation,
+}) => {
+  const [orientation, setOrientation] = useState<
+    'horizontal' | 'vertical' | 'grid'
+  >(propOrientation || 'horizontal');
 
   useEffect(() => {
     // Only apply responsive behavior if no propOrientation is provided
