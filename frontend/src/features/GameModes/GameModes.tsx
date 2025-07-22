@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Menu from '../../components/Body/Menu';
 import './GameModes.css';
 
 const GameModes: React.FC = () => {
+	const navigate = useNavigate();
+
   const menuButtons = [
     {
       title: 'Single Player',
