@@ -11,3 +11,13 @@
   font-size: 1em;
   color: darkslategray;
 }
+
+.game-modes__grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px; /* space between the two columns */
+  margin-top: 150px;
+  flex-wrap: wrap; /* responsive stacking on small screens */
+}
+

@@ -7,7 +7,7 @@ import './GameModes.css';
 const GameModes: React.FC = () => {
 	const navigate = useNavigate();
 
-  const menuButtons = [
+  const offlineModes = [
     {
       title: 'Single Player',
       description: 'Play the classic Snake game alone',
@@ -22,6 +22,9 @@ const GameModes: React.FC = () => {
       buttonLink: '/game',
       buttonbackground: 'purple',
     },
+  ];
+
+  const onlineModes = [
     {
       title: '1v1 AI',
       description: 'Play against AI snake',
@@ -38,15 +41,18 @@ const GameModes: React.FC = () => {
     },
   ];
 
-  return (
-    <div>
-      <Header pageTitle="Game Modes" />
-      <button className="back__button" onClick={() => navigate(-1)}>
-        Back
-      </button>
-      <Menu buttons={menuButtons} orientation="horizontal" />
+return (
+  <div className="game-modes__wrapper">
+    <Header pageTitle="Game Modes" />
+    <button className="back__button" onClick={() => navigate(-1)}>
+      Back
+    </button>
+    <div className="game-modes__grid">
+      <Menu buttons={offlineModes} orientation="vertical" />
+      <Menu buttons={onlineModes} orientation="vertical" />
     </div>
-  );
+  </div>
+);
 };
 
 export default GameModes;
