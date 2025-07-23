@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import Menu from '../../components/Body/Menu';
+import Menu from '../../components/Menu/Menu';
 import './GameModes.css';
 
 const GameModes: React.FC = () => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const offlineModes = [
     {
@@ -41,18 +41,18 @@ const GameModes: React.FC = () => {
     },
   ];
 
-return (
-  <div className="game-modes__wrapper">
-    <Header pageTitle="Game Modes" />
-    <button className="back__button" onClick={() => navigate(-1)}>
-      Back
-    </button>
-    <div className="game-modes__grid">
-      <Menu buttons={offlineModes} orientation="vertical" />
-      <Menu buttons={onlineModes} orientation="vertical" />
+  return (
+    <div className="game-modes__wrapper">
+      <Header pageTitle="Game Modes" />
+      <button className="back__button" onClick={() => navigate(-1)}>
+        Back
+      </button>
+      <div className="game-modes__grid">
+        <Menu buttons={offlineModes} orientation="vertical" />
+        <Menu buttons={onlineModes} orientation="vertical" />
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default GameModes;

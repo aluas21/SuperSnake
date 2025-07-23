@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './features/Home';
 import GameModes from './features/GameModes/GameModes';
-import Game from './features/Game';
+import Game from './features/Game/Game';
 
 function App() {
   return (
