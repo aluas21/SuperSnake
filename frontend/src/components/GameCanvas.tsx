@@ -29,6 +29,24 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
+    // grid lines
+    ctx.strokeStyle = 'gray';
+    for (let x = 0; x <= canvasWidth; x += cellSize)
+      ctx.moveTo(x, 0), ctx.lineTo(x, canvasHeight);
+    for (let y = 0; y <= canvasHeight; y += cellSize)
+      ctx.moveTo(0, y), ctx.lineTo(canvasWidth, y);
+    ctx.stroke();
+
+    // chessboard pattern
+    // ctx.fillStyle = 'white';
+    // ctx.strokeStyle = 'white';
+    // for (let x = 0; x < canvasWidth; x += 2) {
+    //   for (let y = 0; y < canvasHeight; y += 2) {
+    // 		ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    // 		ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    // 	}
+    // }
+
     // draw snake body
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
