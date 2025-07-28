@@ -2,8 +2,7 @@ import React, { useRef, useEffect } from 'react';
 
 interface GameCanvasProps {
   snake: [number, number][];
-  walls: [number, number][];
-  apples: [number, number][];
+  apple: [number, number];
   coin: [number, number] | undefined;
   cash: [number, number][] | undefined;
   cellSize: number;
@@ -13,8 +12,7 @@ interface GameCanvasProps {
 
 const GameCanvas: React.FC<GameCanvasProps> = ({
   snake,
-  walls,
-  apples,
+  apple,
   coin,
   cash,
   cellSize,
@@ -44,24 +42,15 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     ctx.strokeStyle = 'white';
     for (let x = 0; x < canvasWidth; x += 2) {
       for (let y = 0; y < canvasHeight; y += 2) {
-        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-        ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-      }
+    		ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    		ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    	}
     }
     for (let x = 1; x < canvasWidth; x += 2) {
       for (let y = 1; y < canvasHeight; y += 2) {
-        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-        ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-      }
-    }
-
-    // draw walls if are set
-    if (walls) {
-      ctx.fillStyle = 'black';
-      walls.forEach(([x, y]) => {
-        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-        ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-      });
+    		ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    		ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    	}
     }
 
     // draw snake body
@@ -80,18 +69,16 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     ctx.strokeRect(head[0] * cellSize, head[1] * cellSize, cellSize, cellSize);
 
     // draw apple
-    for (let i = 1; i < apples.length; i++) {
-      const centerX = apples[i][0] * cellSize + cellSize / 2;
-      const centerY = apples[i][1] * cellSize + cellSize / 2;
-      const radius = cellSize / 2 - 2;
+    const centerX = apple[0] * cellSize + cellSize / 2;
+    const centerY = apple[1] * cellSize + cellSize / 2;
+    const radius = cellSize / 2 - 2;
 
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = 'red';
-      ctx.fill();
-      ctx.strokeStyle = 'darkred';
-      ctx.stroke();
-    }
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.strokeStyle = 'darkred';
+    ctx.stroke();
 
     // draw coin if coin is set
     if (coin) {
@@ -130,7 +117,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
   // draw the canvas
   useEffect(() => {
     drawCanvas();
-  }, [snake, apples, coin, cash]);
+  }, [snake, apple, coin, cash]);
 
   return (
     <canvas

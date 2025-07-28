@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef, use } from 'react';
 import GameCanvas from '../../components/GameCanvas';
 import Header from '../../components/Header/Header';
 import Score from '../../components/Score/Score';
 import './Game.css';
+import TimerBar from '../../components/TimerBar/TimerBar';
 
 const ROWS = 29;
 const COLS = 29;
 const INITIAL_SNAKE_LENGTH = 3;
-// lower values mean more frames = snake moves quicker
-const SLOW_SPEED = 150;
-const NORMAL_SPEED = 100;
-const FAST_SPEED = 50;
+const SPEED = 100; // milliseconds
 const COIN_TIMEOUT = 3000; // 3 seconds
 const CASH_TIMEOUT = 3000; // 3 seconds
 const CASH_CHANCE = 0.2; // 20% chance to spawn cash
@@ -19,18 +16,6 @@ const HEIGHT_PERCENTAGE = 0.85; // 85% of available height
 
 const createSnake = (length: number): [number, number][] => {
   return Array.from({ length }, (_, i) => [10, 10 - i] as [number, number]);
-};
-
-const createFirstApples = (
-  forbidden: [number, number][],
-  numberOfApples: number
-): [number, number][] => {
-  let apples: [number, number][] = [];
-  for (let i = 1; i <= numberOfApples; i++) {
-    const apple = createApple([...forbidden, ...apples]);
-    apples.push(apple);
-  }
-  return apples;
 };
 
 const createApple = (forbidden: [number, number][]): [number, number] => {
@@ -76,46 +61,7 @@ const createCash = (forbidden: [number, number][]): [number, number][] => {
   return cash;
 };
 
-const setSpeed = (speedSetting: string): number => {
-  switch (speedSetting) {
-    case 'Slow':
-      return SLOW_SPEED;
-    case 'Normal':
-      return NORMAL_SPEED;
-    case 'Fast':
-      return FAST_SPEED;
-    default:
-      return NORMAL_SPEED;
-  }
-};
-
-const setWalls = (): [number, number][] => {
-  let walls: [number, number][] = [];
-  for (let x = 0; x < ROWS; x++) {
-    walls.push([x, 0]);
-    walls.push([x, COLS - 1]);
-  }
-  for (let y = 0; y < COLS; y++) {
-    walls.push([0, y]);
-    walls.push([ROWS - 1, y]);
-  }
-  return walls;
-};
-
 const Game: React.FC = () => {
-  const location = useLocation();
-  const settings = location.state;
-
-  const numberOfApples = Number.isFinite(parseInt(settings.apples))
-    ? parseInt(settings.apples) + 1
-    : 1;
-  const areWalls = settings.walls === 'On';
-  const walls = areWalls ? setWalls() : [];
-  const speed =
-    typeof settings.speed === 'string'
-      ? setSpeed(settings.speed)
-      : NORMAL_SPEED;
-
   const [snake, setSnake] = useState<[number, number][]>(
     createSnake(INITIAL_SNAKE_LENGTH)
   );
@@ -126,9 +72,7 @@ const Game: React.FC = () => {
   const lastTimeRef = useRef<number | null>(null);
   const requestRef = useRef<number | null>(null);
 
-  const [apples, setApples] = useState<[number, number][]>(
-    createFirstApples([...walls, ...snake], numberOfApples)
-  );
+  const [apple, setApple] = useState<[number, number]>(createApple(snake));
   const [coin, setCoin] = useState<[number, number]>();
   const [cash, setCash] = useState<[number, number][]>();
 
@@ -172,7 +116,7 @@ const Game: React.FC = () => {
       }
       const delta = time - lastTimeRef.current;
 
-      if (delta > speed) {
+      if (delta > SPEED) {
         directionRef.current = nextDirectionRef.current;
 
         setSnake((prevSnake) => {
@@ -216,29 +160,24 @@ const Game: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const onAppleEaten = (eatenApple: [number, number]) => {
+  const onAppleEaten = () => {
     setSnake((prevSnake) => {
       const newSnake = [...prevSnake];
       newSnake.push(newSnake[newSnake.length - 1]); // grow the snake
       return newSnake;
     });
 
-    setApples((prevApples) => {
-      const updatedApples = prevApples.filter((apple) => apple !== eatenApple);
-      const newApple = createApple([...walls, ...snake, ...updatedApples]);
-      return [...updatedApples, newApple];
-    });
-
+    setApple(createApple(snake));
     const newCount = applesEaten + 1;
     setApplesEaten(newCount);
 
     if (newCount % 5 === 0 && !coin && !cash) {
       if (Math.random() < CASH_CHANCE) {
-        setCash(createCash([...walls, ...snake, ...apples]));
+        setCash(createCash([...snake, apple]));
         setTimerStart(Date.now());
         setTimerDuration(CASH_TIMEOUT);
       } else {
-        setCoin(createCoin([...walls, ...snake, ...apples]));
+        setCoin(createCoin([...snake, apple]));
         setTimerStart(Date.now());
         setTimerDuration(COIN_TIMEOUT);
       }
@@ -254,23 +193,13 @@ const Game: React.FC = () => {
     }
   }, [snake]);
 
-  // check for wall collisions
-  useEffect(() => {
-    const head = snake[0];
-    if (walls.some(([x, y]) => x === head[0] && y === head[1])) {
-      resetGame();
-    }
-  }, [snake]);
-
   // check for apple collision
   useEffect(() => {
     const head = snake[0];
-    for (let i = 1; i < apples.length; i++) {
-      if (head[0] === apples[i][0] && head[1] === apples[i][1]) {
-        onAppleEaten(apples[i]);
-      }
+    if (head[0] === apple[0] && head[1] === apple[1]) {
+      onAppleEaten();
     }
-  }, [snake, apples]);
+  }, [snake, apple]);
 
   // check for coin collision
   useEffect(() => {
@@ -331,7 +260,7 @@ const Game: React.FC = () => {
     setCashEaten(0);
     setTimerDuration(0);
     setSnake(createSnake(INITIAL_SNAKE_LENGTH));
-    setApples([]);
+    setApple(createApple([]));
     setCoin(undefined);
     setCash(undefined);
     directionRef.current = [1, 0];
@@ -356,12 +285,11 @@ const Game: React.FC = () => {
               value={applesEaten % 5}
               max={5}
             />
-            {/* <TimerBar startTime={timerStart} duration={timerDuration} /> */}
+            <TimerBar startTime={timerStart} duration={timerDuration} />
           </div>
           <GameCanvas
             snake={snake}
-            walls={walls}
-            apples={apples}
+            apple={apple}
             coin={coin}
             cash={cash}
             cellSize={cellSize}

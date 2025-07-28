@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './features/Home';
 import GameModes from './features/GameModes/GameModes';
 import Game from './features/Game/Game';
-import GameSettings from './features/GameSettings/GameSettings';
 
 function App() {
   return (
@@ -12,7 +11,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/game-settings" element={<GameSettings />} />
         <Route path="/game-modes" element={<GameModes />} />
 
         {/* Catch-all route for undefined paths */}
