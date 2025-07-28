@@ -1,0 +1,60 @@
+.settings__back-button {
+  position: absolute;
+  top: 6em;
+  left: 1em;
+  background-color: lightgray;
+  border: none;
+  padding: 1em 2em;
+  cursor: pointer;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+  color: darkslategray;
+}
+
+.settings__container {
+  font-family: 'Fira Code', monospace;
+  color: darkslategray;
+  padding: 3em 1em;
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+}
+
+.settings__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* larger gap before the last element */
+.settings__info > *:last-child {
+  margin-top: 10em;
+}
+
+.settings__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
+.settings__label-text {
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  color: darkslategray;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.settings__ready-button {
+  background-color: lightgray;
+  border: none;
+  padding: 1em 2em;
+  cursor: pointer;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+  color: darkslategray;
+}
