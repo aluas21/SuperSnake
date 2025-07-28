@@ -12,8 +12,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/game-settings" element={<GameSettings />} />
         <Route path="/game-modes" element={<GameModes />} />
+        <Route path="/game-settings" element={<GameSettings />} />
 
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<Home />} />
