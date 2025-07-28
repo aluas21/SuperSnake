@@ -12,14 +12,14 @@ const GameModes: React.FC = () => {
       title: 'Single Player',
       description: 'Play the classic Snake game alone',
       buttonText: 'Play',
-      buttonLink: '/game',
+      buttonLink: '/game-settings',
       buttonbackground: 'blue',
     },
     {
       title: '1v1 (offline)',
       description: 'Play against a friend using the same keyboard',
       buttonText: 'Play',
-      buttonLink: '/game',
+      buttonLink: '/game-settings',
       buttonbackground: 'purple',
     },
   ];
@@ -29,14 +29,14 @@ const GameModes: React.FC = () => {
       title: '1v1 AI',
       description: 'Play against AI snake',
       buttonText: 'Play',
-      buttonLink: '/game',
+      buttonLink: '/game-settings',
       buttonbackground: 'orange',
     },
     {
       title: '1v1 (online)',
       description: 'Play against a friend online',
       buttonText: 'Join',
-      buttonLink: '/game',
+      buttonLink: '/game-settings',
       buttonbackground: 'green',
     },
   ];
