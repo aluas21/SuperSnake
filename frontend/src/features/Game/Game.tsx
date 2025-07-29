@@ -111,7 +111,7 @@ const Game: React.FC = () => {
   const settings = location.state;
 
   const isMultiplayer = settings.gameMode.includes('1v1');
-	
+
   const numberOfApples = Number.isFinite(parseInt(settings.apples))
     ? parseInt(settings.apples) + 1
     : 1;
@@ -140,7 +140,7 @@ const Game: React.FC = () => {
   ]); // next direction to move
 
   const lastTimeRef = useRef<number | null>(null);
-	const opponentLastTimeRef = useRef<number | null>(null);
+  const opponentLastTimeRef = useRef<number | null>(null);
   const requestRef = useRef<number | null>(null);
 
   const [apples, setApples] = useState<[number, number][]>(
@@ -210,30 +210,30 @@ const Game: React.FC = () => {
         lastTimeRef.current = time;
       }
 
-			if (isMultiplayer) {
-	      if (!opponentLastTimeRef.current) {
-	        opponentLastTimeRef.current = time;
-	      }
-	      const deltaOpponent = time - opponentLastTimeRef.current;
+      if (isMultiplayer) {
+        if (!opponentLastTimeRef.current) {
+          opponentLastTimeRef.current = time;
+        }
+        const deltaOpponent = time - opponentLastTimeRef.current;
 
-	      if (deltaOpponent > speed) {
-	        directionRef.current[1] = nextDirectionRef.current[1];
+        if (deltaOpponent > speed) {
+          directionRef.current[1] = nextDirectionRef.current[1];
 
-	        setOpponentSnake((prevOpponentSnake) => {
-	          const newOpponentSnake = [...prevOpponentSnake];
-	          const head = newOpponentSnake[0];
-	          const newHead: [number, number] = [
-	            (head[0] + directionRef.current[1][0] + ROWS) % ROWS,
-	            (head[1] + directionRef.current[1][1] + COLS) % COLS,
-	          ];
-	          newOpponentSnake.unshift(newHead);
-	          newOpponentSnake.pop();
-	          return newOpponentSnake;
-	        });
+          setOpponentSnake((prevOpponentSnake) => {
+            const newOpponentSnake = [...prevOpponentSnake];
+            const head = newOpponentSnake[0];
+            const newHead: [number, number] = [
+              (head[0] + directionRef.current[1][0] + ROWS) % ROWS,
+              (head[1] + directionRef.current[1][1] + COLS) % COLS,
+            ];
+            newOpponentSnake.unshift(newHead);
+            newOpponentSnake.pop();
+            return newOpponentSnake;
+          });
 
-	        opponentLastTimeRef.current = time;
-	      }
-	    }
+          opponentLastTimeRef.current = time;
+        }
+      }
 
       requestRef.current = requestAnimationFrame(animate);
     };
@@ -312,9 +312,14 @@ const Game: React.FC = () => {
     });
   };
 
-	// check for coin and cash spawning
-	useEffect(() => {
-		if ((applesEaten || opponentApplesEaten) && (applesEaten + opponentApplesEaten) % 5 === 0 && !coin && !cash) {
+  // check for coin and cash spawning
+  useEffect(() => {
+    if (
+      (applesEaten || opponentApplesEaten) &&
+      (applesEaten + opponentApplesEaten) % 5 === 0 &&
+      !coin &&
+      !cash
+    ) {
       if (Math.random() < CASH_CHANCE) {
         setCash(createCash([...walls, ...snake, ...opponentSnake, ...apples]));
         setTimerStart(Date.now());
@@ -358,7 +363,11 @@ const Game: React.FC = () => {
     if (isMultiplayer) {
       const opponentHead = opponentSnake[0];
       const opponentBody = opponentSnake.slice(1);
-      if (opponentBody.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+      if (
+        opponentBody.some(
+          ([x, y]) => x === opponentHead[0] && y === opponentHead[1]
+        )
+      ) {
         resetGame('Opponent collided with their own body');
       }
     }
@@ -373,7 +382,9 @@ const Game: React.FC = () => {
 
     if (isMultiplayer) {
       const opponentHead = opponentSnake[0];
-      if (walls.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+      if (
+        walls.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])
+      ) {
         resetGame('Opponent collided with a wall');
       }
     }
@@ -391,7 +402,10 @@ const Game: React.FC = () => {
     if (isMultiplayer) {
       const opponentHead = opponentSnake[0];
       for (let i = 1; i < apples.length; i++) {
-        if (opponentHead[0] === apples[i][0] && opponentHead[1] === apples[i][1]) {
+        if (
+          opponentHead[0] === apples[i][0] &&
+          opponentHead[1] === apples[i][1]
+        ) {
           onAppleEaten(apples[i], setOpponentSnake, setOpponentApplesEaten);
         }
       }
@@ -430,7 +444,9 @@ const Game: React.FC = () => {
 
     if (isMultiplayer) {
       const opponentHead = opponentSnake[0];
-      if (cash.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+      if (
+        cash.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])
+      ) {
         setCash(undefined);
         setOpponentCashEaten((prev) => prev + 1);
         setTimerDuration(0);
@@ -494,7 +510,7 @@ const Game: React.FC = () => {
       [-1, 0],
     ];
     lastTimeRef.current = null;
-		opponentLastTimeRef.current = null;
+    opponentLastTimeRef.current = null;
   };
 
   return (
