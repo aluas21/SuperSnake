@@ -21,6 +21,10 @@ const createSnake = (length: number): [number, number][] => {
   return Array.from({ length }, (_, i) => [10, 10 - i] as [number, number]);
 };
 
+const createOpponentSnake = (length: number): [number, number][] => {
+  return Array.from({ length }, (_, i) => [19, 19 + i] as [number, number]);
+};
+
 const createFirstApples = (
   forbidden: [number, number][],
   numberOfApples: number
@@ -106,6 +110,8 @@ const Game: React.FC = () => {
   const location = useLocation();
   const settings = location.state;
 
+  const isMultiplayer = settings.gameMode.includes('1v1');
+	
   const numberOfApples = Number.isFinite(parseInt(settings.apples))
     ? parseInt(settings.apples) + 1
     : 1;
@@ -120,14 +126,25 @@ const Game: React.FC = () => {
     createSnake(INITIAL_SNAKE_LENGTH)
   );
 
-  const directionRef = useRef<[number, number]>([1, 0]); // moving right by default
-  const nextDirectionRef = useRef<[number, number]>([1, 0]);
+  const [opponentSnake, setOpponentSnake] = useState<[number, number][]>(
+    isMultiplayer ? createOpponentSnake(INITIAL_SNAKE_LENGTH) : []
+  );
+
+  const directionRef = useRef<[number, number][]>([
+    [1, 0],
+    [-1, 0],
+  ]); // moving right by default (left for opponent)
+  const nextDirectionRef = useRef<[number, number][]>([
+    [1, 0],
+    [-1, 0],
+  ]); // next direction to move
 
   const lastTimeRef = useRef<number | null>(null);
+	const opponentLastTimeRef = useRef<number | null>(null);
   const requestRef = useRef<number | null>(null);
 
   const [apples, setApples] = useState<[number, number][]>(
-    createFirstApples([...walls, ...snake], numberOfApples)
+    createFirstApples([...walls, ...snake, ...opponentSnake], numberOfApples)
   );
   const [coin, setCoin] = useState<[number, number]>();
   const [cash, setCash] = useState<[number, number][]>();
@@ -135,6 +152,10 @@ const Game: React.FC = () => {
   const [applesEaten, setApplesEaten] = useState(0);
   const [coinsEarned, setCoinsEarned] = useState(0);
   const [cashEarned, setCashEaten] = useState(0);
+
+  const [opponentApplesEaten, setOpponentApplesEaten] = useState(0);
+  const [opponentCoinsEarned, setOpponentCoinsEarned] = useState(0);
+  const [opponentCashEaten, setOpponentCashEaten] = useState(0);
 
   const [timerStart, setTimerStart] = useState<number | null>(null);
   const [timerDuration, setTimerDuration] = useState<number>(0);
@@ -173,14 +194,14 @@ const Game: React.FC = () => {
       const delta = time - lastTimeRef.current;
 
       if (delta > speed) {
-        directionRef.current = nextDirectionRef.current;
+        directionRef.current[0] = nextDirectionRef.current[0];
 
         setSnake((prevSnake) => {
           const newSnake = [...prevSnake];
           const head = newSnake[0];
           const newHead: [number, number] = [
-            (head[0] + directionRef.current[0] + ROWS) % ROWS,
-            (head[1] + directionRef.current[1] + COLS) % COLS,
+            (head[0] + directionRef.current[0][0] + ROWS) % ROWS,
+            (head[1] + directionRef.current[0][1] + COLS) % COLS,
           ];
           newSnake.unshift(newHead);
           newSnake.pop();
@@ -188,6 +209,32 @@ const Game: React.FC = () => {
         });
         lastTimeRef.current = time;
       }
+
+			if (isMultiplayer) {
+	      if (!opponentLastTimeRef.current) {
+	        opponentLastTimeRef.current = time;
+	      }
+	      const deltaOpponent = time - opponentLastTimeRef.current;
+
+	      if (deltaOpponent > speed) {
+	        directionRef.current[1] = nextDirectionRef.current[1];
+
+	        setOpponentSnake((prevOpponentSnake) => {
+	          const newOpponentSnake = [...prevOpponentSnake];
+	          const head = newOpponentSnake[0];
+	          const newHead: [number, number] = [
+	            (head[0] + directionRef.current[1][0] + ROWS) % ROWS,
+	            (head[1] + directionRef.current[1][1] + COLS) % COLS,
+	          ];
+	          newOpponentSnake.unshift(newHead);
+	          newOpponentSnake.pop();
+	          return newOpponentSnake;
+	        });
+
+	        opponentLastTimeRef.current = time;
+	      }
+	    }
+
       requestRef.current = requestAnimationFrame(animate);
     };
     requestRef.current = requestAnimationFrame(animate);
@@ -199,16 +246,37 @@ const Game: React.FC = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
         case 'w':
-          if (directionRef.current[1] === 0) nextDirectionRef.current = [0, -1];
+          if (directionRef.current[0][1] === 0)
+            nextDirectionRef.current[0] = [0, -1];
           break;
         case 's':
-          if (directionRef.current[1] === 0) nextDirectionRef.current = [0, 1];
+          if (directionRef.current[0][1] === 0)
+            nextDirectionRef.current[0] = [0, 1];
           break;
         case 'a':
-          if (directionRef.current[0] === 0) nextDirectionRef.current = [-1, 0];
+          if (directionRef.current[0][0] === 0)
+            nextDirectionRef.current[0] = [-1, 0];
           break;
         case 'd':
-          if (directionRef.current[0] === 0) nextDirectionRef.current = [1, 0];
+          if (directionRef.current[0][0] === 0)
+            nextDirectionRef.current[0] = [1, 0];
+          break;
+
+        case 'ArrowUp':
+          if (directionRef.current[1][1] === 0)
+            nextDirectionRef.current[1] = [0, -1];
+          break;
+        case 'ArrowDown':
+          if (directionRef.current[1][1] === 0)
+            nextDirectionRef.current[1] = [0, 1];
+          break;
+        case 'ArrowLeft':
+          if (directionRef.current[1][0] === 0)
+            nextDirectionRef.current[1] = [-1, 0];
+          break;
+        case 'ArrowRight':
+          if (directionRef.current[1][0] === 0)
+            nextDirectionRef.current[1] = [1, 0];
           break;
       }
     };
@@ -216,61 +284,119 @@ const Game: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const onAppleEaten = (eatenApple: [number, number]) => {
+  const onAppleEaten = (
+    eatenApple: [number, number],
+    setSnake: React.Dispatch<React.SetStateAction<[number, number][]>>,
+    setApplesEaten: React.Dispatch<React.SetStateAction<number>>
+  ) => {
     setSnake((prevSnake) => {
       const newSnake = [...prevSnake];
-      newSnake.push(newSnake[newSnake.length - 1]); // grow the snake
+      newSnake.push(newSnake[newSnake.length - 1]); // grow the snake (either yours or opponent's)
       return newSnake;
     });
 
     setApples((prevApples) => {
       const updatedApples = prevApples.filter((apple) => apple !== eatenApple);
-      const newApple = createApple([...walls, ...snake, ...updatedApples]);
+      const newApple = createApple([
+        ...walls,
+        ...snake,
+        ...opponentSnake,
+        ...updatedApples,
+      ]);
       return [...updatedApples, newApple];
     });
 
-    const newCount = applesEaten + 1;
-    setApplesEaten(newCount);
+    setApplesEaten((prevCount: number) => {
+      let newCount = prevCount + 1;
+      return newCount;
+    });
+  };
 
-    if (newCount % 5 === 0 && !coin && !cash) {
+	// check for coin and cash spawning
+	useEffect(() => {
+		if ((applesEaten || opponentApplesEaten) && (applesEaten + opponentApplesEaten) % 5 === 0 && !coin && !cash) {
       if (Math.random() < CASH_CHANCE) {
-        setCash(createCash([...walls, ...snake, ...apples]));
+        setCash(createCash([...walls, ...snake, ...opponentSnake, ...apples]));
         setTimerStart(Date.now());
         setTimerDuration(CASH_TIMEOUT);
       } else {
-        setCoin(createCoin([...walls, ...snake, ...apples]));
+        setCoin(createCoin([...walls, ...snake, ...opponentSnake, ...apples]));
         setTimerStart(Date.now());
         setTimerDuration(COIN_TIMEOUT);
       }
     }
-  };
+  }, [applesEaten, opponentApplesEaten]);
+
+  // check for collisions between snakes
+  useEffect(() => {
+    if (!isMultiplayer) return;
+    const head = snake[0];
+    for (let i = 0; i < opponentSnake.length; i++) {
+      if (head[0] === opponentSnake[i][0] && head[1] === opponentSnake[i][1]) {
+        resetGame('You collided with the opponent snake');
+        return;
+      }
+    }
+
+    const opponentHead = opponentSnake[0];
+    for (let i = 0; i < snake.length; i++) {
+      if (opponentHead[0] === snake[i][0] && opponentHead[1] === snake[i][1]) {
+        resetGame('Opponent collided with your snake');
+        return;
+      }
+    }
+  }, [snake, opponentSnake]);
 
   // check for body collisions
   useEffect(() => {
     const head = snake[0];
     const body = snake.slice(1);
     if (body.some(([x, y]) => x === head[0] && y === head[1])) {
-      resetGame();
+      resetGame('You collided with your own body');
     }
-  }, [snake]);
+
+    if (isMultiplayer) {
+      const opponentHead = opponentSnake[0];
+      const opponentBody = opponentSnake.slice(1);
+      if (opponentBody.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+        resetGame('Opponent collided with their own body');
+      }
+    }
+  }, [snake, opponentSnake]);
 
   // check for wall collisions
   useEffect(() => {
     const head = snake[0];
     if (walls.some(([x, y]) => x === head[0] && y === head[1])) {
-      resetGame();
+      resetGame('You collided with a wall');
     }
-  }, [snake]);
+
+    if (isMultiplayer) {
+      const opponentHead = opponentSnake[0];
+      if (walls.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+        resetGame('Opponent collided with a wall');
+      }
+    }
+  }, [snake, opponentSnake]);
 
   // check for apple collision
   useEffect(() => {
     const head = snake[0];
     for (let i = 1; i < apples.length; i++) {
       if (head[0] === apples[i][0] && head[1] === apples[i][1]) {
-        onAppleEaten(apples[i]);
+        onAppleEaten(apples[i], setSnake, setApplesEaten);
       }
     }
-  }, [snake, apples]);
+
+    if (isMultiplayer) {
+      const opponentHead = opponentSnake[0];
+      for (let i = 1; i < apples.length; i++) {
+        if (opponentHead[0] === apples[i][0] && opponentHead[1] === apples[i][1]) {
+          onAppleEaten(apples[i], setOpponentSnake, setOpponentApplesEaten);
+        }
+      }
+    }
+  }, [snake, opponentSnake, apples]);
 
   // check for coin collision
   useEffect(() => {
@@ -281,7 +407,16 @@ const Game: React.FC = () => {
       setCoinsEarned((prev) => prev + 1);
       setTimerDuration(0);
     }
-  }, [snake, coin]);
+
+    if (isMultiplayer) {
+      const opponentHead = opponentSnake[0];
+      if (opponentHead[0] === coin[0] && opponentHead[1] === coin[1]) {
+        setCoin(undefined);
+        setOpponentCoinsEarned((prev) => prev + 1);
+        setTimerDuration(0);
+      }
+    }
+  }, [snake, opponentSnake, coin]);
 
   // check for cash collision
   useEffect(() => {
@@ -292,7 +427,16 @@ const Game: React.FC = () => {
       setCashEaten((prev) => prev + 1);
       setTimerDuration(0);
     }
-  }, [snake, cash]);
+
+    if (isMultiplayer) {
+      const opponentHead = opponentSnake[0];
+      if (cash.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])) {
+        setCash(undefined);
+        setOpponentCashEaten((prev) => prev + 1);
+        setTimerDuration(0);
+      }
+    }
+  }, [snake, opponentSnake, cash]);
 
   useEffect(() => {
     if (coin && timerStart && timerDuration > 0) {
@@ -316,32 +460,46 @@ const Game: React.FC = () => {
     }
   }, [cash, timerStart, timerDuration]);
 
-  const resetGame = () => {
+  const resetGame = (cause: string) => {
     alert(
-      'Game Over! You ate ' +
-        applesEaten +
-        ' apples, ' +
-        coinsEarned +
-        ' coins and ' +
-        cashEarned +
-        ' cash.'
+      'Game Over! \n' +
+        'Cause: ' +
+        cause +
+        '\n' +
+        `You ate ${applesEaten} apples, ${coinsEarned} coins and ${cashEarned} cash.\n` +
+        (isMultiplayer
+          ? `Opponent ate ${opponentApplesEaten} apples, ${opponentCoinsEarned} coins and ${opponentCashEaten} cash.`
+          : '')
     );
     setApplesEaten(0);
     setCoinsEarned(0);
     setCashEaten(0);
+    setOpponentApplesEaten(0);
+    setOpponentCoinsEarned(0);
+    setOpponentCashEaten(0);
     setTimerDuration(0);
     setSnake(createSnake(INITIAL_SNAKE_LENGTH));
+    setOpponentSnake(
+      isMultiplayer ? createOpponentSnake(INITIAL_SNAKE_LENGTH) : []
+    );
     setApples([]);
     setCoin(undefined);
     setCash(undefined);
-    directionRef.current = [1, 0];
-    nextDirectionRef.current = [1, 0];
+    directionRef.current = [
+      [1, 0],
+      [-1, 0],
+    ]; // reset directions
+    nextDirectionRef.current = [
+      [1, 0],
+      [-1, 0],
+    ];
     lastTimeRef.current = null;
+		opponentLastTimeRef.current = null;
   };
 
   return (
     <>
-      <Header pageTitle="Game" ref={headerRef} />
+      <Header pageTitle={`Game - ${settings.gameMode}`} ref={headerRef} />
       <div className="game__container">
         <Score
           playerName="Player 1"
@@ -353,13 +511,16 @@ const Game: React.FC = () => {
           <div className="game__info" ref={infoRef}>
             <progress
               className="game__progress-bar"
-              value={applesEaten % 5}
+              value={(applesEaten + opponentApplesEaten) % 5}
               max={5}
             />
             {/* <TimerBar startTime={timerStart} duration={timerDuration} /> */}
           </div>
           <GameCanvas
             snake={snake}
+            opponentSnake={
+              isMultiplayer && opponentSnake ? opponentSnake : undefined
+            }
             walls={walls}
             apples={apples}
             coin={coin}
@@ -369,7 +530,14 @@ const Game: React.FC = () => {
             canvasHeight={canvasHeight}
           />
         </div>
-        <Score playerName="Player 2" score={999} coins={999} cash={999} />
+        {isMultiplayer && (
+          <Score
+            playerName="Player 2"
+            score={opponentApplesEaten}
+            coins={opponentCoinsEarned}
+            cash={opponentCashEaten}
+          />
+        )}
       </div>
     </>
   );

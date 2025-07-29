@@ -8,28 +8,28 @@ const Home: React.FC = () => {
       description: 'Start a new game!',
       buttonText: 'Play',
       buttonLink: '/game-modes',
-      buttonbackground: 'green', // or a color like "blue"
+      buttonBackground: 'green', // or a color like "blue"
     },
     {
       title: 'SHOP',
       description: 'Buy new skins',
       buttonText: 'View',
       buttonLink: '/shop',
-      buttonbackground: 'gold',
+      buttonBackground: 'gold',
     },
     {
       title: 'SETTINGS',
       description: 'Customize your experience',
       buttonText: 'Open',
       buttonLink: '/settings',
-      buttonbackground: 'gray',
+      buttonBackground: 'gray',
     },
     {
       title: 'EXIT',
       description: 'Logout from the game',
       buttonText: 'Logout',
       buttonLink: 'handleLogout', // This should be a function or a route that handles logout
-      buttonbackground: 'red',
+      buttonBackground: 'red',
     },
   ];
 

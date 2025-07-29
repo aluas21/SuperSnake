@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 
 interface GameCanvasProps {
   snake: [number, number][];
+  opponentSnake?: [number, number][];
   walls: [number, number][];
   apples: [number, number][];
   coin: [number, number] | undefined;
@@ -13,6 +14,7 @@ interface GameCanvasProps {
 
 const GameCanvas: React.FC<GameCanvasProps> = ({
   snake,
+  opponentSnake,
   walls,
   apples,
   coin,
@@ -78,6 +80,29 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     const head = snake[0];
     ctx.fillRect(head[0] * cellSize, head[1] * cellSize, cellSize, cellSize);
     ctx.strokeRect(head[0] * cellSize, head[1] * cellSize, cellSize, cellSize);
+
+    // draw opponent snake if set
+    if (opponentSnake && opponentSnake.length > 0) {
+      // draw snake body
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = 'lightblue';
+      opponentSnake.forEach(([x, y]) => {
+        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+        ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+      });
+
+      // draw snake head
+      ctx.fillStyle = 'blue';
+      const head = opponentSnake[0];
+      ctx.fillRect(head[0] * cellSize, head[1] * cellSize, cellSize, cellSize);
+      ctx.strokeRect(
+        head[0] * cellSize,
+        head[1] * cellSize,
+        cellSize,
+        cellSize
+      );
+    }
 
     // draw apple
     for (let i = 1; i < apples.length; i++) {
