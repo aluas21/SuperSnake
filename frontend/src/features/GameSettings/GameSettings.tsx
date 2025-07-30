@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './GameSettings.css';
 import Slider from '../../components/Slider/Slider';
 
 const GameSettings: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const gameMode = location.state.title || {};
 
   const appleValues = ['1', '3', '5'];
   const [apples, setApples] = useState('1');
@@ -48,6 +51,7 @@ const GameSettings: React.FC = () => {
             className="settings__ready-button"
             onClick={() => {
               const settings = {
+                gameMode: gameMode || 'Single Player',
                 apples: apples || '1',
                 walls: walls || 'Off',
                 speed: speed || 'Normal',

@@ -7,7 +7,7 @@ interface MenuButtonProps {
   description: string;
   buttonText: string;
   buttonLink: string;
-  buttonbackground: string;
+  buttonBackground: string;
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
@@ -15,7 +15,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   description,
   buttonText,
   buttonLink,
-  buttonbackground,
+  buttonBackground,
 }) => {
   const navigate = useNavigate();
   const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>(
@@ -24,11 +24,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 
   useEffect(() => {
     const img = new Image();
-    img.src = buttonbackground;
+    img.src = buttonBackground;
 
     img.onload = () => {
       setBackgroundStyle({
-        backgroundImage: `url(${buttonbackground})`,
+        backgroundImage: `url(${buttonBackground})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       });
@@ -36,17 +36,17 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 
     img.onerror = () => {
       const testEl = document.createElement('div');
-      testEl.style.color = buttonbackground;
+      testEl.style.color = buttonBackground;
       if (testEl.style.color) {
-        setBackgroundStyle({ backgroundColor: buttonbackground });
+        setBackgroundStyle({ backgroundColor: buttonBackground });
       } else {
         setBackgroundStyle({ backgroundColor: '#888' });
       }
     };
-  }, [buttonbackground]);
+  }, [buttonBackground]);
 
   const handleClick = () => {
-    navigate(buttonLink);
+    navigate(buttonLink, { state: { title } });
   };
 
   return (

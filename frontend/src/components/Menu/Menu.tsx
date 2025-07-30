@@ -8,7 +8,7 @@ interface MenuProps {
     description: string;
     buttonText: string;
     buttonLink: string;
-    buttonbackground: string;
+    buttonBackground: string;
   }[];
   orientation?: 'horizontal' | 'vertical' | 'grid';
 }
@@ -56,7 +56,7 @@ const Menu: React.FC<MenuProps> = ({
             description={btn.description}
             buttonText={btn.buttonText}
             buttonLink={btn.buttonLink}
-            buttonbackground={btn.buttonbackground}
+            buttonBackground={btn.buttonBackground}
           />
         ))}
       </div>
