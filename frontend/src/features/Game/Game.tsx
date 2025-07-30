@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import GameCanvas from '../../components/GameCanvas';
 import Header from '../../components/Header/Header';
 import Score from '../../components/Score/Score';
+import GameOverModal from '../../components/GameOverModal/GameOverModal';
 import './Game.css';
 
 const ROWS = 29;
@@ -107,6 +108,7 @@ const setWalls = (): [number, number][] => {
 };
 
 const Game: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const settings = location.state;
 
@@ -155,7 +157,7 @@ const Game: React.FC = () => {
 
   const [opponentApplesEaten, setOpponentApplesEaten] = useState(0);
   const [opponentCoinsEarned, setOpponentCoinsEarned] = useState(0);
-  const [opponentCashEaten, setOpponentCashEaten] = useState(0);
+  const [opponentCashEarned, setOpponentCashEarned] = useState(0);
 
   const [timerStart, setTimerStart] = useState<number | null>(null);
   const [timerDuration, setTimerDuration] = useState<number>(0);
@@ -163,6 +165,22 @@ const Game: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const [cellSize, setCellSize] = useState(15); // default cell size
+
+  const [startTime, setStartTime] = useState<number>(Date.now());
+  const [showGameOver, setShowGameOver] = useState(false);
+  const [gameOverData, setGameOverData] = useState<{
+    cause: string;
+    applesEaten: number;
+    coinsEarned: number;
+    cashEarned: number;
+    isMultiplayer: boolean;
+    opponentApplesEaten?: number;
+    opponentCoinsEarned?: number;
+    opponentCashEarned?: number;
+    timePlayed: number;
+    onPlayAgain: () => void;
+    onExit: () => void;
+  } | null>(null);
 
   // calculate cell size based on available height
   useEffect(() => {
@@ -187,6 +205,7 @@ const Game: React.FC = () => {
 
   // game loop
   useEffect(() => {
+    if (showGameOver) return; // stop the game loop if game is over
     const animate = (time: number) => {
       if (!lastTimeRef.current) {
         lastTimeRef.current = time;
@@ -239,7 +258,7 @@ const Game: React.FC = () => {
     };
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current!);
-  }, []);
+  }, [showGameOver]);
 
   // handle key events (avoid backward movement)
   useEffect(() => {
@@ -338,7 +357,7 @@ const Game: React.FC = () => {
     const head = snake[0];
     for (let i = 0; i < opponentSnake.length; i++) {
       if (head[0] === opponentSnake[i][0] && head[1] === opponentSnake[i][1]) {
-        resetGame('You collided with the opponent snake');
+        onGameOver('You collided with the opponent snake');
         return;
       }
     }
@@ -346,7 +365,7 @@ const Game: React.FC = () => {
     const opponentHead = opponentSnake[0];
     for (let i = 0; i < snake.length; i++) {
       if (opponentHead[0] === snake[i][0] && opponentHead[1] === snake[i][1]) {
-        resetGame('Opponent collided with your snake');
+        onGameOver('Opponent collided with your snake');
         return;
       }
     }
@@ -357,7 +376,7 @@ const Game: React.FC = () => {
     const head = snake[0];
     const body = snake.slice(1);
     if (body.some(([x, y]) => x === head[0] && y === head[1])) {
-      resetGame('You collided with your own body');
+      onGameOver('You collided with your own body');
     }
 
     if (isMultiplayer) {
@@ -368,7 +387,7 @@ const Game: React.FC = () => {
           ([x, y]) => x === opponentHead[0] && y === opponentHead[1]
         )
       ) {
-        resetGame('Opponent collided with their own body');
+        onGameOver('Opponent collided with their own body');
       }
     }
   }, [snake, opponentSnake]);
@@ -377,7 +396,7 @@ const Game: React.FC = () => {
   useEffect(() => {
     const head = snake[0];
     if (walls.some(([x, y]) => x === head[0] && y === head[1])) {
-      resetGame('You collided with a wall');
+      onGameOver('You collided with a wall');
     }
 
     if (isMultiplayer) {
@@ -385,7 +404,7 @@ const Game: React.FC = () => {
       if (
         walls.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])
       ) {
-        resetGame('Opponent collided with a wall');
+        onGameOver('Opponent collided with a wall');
       }
     }
   }, [snake, opponentSnake]);
@@ -448,7 +467,7 @@ const Game: React.FC = () => {
         cash.some(([x, y]) => x === opponentHead[0] && y === opponentHead[1])
       ) {
         setCash(undefined);
-        setOpponentCashEaten((prev) => prev + 1);
+        setOpponentCashEarned((prev) => prev + 1);
         setTimerDuration(0);
       }
     }
@@ -476,29 +495,39 @@ const Game: React.FC = () => {
     }
   }, [cash, timerStart, timerDuration]);
 
-  const resetGame = (cause: string) => {
-    alert(
-      'Game Over! \n' +
-        'Cause: ' +
-        cause +
-        '\n' +
-        `You ate ${applesEaten} apples, ${coinsEarned} coins and ${cashEarned} cash.\n` +
-        (isMultiplayer
-          ? `Opponent ate ${opponentApplesEaten} apples, ${opponentCoinsEarned} coins and ${opponentCashEaten} cash.`
-          : '')
-    );
+  const onGameOver = (cause: string) => {
+    const gameOverData = {
+      cause,
+      applesEaten,
+      coinsEarned,
+      cashEarned,
+      isMultiplayer,
+      opponentApplesEaten,
+      opponentCoinsEarned,
+      opponentCashEarned,
+      timePlayed: Date.now() - (startTime || 0),
+      onPlayAgain: resetGameState,
+      onExit: () => navigate(-1),
+    };
+    setGameOverData(gameOverData);
+    setShowGameOver(true);
+  };
+
+  const resetGameState = () => {
     setApplesEaten(0);
     setCoinsEarned(0);
     setCashEaten(0);
     setOpponentApplesEaten(0);
     setOpponentCoinsEarned(0);
-    setOpponentCashEaten(0);
+    setOpponentCashEarned(0);
     setTimerDuration(0);
     setSnake(createSnake(INITIAL_SNAKE_LENGTH));
     setOpponentSnake(
       isMultiplayer ? createOpponentSnake(INITIAL_SNAKE_LENGTH) : []
     );
-    setApples([]);
+    setApples(
+      createFirstApples([...walls, ...snake, ...opponentSnake], numberOfApples)
+    );
     setCoin(undefined);
     setCash(undefined);
     directionRef.current = [
@@ -511,6 +540,9 @@ const Game: React.FC = () => {
     ];
     lastTimeRef.current = null;
     opponentLastTimeRef.current = null;
+    setStartTime(Date.now());
+    setGameOverData(null);
+    setShowGameOver(false);
   };
 
   return (
@@ -551,7 +583,22 @@ const Game: React.FC = () => {
             playerName="Player 2"
             score={opponentApplesEaten}
             coins={opponentCoinsEarned}
-            cash={opponentCashEaten}
+            cash={opponentCashEarned}
+          />
+        )}
+        {showGameOver && gameOverData && (
+          <GameOverModal
+            cause={gameOverData.cause}
+            applesEaten={gameOverData.applesEaten}
+            coinsEarned={gameOverData.coinsEarned}
+            cashEarned={gameOverData.cashEarned}
+            isMultiplayer={gameOverData.isMultiplayer}
+            opponentApplesEaten={gameOverData.opponentApplesEaten}
+            opponentCoinsEarned={gameOverData.opponentCoinsEarned}
+            opponentCashEarned={gameOverData.opponentCashEarned}
+            timePlayed={gameOverData.timePlayed}
+            onPlayAgain={gameOverData.onPlayAgain}
+            onExit={gameOverData.onExit}
           />
         )}
       </div>
