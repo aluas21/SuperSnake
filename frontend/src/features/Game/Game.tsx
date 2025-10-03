@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GameCanvas from '../../components/GameCanvas';
 import Header from '../../components/Header/Header';
 import Score from '../../components/Score/Score';
 import GameOverModal from '../../components/GameOverModal/GameOverModal';
+import TimerBar from '../../components/TimerBar/TimerBar';
 import './Game.css';
 
 const ROWS = 29;
@@ -159,7 +160,7 @@ const Game: React.FC = () => {
   const [opponentCoinsEarned, setOpponentCoinsEarned] = useState(0);
   const [opponentCashEarned, setOpponentCashEarned] = useState(0);
 
-  const [timerStart, setTimerStart] = useState<number | null>(null);
+  const [timerStart, setTimerStart] = useState<number | null>(Date.now());
   const [timerDuration, setTimerDuration] = useState<number>(0);
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -562,7 +563,7 @@ const Game: React.FC = () => {
               value={(applesEaten + opponentApplesEaten) % 5}
               max={5}
             />
-            {/* <TimerBar startTime={timerStart} duration={timerDuration} /> */}
+            <TimerBar startTime={timerStart} duration={timerDuration} />
           </div>
           <GameCanvas
             snake={snake}
