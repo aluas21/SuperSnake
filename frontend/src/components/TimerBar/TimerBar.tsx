@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "./TimerBar.css";
+import React, { useEffect, useState } from 'react';
+import './TimerBar.css';
 
 interface TimerBarProps {
-  duration: number; // ms
+  duration: number;
   startTime: number | null;
 }
 
@@ -12,15 +12,13 @@ const TimerBar: React.FC<TimerBarProps> = ({ duration, startTime }) => {
   useEffect(() => {
     if (!startTime) return;
 
-    const endTime = startTime + duration;
-
     let animationFrameId: number;
 
     const update = () => {
-      const now = Date.now();
-      const ratio = (endTime - now) / duration;
+      const elapsed = Date.now() - startTime;
+      const ratio = 1 - elapsed / duration;
       setWidth(Math.max(0, ratio * 100));
-      if (now < endTime) {
+      if (elapsed < duration) {
         animationFrameId = requestAnimationFrame(update);
       }
     };
