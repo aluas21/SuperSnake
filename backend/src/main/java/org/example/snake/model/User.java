@@ -44,7 +44,7 @@ public class User {
     private LocalDateTime dateOfBirth;
 
     @Column(nullable = false)
-    private String userType; // e.g., "admin", "user", "guest"
+    private String userType = "USER"; // e.g., "admin", "user", "guest"
 
     @ManyToMany
     @JoinTable(
