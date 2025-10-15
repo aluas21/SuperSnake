@@ -7,11 +7,20 @@ import org.example.snake.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.example.snake.dto.LoginDto;
+import org.example.snake.exceptions.UserNotFoundException;
+import org.example.snake.exceptions.InvalidCredentialsException;
+import org.example.snake.security.Jwt;
+import org.example.snake.dto.UserWithTokenDto;
+import java.util.Optional;
 
 @Service
 public class AuthService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private Jwt jwt;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,13 +41,23 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public User authenticate(String username, String rawPassword) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid username or password");
+    public UserWithTokenDto login(LoginDto loginDto) {
+        /// identifier can be either username or email
+        Optional<User> user = userRepository.findByEmail(loginDto.getIdentifier());
+        if(!user.isPresent()) {
+            user = userRepository.findByUsername(loginDto.getIdentifier());
         }
-        return user;
+        if(!user.isPresent()) {
+            throw new UserNotFoundException("Invalid username/email");
+        }
+
+        if(!passwordEncoder.matches(loginDto.getPassword(), user.get().getPassword())) {
+            throw new InvalidCredentialsException("Invalid password");
+        }
+
+        String token = jwt.generateToken(user.get().getUsername());
+
+        return new UserWithTokenDto(user.get().getFirstName(), user.get().getLastName(), user.get().getUsername(), user.get().getEmail(), user.get().getProfilePicture(), user.get().getPhone(), user.get().getDateOfBirth(), user.get().getUserType(), token);
     }
 }
 

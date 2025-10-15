@@ -5,11 +5,13 @@ import GameModes from './features/GameModes/GameModes';
 import Game from './features/Game/Game';
 import GameSettings from './features/GameSettings/GameSettings';
 import Register from './features/Register/Register';
+import Login from './features/Login/Login';
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />

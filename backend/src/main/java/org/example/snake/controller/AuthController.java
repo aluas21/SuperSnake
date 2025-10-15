@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.example.snake.exceptions.UserAlreadyExistsException;
 import java.util.Map;
+import org.example.snake.dto.LoginDto;
+import org.example.snake.exceptions.UserNotFoundException;
+import org.example.snake.exceptions.InvalidCredentialsException;
+import org.example.snake.dto.UserWithTokenDto;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,6 +35,24 @@ public class AuthController {
                 Map.of("error", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                Map.of("error", "An unexpected error occurred: " + e.getMessage())
+            );
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        try {
+            UserWithTokenDto userWithTokenDto = authService.login(loginDto);
+            return ResponseEntity.ok(userWithTokenDto);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of("error", e.getMessage()));
+        } catch (InvalidCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                 Map.of("error", "An unexpected error occurred: " + e.getMessage())
             );
         }
