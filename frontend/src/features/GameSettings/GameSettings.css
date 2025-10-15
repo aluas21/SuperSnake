@@ -10,18 +10,31 @@
   font-weight: bolder;
   font-size: 1em;
   color: darkslategray;
+
+  z-index: 100;
 }
 
 .settings__container {
   font-family: 'Fira Code', monospace;
   color: darkslategray;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   padding: 3em 1em;
-  display: flex;
+  box-sizing: border-box;
+}
+
+.settings__container.online {
   justify-content: space-between;
-  gap: 2em;
 }
 
 .settings__info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,4 +70,29 @@
   font-weight: bolder;
   font-size: 1em;
   color: darkslategray;
+}
+
+.room-info-wrapper {
+  position: absolute;
+  left: 2em;
+  top: 25%;
+  transform: translateY(-50%);
+}
+
+.chat-wrapper {
+  position: absolute;
+  right: 2em;
+  top: 25%;
+  transform: translateY(-50%);
+}
+
+.room-info-wrapper,
+.chat-wrapper {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.settings__container.offline .room-info-wrapper,
+.settings__container.offline .chat-wrapper {
+  display: none;
 }

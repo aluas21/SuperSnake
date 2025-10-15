@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './GameSettings.css';
 import Slider from '../../components/Slider/Slider';
+import GameChat from '../../components/GameChat/GameChat';
+import GameRoomInfo from '../../components/GameRoomInfo/GameRoomInfo';
 
 const GameSettings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const gameMode = location.state.title || {};
+  const gameMode = location.state?.title || {};
 
   const appleValues = ['1', '3', '5'];
   const [apples, setApples] = useState('1');
@@ -24,9 +26,24 @@ const GameSettings: React.FC = () => {
       <button className="settings__back-button" onClick={() => navigate(-1)}>
         Back
       </button>
-      <div className="settings__container">
-        <h2>Room info</h2>
+      <div
+        className={`settings__container ${
+          gameMode.includes("online") ? "online" : ""
+        }`}
+      > {/* Added conditional CSS class */}
+        {gameMode.includes("online") && (
+          <div className="room-info-wrapper">
+            <GameRoomInfo 
+              code="1234"
+              players={[
+                { name: "Player1", status: "Ready" },
+                { name: "Player2", status: "Joined" },
+              ]}
+            />
+          </div>
+        )}
         <div className="settings__info">
+          <h2>Settings</h2>
           <Slider
             name="Apples"
             values={appleValues}
@@ -63,7 +80,11 @@ const GameSettings: React.FC = () => {
             Ready
           </button>
         </div>
-        <h2>Chat</h2>
+        {gameMode.includes("online") && (
+          <div className="chat-wrapper">
+            <GameChat />
+          </div>
+        )}
       </div>
     </div>
   );
