@@ -5,3 +5,8 @@ export interface UserRegistration {
   email: string;
   password: string;
 }
+
+export interface UserLogin {
+  identifier: string; // can be either username or email
+  password: string;
+}
