@@ -13,14 +13,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/game" element={<Game />} />
         <Route path="/game-modes" element={<GameModes />} />
         <Route path="/game-settings" element={<GameSettings />} />
 
         {/* Catch-all route for undefined paths */}
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );
