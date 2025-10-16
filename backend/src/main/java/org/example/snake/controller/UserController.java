@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.example.snake.model.User;
 import org.example.snake.dto.UserDto;
 import java.util.List;
-import org.example.snake.dto.UserWithTokenDto;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:8080", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
     @Autowired 
     private UserService userService;
@@ -55,8 +53,10 @@ public class UserController {
     @PutMapping("/{username}")
     public ResponseEntity<String> updateUser(
         @PathVariable String username,
-        @RequestBody UserWithTokenDto userDto) {
+        @RequestBody UserDto userDto) {
         try {
+            System.out.println("Received update request for username: " + username);
+            System.out.println("New user data: " + userDto);
             userService.updateUser(username, userDto);
             return new ResponseEntity<>("User updated", HttpStatus.OK);
         } catch (Exception e) {

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +38,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Lob
     private String profilePicture;
 
     private String phone;

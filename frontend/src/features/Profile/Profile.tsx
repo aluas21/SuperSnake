@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import Header from '../../components/Header/Header';
 import UserIcon from '../../assets/user-icon.png';
-import { User } from '../../types/userTypes';
+import { UserWithToken } from '../../types/userTypes';
 import './Profile.css';
 import { changeProfilePicture } from '../../services/api';
 import PersonalData from '../../components/PersonalData/PersonalData';
@@ -10,7 +10,7 @@ import Friends from '../../components/Friends/Friends';
 import GamesArchive from '../../components/GamesArchive/GamesArchive'
 
 const Profile: React.FC = () => {
-	const user: User = JSON.parse(sessionStorage.getItem("user") || "{}");
+	const user: UserWithToken = JSON.parse(sessionStorage.getItem("user") || "{}");
 	const profilePicture = user.profilePicture || UserIcon;
 
 	const fileInputRef = useRef<HTMLInputElement>(null);

@@ -9,8 +9,7 @@ import org.example.snake.model.User;
 import org.example.snake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.example.snake.dto.UserWithTokenDto;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class UserService {
      * @param email the email of the user to update
      * @throws UserNotFoundException if no user is found with the given email
      */
-    public void updateUser(String username, UserWithTokenDto userDto) {
+    public void updateUser(String username, UserDto userDto) {
         // Find user by email
         User existingUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found with this username"));
@@ -108,9 +107,9 @@ public class UserService {
         existingUser.setEmail(userDto.getEmail());
         existingUser.setProfilePicture(userDto.getProfilePicture());
         existingUser.setPhone(userDto.getPhone());
-        existingUser.setDateOfBirth(LocalDateTime.parse(userDto.getDateOfBirth()));
+        existingUser.setDateOfBirth(LocalDate.parse(userDto.getDateOfBirth()).atStartOfDay());
         existingUser.setUserType(userDto.getUserType());
-        // Save the updated user entity to the database
+        // Save the updated user entity to the database 
         userRepository.save(existingUser);
     }
 

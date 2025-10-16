@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -19,4 +18,18 @@ public class UserDto {
     private String phone;
     private String dateOfBirth;
     private String userType; // e.g., "admin", "user", "guest"
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", phone='" + phone + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
+    }
 }

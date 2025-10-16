@@ -1,38 +1,48 @@
 import React, {useState} from 'react';
 import './PersonalData.css';
-import { Phone } from 'lucide-react';
 import { updateUser } from '../../services/api';
+import { User } from '../../types/userTypes';
 
 const PersonalData: React.FC = () => {
-  const user = sessionStorage.getItem('user');
-	const userData = user ? JSON.parse(user) : null;
+  const userWithToken = sessionStorage.getItem('user');
+	const user: User = {
+		firstName: JSON.parse(userWithToken || "{}").firstName,
+		lastName: JSON.parse(userWithToken || "{}").lastName,
+		username: JSON.parse(userWithToken || "{}").username,
+		email: JSON.parse(userWithToken || "{}").email,
+		profilePicture: JSON.parse(userWithToken || "{}").profilePicture,
+		phone: JSON.parse(userWithToken || "{}").phone,
+		dateOfBirth: JSON.parse(userWithToken || "{}").dateOfBirth,
+		userType: JSON.parse(userWithToken || "{}").userType,
+	}
+	const token = JSON.parse(userWithToken || "{}").token;
 
-	const [newFirstName, setNewFirstName] = useState(userData ? userData.firstName : '');
-	const [newLastName, setNewLastName] = useState(userData ? userData.lastName : '');
-	const [newUsername, setNewUsername] = useState(userData ? userData.username : '');
-	const [newEmail, setNewEmail] = useState(userData ? userData.email : '');
-	const [newDateOfBirth, setNewDateOfBirth] = useState(userData ? userData.dateOfBirth : '');
-	const [newPhone, setNewPhone] = useState(userData ? userData.phone : '');
+	const [newFirstName, setNewFirstName] = useState(user ? user.firstName : '');
+	const [newLastName, setNewLastName] = useState(user ? user.lastName : '');
+	const [newUsername, setNewUsername] = useState(user ? user.username : '');
+	const [newEmail, setNewEmail] = useState(user ? user.email : '');
+	const [newDateOfBirth, setNewDateOfBirth] = useState(user ? user.dateOfBirth : '');
+	const [newPhone, setNewPhone] = useState(user ? user.phone : '');
 
 	const handleUpdateProfile = () => {
 		// Here you would typically send the updated data to the server
-		const updatedUserData = {
-			...userData,
+		const updatedUser: User = {
+			...user,
 			firstName: newFirstName,
 			lastName: newLastName,
 			username: newUsername,
 			email: newEmail,
 			dateOfBirth: newDateOfBirth,
 			phone: newPhone,
+			userType: user.userType,
 		};
 
 		// For demonstration, we'll just log it and update sessionStorage
-		const oldUsername = userData.username;
-		console.log('Updated User Data:', userData.token);
-		updateUser(oldUsername, updatedUserData, userData.token).then((response) => {
+		const oldUsername = user.username;
+		updateUser(oldUsername, updatedUser, token).then((response) => {
 			if (response.ok) {
 				alert('Profile updated successfully!');
-				sessionStorage.setItem('user', JSON.stringify(updatedUserData));
+				sessionStorage.setItem('user', JSON.stringify({ ...updatedUser, token }));
 			} else {
 				alert(response.error);
 			}
@@ -42,7 +52,7 @@ const PersonalData: React.FC = () => {
 	return (
 		<div>
 			<h2>Personal Data</h2>
-			{userData ? (
+			{user ? (
 				<div className="personal-data">
 					<div className="personal-data__item">
 						<label>First Name:</label>

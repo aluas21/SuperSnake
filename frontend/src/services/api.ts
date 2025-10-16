@@ -64,10 +64,11 @@ export const changeProfilePicture = async (username: string, base64Image: string
 };
 
 
-export const updateUser = async (username: string, newUser: User, token: string) => {
+export const updateUser = async (oldUsername: string, newUser: User, token: string) => {
   try {
+    console.log('Updating user:', oldUsername, newUser, token);
     const response = await api.put(
-      `/users/${username}`, 
+      `/users/${oldUsername}`, 
       newUser,
       {
         headers: { 

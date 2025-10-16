@@ -20,5 +20,16 @@ export interface User {
   phone?: string;
   dateOfBirth?: string;
   userType?: string;
+}
+
+export interface UserWithToken {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  profilePicture?: string;
+  phone?: string;
+  dateOfBirth?: string;
+  userType?: string;
   token: string;
 }

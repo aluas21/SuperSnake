@@ -2,7 +2,7 @@ package org.example.snake.convertor;
 
 import org.example.snake.dto.UserDto;
 import org.example.snake.model.User;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class UserConvertor {
     public static User toEntity(UserDto userDto) {
@@ -18,7 +18,7 @@ public class UserConvertor {
         user.setPhone(userDto.getPhone());
         //string to LocalDateTime conversion needed
         if (userDto.getDateOfBirth() != null) {
-            user.setDateOfBirth(LocalDateTime.parse(userDto.getDateOfBirth()));
+            user.setDateOfBirth(LocalDate.parse(userDto.getDateOfBirth()).atStartOfDay());
         }
         user.setUserType(userDto.getUserType());
         return user;
