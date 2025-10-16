@@ -17,6 +17,8 @@ export interface User {
   username: string;
   email: string;
   profilePicture?: string;
+  phone?: string;
   dateOfBirth?: string;
+  userType?: string;
   token: string;
 }

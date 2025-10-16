@@ -2,6 +2,7 @@ package org.example.snake.convertor;
 
 import org.example.snake.dto.UserDto;
 import org.example.snake.model.User;
+import java.time.LocalDateTime;
 
 public class UserConvertor {
     public static User toEntity(UserDto userDto) {
@@ -15,7 +16,10 @@ public class UserConvertor {
         user.setEmail(userDto.getEmail());
         user.setProfilePicture(userDto.getProfilePicture());
         user.setPhone(userDto.getPhone());
-        user.setDateOfBirth(userDto.getDateOfBirth());
+        //string to LocalDateTime conversion needed
+        if (userDto.getDateOfBirth() != null) {
+            user.setDateOfBirth(LocalDateTime.parse(userDto.getDateOfBirth()));
+        }
         user.setUserType(userDto.getUserType());
         return user;
     }
@@ -31,7 +35,10 @@ public class UserConvertor {
         userDto.setEmail(user.getEmail());
         userDto.setProfilePicture(user.getProfilePicture());
         userDto.setPhone(user.getPhone());
-        userDto.setDateOfBirth(user.getDateOfBirth());
+        //LocalDateTime to string conversion needed
+        if (user.getDateOfBirth() != null) {
+            userDto.setDateOfBirth(user.getDateOfBirth().toString());
+        }
         userDto.setUserType(user.getUserType());
         return userDto;
     }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.example.snake.model.User;
 import org.example.snake.dto.UserDto;
 import java.util.List;
+import org.example.snake.dto.UserWithTokenDto;
 
 @RestController
 @RequestMapping("/users")
@@ -50,5 +51,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{username}")
+    public ResponseEntity<String> updateUser(
+        @PathVariable String username,
+        @RequestBody UserWithTokenDto userDto) {
+        try {
+            userService.updateUser(username, userDto);
+            return new ResponseEntity<>("User updated", HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
+    } 
 
 }

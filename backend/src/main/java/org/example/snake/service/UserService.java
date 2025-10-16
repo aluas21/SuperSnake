@@ -9,6 +9,8 @@ import org.example.snake.model.User;
 import org.example.snake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.snake.dto.UserWithTokenDto;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -95,20 +97,19 @@ public class UserService {
      * @param email the email of the user to update
      * @throws UserNotFoundException if no user is found with the given email
      */
-    public void updateUser(User user, String email) {
+    public void updateUser(String username, UserWithTokenDto userDto) {
         // Find user by email
-        User existingUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with this email"));
+        User existingUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with this username"));
         // Update the existing user's fields
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setUsername(user.getUsername());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setProfilePicture(user.getProfilePicture());
-        existingUser.setPhone(user.getPhone());
-        existingUser.setDateOfBirth(user.getDateOfBirth());
-        existingUser.setUserType(user.getUserType());
+        existingUser.setFirstName(userDto.getFirstName());
+        existingUser.setLastName(userDto.getLastName());
+        existingUser.setUsername(userDto.getUsername());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setProfilePicture(userDto.getProfilePicture());
+        existingUser.setPhone(userDto.getPhone());
+        existingUser.setDateOfBirth(LocalDateTime.parse(userDto.getDateOfBirth()));
+        existingUser.setUserType(userDto.getUserType());
         // Save the updated user entity to the database
         userRepository.save(existingUser);
     }

@@ -17,6 +17,6 @@ public class UserDto {
     private String email;
     private String profilePicture;
     private String phone;
-    private LocalDateTime dateOfBirth;
+    private String dateOfBirth;
     private String userType; // e.g., "admin", "user", "guest"
 }
