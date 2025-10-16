@@ -1,9 +1,13 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import Header from '../../components/Header/Header';
 import UserIcon from '../../assets/user-icon.png';
 import { User } from '../../types/userTypes';
 import './Profile.css';
 import { changeProfilePicture } from '../../services/api';
+import PersonalData from '../../components/PersonalData/PersonalData';
+import Inventory from '../../components/Inventory/Inventory';
+import Friends from '../../components/Friends/Friends';
+import GamesArchive from '../../components/GamesArchive/GamesArchive'
 
 const Profile: React.FC = () => {
 	const user: User = JSON.parse(sessionStorage.getItem("user") || "{}");
@@ -37,6 +41,9 @@ const Profile: React.FC = () => {
 	const handleFileSelection = () => {
 		fileInputRef.current?.click();
 	}
+
+	const [infoPanelName, setInfoPanelName] = useState("Personal Data");
+
   return (
 		<>
 			<Header pageTitle="Profile" />
@@ -57,15 +64,25 @@ const Profile: React.FC = () => {
 				</div>
 
 				<div className="profile-menu">
-					<button className="menu-button">Personal Data</button>
-					<button className="menu-button">Inventory</button>
-					<button className="menu-button">Friends</button>
-					<button className="menu-button">Games Archive</button>
+					<button className="menu-button" onClick={() => setInfoPanelName("Personal Data")}>Personal Data</button>
+					<button className="menu-button" onClick={() => setInfoPanelName("Inventory")}>Inventory</button>
+					<button className="menu-button" onClick={() => setInfoPanelName("Friends")}>Friends</button>
+					<button className="menu-button" onClick={() => setInfoPanelName("Games Archive")}>Games Archive</button>
 				</div>
 
 				<div className="profile-info-panel">
-					<h2>Personal Data</h2>
-					<p>This section will update based on selected menu option.</p>
+					{infoPanelName === "Personal Data" && (
+						<PersonalData />
+					)}
+					{infoPanelName === "Inventory" && (
+						<Inventory />
+					)}
+					{infoPanelName === "Friends" && (
+						<Friends />
+					)}	
+					{infoPanelName === "Games Archive" && (
+						<GamesArchive />
+					)}
 				</div>
 			</div>
 		</>
