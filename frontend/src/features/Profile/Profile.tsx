@@ -5,6 +5,7 @@ const Profile: React.FC = () => {
   return (
 		<div>
 			<Header pageTitle="Profile" />
+			<h1>Profile Page</h1>
 		</div>
   );
 }
