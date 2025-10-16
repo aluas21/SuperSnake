@@ -1,7 +1,5 @@
 package org.example.snake.dto;
 
-
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;

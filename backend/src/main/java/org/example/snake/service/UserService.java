@@ -127,4 +127,11 @@ public class UserService {
                 .map(UserConvertor::toDto)
                 .toList();
     }
+
+    public void changeProfilePicture(String username, String base64Image) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("There's no user with this username"));
+        user.setProfilePicture(base64Image);
+        userRepository.save(user);
+    }
 }

@@ -3,12 +3,15 @@ import './Header.css';
 import AppLogo from '../../assets/app-logo.png';
 import UserIcon from '../../assets/user-icon.png';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../../types/userTypes';
 
 interface HeaderProps {
   pageTitle: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
+  const user: User = JSON.parse(sessionStorage.getItem("user") || "{}");
+  const profilePicture = user.profilePicture || UserIcon;
   const navigate = useNavigate(); 
 
   const handleLogoClick = () => {
@@ -30,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
 
      {/* future user icon */}
      <div className="header__right">
-       <img className="header__user-icon" src={UserIcon} alt="User Icon" onClick={handleUserIconClick} />
+       <img className="header__user-icon" src={profilePicture} alt="User Icon" onClick={handleUserIconClick} />
      </div>
    </header>
  );

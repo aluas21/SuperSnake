@@ -25,6 +25,7 @@ const Login: React.FC = () => {
     login(userLogin).then((response) => {
       if (response.ok) {
         navigate("/");
+        sessionStorage.setItem("user", JSON.stringify(response.data));
       } else {
         alert(response.error);
       }
