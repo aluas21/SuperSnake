@@ -6,6 +6,6 @@ const Friends: React.FC = () => {
       <h2>Friends Component</h2>
     </div>
   );
-}
+};
 
 export default Friends;

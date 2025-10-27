@@ -1,0 +1,7 @@
+.inventory-items {
+  height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 0.5em solid #ccc;
+  padding: 2em;
+}

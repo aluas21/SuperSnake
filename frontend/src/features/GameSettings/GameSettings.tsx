@@ -28,16 +28,18 @@ const GameSettings: React.FC = () => {
       </button>
       <div
         className={`settings__container ${
-          gameMode.includes("online") ? "online" : ""
+          gameMode.includes('online') ? 'online' : ''
         }`}
-      > {/* Added conditional CSS class */}
-        {gameMode.includes("online") && (
+      >
+        {' '}
+        {/* Added conditional CSS class */}
+        {gameMode.includes('online') && (
           <div className="room-info-wrapper">
-            <GameRoomInfo 
+            <GameRoomInfo
               code="1234"
               players={[
-                { name: "Player1", status: "Ready" },
-                { name: "Player2", status: "Joined" },
+                { name: 'Player1', status: 'Ready' },
+                { name: 'Player2', status: 'Joined' },
               ]}
             />
           </div>
@@ -80,7 +82,7 @@ const GameSettings: React.FC = () => {
             Ready
           </button>
         </div>
-        {gameMode.includes("online") && (
+        {gameMode.includes('online') && (
           <div className="chat-wrapper">
             <GameChat />
           </div>

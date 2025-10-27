@@ -1,37 +1,50 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import "./Register.css";
-import { register } from "../../services/api";
-import { UserRegistration } from "../../types/userTypes";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import './Register.css';
+import { register } from '../../services/api';
+import { UserRegistration } from '../../types/userTypes';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault(); // prevents page reload when submitting
 
-    if (!firstName || !lastName || !username || !email || !password || !confirmPassword) {
-      alert("Please fill in all fields");
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
+      alert('Please fill in all fields');
       return;
     }
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      alert('Passwords do not match');
       return;
     }
 
-    const userRegister: UserRegistration = { firstName, lastName, username, email, password };
+    const userRegister: UserRegistration = {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+    };
 
     register(userRegister).then((response) => {
       if (response.ok) {
-        navigate("/login");
+        navigate('/login');
       } else {
         alert(response.error);
       }
