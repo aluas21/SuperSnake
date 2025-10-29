@@ -8,6 +8,7 @@ import org.example.snake.exceptions.UserNotFoundException;
 import org.example.snake.model.User;
 import org.example.snake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
@@ -27,6 +28,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Saves a new user to the database.
@@ -132,6 +136,16 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("There's no user with this username"));
         user.setProfilePicture(base64Image);
+        userRepository.save(user);
+    }
+
+    public void changePassword(String username, String oldPassword, String newPassword){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("There's no user with this username"));
+        if(!passwordEncoder.matches(oldPassword, user.getPassword())){
+            throw new IllegalArgumentException("Old password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
 }

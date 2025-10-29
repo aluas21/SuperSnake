@@ -8,6 +8,8 @@ import PersonalData from '../../components/PersonalData/PersonalData';
 import Inventory from '../../components/Inventory/Inventory';
 import Friends from '../../components/Friends/Friends';
 import GamesArchive from '../../components/GamesArchive/GamesArchive';
+import { changePassword } from '../../services/api';
+import Dialog from '../../components/DialogWindow/DialogWindow';
 
 const Profile: React.FC = () => {
   const user: UserWithToken = JSON.parse(
@@ -46,6 +48,46 @@ const Profile: React.FC = () => {
     fileInputRef.current?.click();
   };
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+
+  const handleChangePassword = () => {
+    // validare simplă
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      alert('Complete all fields!');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    changePassword(user.username, oldPassword, newPassword, user.token).then(
+      (response) => {
+        if (response.ok) {
+          console.log('Password changed successfully');
+          alert('Password changed successfully!');
+        } else {
+          alert(response.error);
+          return;
+        }
+      }
+    );
+
+    clearDialog();
+  };
+
+  const clearDialog = () => {
+    setOldPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setIsDialogOpen(false);
+    setIsSuccessDialogOpen(true);
+  };
+
   const [infoPanelName, setInfoPanelName] = useState('Personal Data');
 
   return (
@@ -66,7 +108,40 @@ const Profile: React.FC = () => {
             style={{ display: 'none' }}
             onChange={handlePictureChange}
           />
-          <button className="profile-action">Change Password</button>
+          <button
+            className="profile-action"
+            onClick={() => setIsDialogOpen(true)}
+          >
+            Change Password
+          </button>
+
+          {/* Dialogul pentru schimbarea parolei */}
+          <Dialog
+            isOpen={isDialogOpen}
+            onClose={() => clearDialog()}
+            title="Change Password"
+          >
+            <input
+              type="password"
+              placeholder="Old password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="New password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Confirm new password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+
+            <button onClick={handleChangePassword}>Save</button>
+          </Dialog>
         </div>
 
         <div className="profile-menu">

@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.example.snake.dto.UserDto;
+import org.example.snake.exceptions.UserNotFoundException;
+import org.example.snake.dto.ChangePasswordDto;
+
 import java.util.List;
 
 @RestController
@@ -64,4 +67,21 @@ public class UserController {
         }
     } 
 
-}
+    @PutMapping("/{username}/change-password")
+    public ResponseEntity<String> changePassword(
+        @PathVariable String username,
+        @RequestBody ChangePasswordDto changePasswordDto) {
+        try {
+            userService.changePassword(username,
+                    changePasswordDto.getOldPassword(),
+                    changePasswordDto.getNewPassword());
+            return new ResponseEntity<>("Password changed successfully", HttpStatus.OK);
+        } catch (UserNotFoundException  e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+    }

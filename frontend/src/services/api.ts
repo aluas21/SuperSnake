@@ -90,3 +90,31 @@ export const updateUser = async (
     }
   }
 };
+
+export const changePassword = async (
+  username: string,
+  oldPassword: string,
+  newPassword: string,
+  token: string
+) => {
+  try {
+    const response = await api.put(
+      `/users/${username}/change-password`,
+      { oldPassword, newPassword },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return { ok: true, data: response.data };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const messageError = error.response?.data?.error || 'An error occurred';
+      return { ok: false, error: messageError };
+    } else {
+      return { ok: false, error: 'An unexpected error occurred' };
+    }
+  }
+};
