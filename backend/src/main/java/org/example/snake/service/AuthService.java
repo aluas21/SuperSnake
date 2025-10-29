@@ -57,7 +57,7 @@ public class AuthService {
 
         String token = jwt.generateToken(user.get().getUsername());
 
-        return new UserWithTokenDto(user.get().getFirstName(), user.get().getLastName(), user.get().getUsername(), user.get().getEmail(), user.get().getProfilePicture(), user.get().getPhone(), user.get().getDateOfBirth(), user.get().getUserType(), token);
+        return new UserWithTokenDto(user.get().getFirstName(), user.get().getLastName(), user.get().getUsername(), user.get().getEmail(), user.get().getProfilePicture(), user.get().getPhone(), user.get().getDateOfBirth() != null ? user.get().getDateOfBirth().toString() : null, user.get().getUserType(), token);
     }
 }
 

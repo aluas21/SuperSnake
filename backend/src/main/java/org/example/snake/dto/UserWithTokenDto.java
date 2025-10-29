@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 public class UserWithTokenDto extends UserDto {
     private String token;
 
-    public UserWithTokenDto(String firstName, String lastName, String username, String email, String profilePicture, String phone, LocalDateTime dateOfBirth, String userType, String token) {
+    public UserWithTokenDto(String firstName, String lastName, String username, String email, String profilePicture, String phone, String dateOfBirth, String userType, String token) {
         super(firstName, lastName, username, email, profilePicture, phone, dateOfBirth, userType);
         this.token = token;
     }

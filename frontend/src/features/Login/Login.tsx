@@ -1,22 +1,22 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import "./Login.css";  
-import { login } from "../../services/api";
-import { UserLogin } from "../../types/userTypes";
+import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import './Login.css';
+import { login } from '../../services/api';
+import { UserLogin } from '../../types/userTypes';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault(); // prevents page reload when submitting
 
     if (!identifier || !password) {
-      alert("Please fill in all fields");
+      alert('Please fill in all fields');
       return;
     }
 
@@ -24,7 +24,8 @@ const Login: React.FC = () => {
 
     login(userLogin).then((response) => {
       if (response.ok) {
-        navigate("/");
+        navigate('/home');
+        sessionStorage.setItem('user', JSON.stringify(response.data));
       } else {
         alert(response.error);
       }
@@ -65,6 +66,6 @@ const Login: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

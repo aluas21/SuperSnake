@@ -6,6 +6,7 @@ import Game from './features/Game/Game';
 import GameSettings from './features/GameSettings/GameSettings';
 import Register from './features/Register/Register';
 import Login from './features/Login/Login';
+import Profile from './features/Profile/Profile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/game-modes" element={<GameModes />} />
         <Route path="/game-settings" element={<GameSettings />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<Login />} />

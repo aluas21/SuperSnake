@@ -17,6 +17,9 @@
 .header__logo {
   width: 3em;
   height: 3em;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .header__title {
@@ -43,7 +46,11 @@
   align-items: center;
 }
 
-.header__user-icon {
+.header__icon {
+  padding: 1em;
   width: 3em;
   height: 3em;
+  &:hover {
+    cursor: pointer;
+  }
 }

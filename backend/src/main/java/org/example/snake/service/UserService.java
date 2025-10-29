@@ -8,7 +8,9 @@ import org.example.snake.exceptions.UserNotFoundException;
 import org.example.snake.model.User;
 import org.example.snake.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Saves a new user to the database.
@@ -95,21 +100,20 @@ public class UserService {
      * @param email the email of the user to update
      * @throws UserNotFoundException if no user is found with the given email
      */
-    public void updateUser(User user, String email) {
+    public void updateUser(String username, UserDto userDto) {
         // Find user by email
-        User existingUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found with this email"));
+        User existingUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with this username"));
         // Update the existing user's fields
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setUsername(user.getUsername());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setProfilePicture(user.getProfilePicture());
-        existingUser.setPhone(user.getPhone());
-        existingUser.setDateOfBirth(user.getDateOfBirth());
-        existingUser.setUserType(user.getUserType());
-        // Save the updated user entity to the database
+        existingUser.setFirstName(userDto.getFirstName());
+        existingUser.setLastName(userDto.getLastName());
+        existingUser.setUsername(userDto.getUsername());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setProfilePicture(userDto.getProfilePicture());
+        existingUser.setPhone(userDto.getPhone());
+        existingUser.setDateOfBirth(LocalDate.parse(userDto.getDateOfBirth()).atStartOfDay());
+        existingUser.setUserType(userDto.getUserType());
+        // Save the updated user entity to the database 
         userRepository.save(existingUser);
     }
 
@@ -126,5 +130,22 @@ public class UserService {
         return users.stream()
                 .map(UserConvertor::toDto)
                 .toList();
+    }
+
+    public void changeProfilePicture(String username, String base64Image) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("There's no user with this username"));
+        user.setProfilePicture(base64Image);
+        userRepository.save(user);
+    }
+
+    public void changePassword(String username, String oldPassword, String newPassword){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("There's no user with this username"));
+        if(!passwordEncoder.matches(oldPassword, user.getPassword())){
+            throw new IllegalArgumentException("Old password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

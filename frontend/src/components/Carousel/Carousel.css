@@ -1,0 +1,13 @@
+.carousel-container {
+  display: flex;
+}
+
+.carousel {
+  display: flex;
+}
+
+.carousel img {
+  height: 64px;
+  width: 64px;
+  margin-right: 8px;
+}
