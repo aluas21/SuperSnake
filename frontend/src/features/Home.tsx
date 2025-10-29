@@ -2,6 +2,7 @@ import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu'; // ✅ make sure path is correct
 
 const Home: React.FC = () => {
+  
   const menuButtons = [
     {
       title: 'PLAY GAME',
@@ -32,6 +33,8 @@ const Home: React.FC = () => {
       buttonBackground: 'red',
     },
   ];
+
+  
 
   return (
     <div>

@@ -1,35 +1,49 @@
-import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './Login.css';
-import { login } from '../../services/api';
+import { login as loginApi } from '../../services/api';
 import { UserLogin } from '../../types/userTypes';
+import { useAuth } from '../../components/Routes/AuthContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth(); // get login function from context
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault(); // prevents page reload when submitting
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!identifier || !password) {
       alert('Please fill in all fields');
       return;
     }
 
+    setLoading(true);
+
     const userLogin: UserLogin = { identifier, password };
 
-    login(userLogin).then((response) => {
+    try {
+      const response = await loginApi(userLogin);
+
       if (response.ok) {
-        navigate('/home');
-        sessionStorage.setItem('user', JSON.stringify(response.data));
+        // ✅ update context and sessionStorage
+        authLogin(response.data);
+
+        // ✅ navigate to home
+        navigate('/home', { replace: true });
       } else {
-        alert(response.error);
+        alert(response.error || 'Invalid credentials');
       }
-    });
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Something went wrong. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,11 +72,14 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit" className="login__button">
-            Login
+          <button type="submit" className="login__button" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <a href="/register" className="login__register-link">Don't have an account? Register here</a>
+
+        <Link to="/register" className="login__register-link">
+          Don’t have an account? Register here
+        </Link>
       </div>
     </div>
   );
