@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: java-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/data:/app/data
+    environment:
+      - SERVER_ADDRESS=0.0.0.0
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
