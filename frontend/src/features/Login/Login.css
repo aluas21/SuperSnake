@@ -18,6 +18,14 @@
   transform: translate(-50%, -50%);
 }
 
+
+.login__register-link {
+  margin-top: 15px;
+  text-align: center;
+  padding: auto;
+}
+
+
 .login__form {
   display: flex;
   flex-direction: column;

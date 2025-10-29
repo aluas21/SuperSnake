@@ -121,6 +121,7 @@ const Register: React.FC = () => {
             Register
           </button>
         </form>
+				<a href="/login">Already have an account? Login here</a>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
 
         {/* Catch-all route for undefined paths */}
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );
