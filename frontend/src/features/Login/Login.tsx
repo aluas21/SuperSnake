@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import './Login.css';
 import { login as loginApi } from '../../services/api';
 import { UserLogin } from '../../types/userTypes';
 import { useAuth } from '../../components/Routes/AuthContext';
@@ -47,13 +46,16 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <Header pageTitle="Login" />
 
-      <div className="login__container">
-        <form className="login__form" onSubmit={handleLogin}>
-          <label htmlFor="Identifier">Username or Email:</label>
+      <div className="flex flex-col bg-white p-8 rounded shadow-md w-full max-w-md">
+        <form className="flex flex-col space-y-4" onSubmit={handleLogin}>
+          <label className="font-medium text-gray-700" htmlFor="Identifier">
+            Username or Email:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="text"
             id="Identifier"
             name="Identifier"
@@ -62,8 +64,11 @@ const Login: React.FC = () => {
             onChange={(e) => setIdentifier(e.target.value)}
           />
 
-          <label htmlFor="Password">Password:</label>
+          <label className="font-medium text-gray-700" htmlFor="Password">
+            Password:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="password"
             id="Password"
             name="Password"
@@ -72,12 +77,19 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit" className="login__button" disabled={loading}>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white p-2 rounded"
+            disabled={loading}
+          >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        <Link to="/register" className="login__register-link">
+        <Link
+          to="/register"
+          className="text-gray-500 hover:underline hover:text-blue-500 mt-4 text-center"
+        >
           Don’t have an account? Register here
         </Link>
       </div>

@@ -1,4 +1,10 @@
-import { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from 'react';
 
 interface AuthContextType {
   user: any;
@@ -13,7 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Load from sessionStorage on mount
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
+    const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -21,12 +27,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (userData: any) => {
     setUser(userData);
-    sessionStorage.setItem("user", JSON.stringify(userData));
+    sessionStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
-    sessionStorage.removeItem("user");
+    sessionStorage.removeItem('user');
   };
 
   return (
@@ -38,6 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };

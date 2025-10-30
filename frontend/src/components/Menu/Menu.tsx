@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import MenuButton from '../MenuButton/MenuButton';
-import './Menu.css';
 
 interface MenuProps {
   buttons: {
@@ -47,8 +46,22 @@ const Menu: React.FC<MenuProps> = ({
   const effectiveOrientation = propOrientation || orientation;
 
   return (
-    <div className={`menu ${effectiveOrientation}`}>
-      <div className="button-list">
+    <div
+      className={`${
+        effectiveOrientation === 'horizontal'
+          ? 'flex justify-center items-center h-screen'
+          : 'flex flex-col justify-start items-center pt-2 min-h-screen box-border'
+      }`}
+    >
+      <div
+        className={`${
+          effectiveOrientation === 'grid'
+            ? 'grid grid-cols-3 gap-4 p-4 w-full max-w-6xl'
+            : effectiveOrientation === 'horizontal'
+              ? 'flex space-x-4 p-4 w-full max-w-6xl'
+              : 'flex flex-col space-y-4 p-4 w-full max-w-2xl'
+        }`}
+      >
         {buttons.map((btn, index) => (
           <MenuButton
             key={index}
