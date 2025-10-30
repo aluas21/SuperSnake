@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import './Register.css';
 import { register } from '../../services/api';
 import { UserRegistration } from '../../types/userTypes';
 
@@ -52,13 +51,16 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="register">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 pt-30">
       <Header pageTitle="Register" />
 
-      <div className="register__container">
-        <form className="register__form" onSubmit={handleRegister}>
-          <label htmlFor="FirstName">First Name:</label>
+      <div className="flex flex-col bg-white p-8 rounded shadow-md w-full max-w-md">
+        <form className="flex flex-col space-y-4" onSubmit={handleRegister}>
+          <label className="font-medium text-gray-700" htmlFor="FirstName">
+            First Name:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="text"
             id="FirstName"
             name="FirstName"
@@ -67,8 +69,11 @@ const Register: React.FC = () => {
             onChange={(e) => setFirstName(e.target.value)}
           />
 
-          <label htmlFor="LastName">Last Name:</label>
+          <label className="font-medium text-gray-700" htmlFor="LastName">
+            Last Name:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="text"
             id="LastName"
             name="LastName"
@@ -77,8 +82,11 @@ const Register: React.FC = () => {
             onChange={(e) => setLastName(e.target.value)}
           />
 
-          <label htmlFor="username">Username:</label>
+          <label className="font-medium text-gray-700" htmlFor="username">
+            Username:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="text"
             id="username"
             name="username"
@@ -87,8 +95,11 @@ const Register: React.FC = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
 
-          <label htmlFor="email">Email:</label>
+          <label className="font-medium text-gray-700" htmlFor="email">
+            Email:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="email"
             id="email"
             name="email"
@@ -97,8 +108,11 @@ const Register: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label htmlFor="password">Password:</label>
+          <label className="font-medium text-gray-700" htmlFor="password">
+            Password:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="password"
             id="password"
             name="password"
@@ -107,8 +121,14 @@ const Register: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <label
+            className="font-medium text-gray-700"
+            htmlFor="confirmPassword"
+          >
+            Confirm Password:
+          </label>
           <input
+            className="border border-gray-300 p-2 rounded"
             type="password"
             id="confirmPassword"
             name="confirmPassword"
@@ -117,11 +137,16 @@ const Register: React.FC = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          <button type="submit" className="register__submit-button">
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
             Register
           </button>
         </form>
-				<a href="/login">Already have an account? Login here</a>
+        <Link
+          to="/login"
+          className="text-gray-500 hover:underline hover:text-blue-500 mt-4 text-center"
+        >
+          Already have an account? Login here
+        </Link>
       </div>
     </div>
   );

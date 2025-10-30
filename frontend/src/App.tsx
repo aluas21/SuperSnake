@@ -14,17 +14,72 @@ function App() {
   return (
     <Routes>
       {/* Public routes */}
-      <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
-      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-      <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
 
       {/* Protected routes */}
-      <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-      <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-      <Route path="/game-modes" element={<PrivateRoute><GameModes /></PrivateRoute>} />
-      <Route path="/game-settings" element={<PrivateRoute><GameSettings /></PrivateRoute>} />
-      <Route path="/game" element={<PrivateRoute><Game /></PrivateRoute>} />
-    
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/game-modes"
+        element={
+          <PrivateRoute>
+            <GameModes />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/game-settings"
+        element={
+          <PrivateRoute>
+            <GameSettings />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/game"
+        element={
+          <PrivateRoute>
+            <Game />
+          </PrivateRoute>
+        }
+      />
 
       {/* Optional catch-all */}
       <Route path="*" element={<Login />} />

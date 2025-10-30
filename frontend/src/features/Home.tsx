@@ -2,7 +2,6 @@ import Header from '../components/Header/Header';
 import Menu from '../components/Menu/Menu'; // ✅ make sure path is correct
 
 const Home: React.FC = () => {
-  
   const menuButtons = [
     {
       title: 'PLAY GAME',
@@ -34,10 +33,8 @@ const Home: React.FC = () => {
     },
   ];
 
-  
-
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 pt-30">
       <Header pageTitle="Home" />
       <Menu buttons={menuButtons} orientation="vertical" />
     </div>

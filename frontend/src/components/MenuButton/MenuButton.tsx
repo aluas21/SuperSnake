@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './MenuButton.css';
 
 interface MenuButtonProps {
   title: string;
@@ -51,16 +50,16 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 
   return (
     <div
-      className="menu-button-card"
+      className="flex flex-col justify-between p-6 rounded-lg shadow-lg cursor-pointer text-white"
       style={backgroundStyle}
       onClick={handleClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <div className="menu-button-label">{buttonText}</div>
+      <h2 className="text-lg font-semibold">{title}</h2>
+      <p className="text-gray-300">{description}</p>
+      <div className="font-medium">{buttonText}</div>
     </div>
   );
 };
