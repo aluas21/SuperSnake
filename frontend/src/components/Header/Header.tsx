@@ -10,16 +10,26 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
-  const user: User = JSON.parse(sessionStorage.getItem('user') || '{}');
-  const profilePicture = user.profilePicture || UserIcon;
+  const user: User | null = JSON.parse(
+    sessionStorage.getItem('user') || 'null'
+  );
+  const profilePicture = user?.profilePicture || UserIcon;
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/home');
+    if (user === null) {
+      navigate('/login');
+    } else {
+      navigate('/home');
+    }
   };
 
   const handleUserIconClick = () => {
-    navigate('/profile');
+    if (user === null) {
+      return;
+    } else {
+      navigate('/profile');
+    }
   };
 
   return (
@@ -36,8 +46,11 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
       </div>
       <h2 className="text-lg font-semibold">{pageTitle}</h2>
 
-      {/* future user icon */}
-      <div className="flex items-center space-x-4">
+      <div
+        className={`flex items-center space-x-4 ${
+          user ? '' : 'invisible pointer-events-none'
+        }`}
+      >
         <Bell className="text-gray-500 hover:text-blue-500" size={32} />
         <Mail className="text-gray-500 hover:text-blue-500" size={32} />
         <img
@@ -52,20 +65,3 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
 };
 
 export default Header;
-
-// const Header = forwardRef<HTMLDivElement, HeaderProps>(({ pageTitle }, ref) => (
-//   <header className="header" ref={ref}>
-//     {/* Logo and title on the left */}
-//     <div className="header__left">
-//       <img className="header__logo" src={AppLogo} alt="Logo" />
-//       <h1 className="header__title">Super Snake</h1>
-//     </div>
-
-//     <h2 className="header__page-title">{pageTitle}</h2>
-
-//     {/* future user icon */}
-//     <div className="header__right">
-//       <img className="header__user-icon" src={UserIcon} alt="User Icon" />
-//     </div>
-//   </header>
-// ));
