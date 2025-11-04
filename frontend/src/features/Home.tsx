@@ -1,5 +1,5 @@
 import Header from '../components/Header/Header';
-import Menu from '../components/Menu/Menu'; // ✅ make sure path is correct
+import Menu from '../components/Menu/Menu';
 
 const Home: React.FC = () => {
   const menuButtons = [
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
       title: 'EXIT',
       description: 'Logout from the game',
       buttonText: 'Logout',
-      buttonLink: 'handleLogout', // This should be a function or a route that handles logout
+      buttonLink: '/logout',
       buttonBackground: 'bg-red-500',
       width: 'w-128',
       height: 'h-32',

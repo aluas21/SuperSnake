@@ -10,16 +10,26 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
-  const user: User = JSON.parse(sessionStorage.getItem('user') || '{}');
-  const profilePicture = user.profilePicture || UserIcon;
+  const user: User | null = JSON.parse(
+    sessionStorage.getItem('user') || 'null'
+  );
+  const profilePicture = user?.profilePicture || UserIcon;
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/home');
+    if (user === null) {
+      navigate('/login');
+    } else {
+      navigate('/home');
+    }
   };
 
   const handleUserIconClick = () => {
-    navigate('/profile');
+    if (user === null) {
+      return;
+    } else {
+      navigate('/profile');
+    }
   };
 
   return (
@@ -42,7 +52,11 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
       </div>
 
       {/* Right: Icons */}
-      <div className="flex items-center space-x-4 w-[15vw] min-w-[150px] justify-end">
+      <div
+        className={`flex items-center space-x-4 w-[15vw] min-w-[150px] justify-end ${
+          user ? '' : 'invisible pointer-events-none'
+        }`}
+      >
         <Bell className="text-gray-500 hover:text-blue-500" size={32} />
         <Mail className="text-gray-500 hover:text-blue-500" size={32} />
         <img
