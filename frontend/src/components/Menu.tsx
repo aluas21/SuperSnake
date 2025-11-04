@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MenuButton from '../MenuButton/MenuButton';
+import MenuButton from './MenuButton';
 
 interface MenuProps {
   buttons: {
@@ -47,31 +47,30 @@ const Menu: React.FC<MenuProps> = ({
   // Use propOrientation if provided, else the internal state
   const effectiveOrientation = propOrientation || orientation;
 
-return (
-  <div
-    className={`${
-      effectiveOrientation === 'grid'
-        ? 'grid grid-cols-2 gap-8 justify-center items-center'
-        : effectiveOrientation === 'horizontal'
-        ? 'flex justify-center items-center space-x-8'
-        : 'flex flex-col justify-center items-center space-y-8'
-    }`}
-  >
-    {buttons.map((btn, index) => (
-      <MenuButton
-        key={index}
-        title={btn.title}
-        description={btn.description}
-        buttonText={btn.buttonText}
-        buttonLink={btn.buttonLink}
-        buttonBackground={btn.buttonBackground}
-        width={btn.width}
-        height={btn.height}
-      />
-    ))}
-  </div>
-);
-
+  return (
+    <div
+      className={`${
+        effectiveOrientation === 'grid'
+          ? 'grid grid-cols-2 gap-8 justify-center items-center'
+          : effectiveOrientation === 'horizontal'
+            ? 'flex justify-center items-center space-x-8'
+            : 'flex flex-col justify-center items-center space-y-8'
+      }`}
+    >
+      {buttons.map((btn, index) => (
+        <MenuButton
+          key={index}
+          title={btn.title}
+          description={btn.description}
+          buttonText={btn.buttonText}
+          buttonLink={btn.buttonLink}
+          buttonBackground={btn.buttonBackground}
+          width={btn.width}
+          height={btn.height}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default Menu;

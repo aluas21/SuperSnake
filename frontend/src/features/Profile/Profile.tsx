@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 import UserIcon from '../../assets/user-icon.png';
 import { UserWithToken } from '../../types/userTypes';
 import './Profile.css';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 import './GameSettings.css';
 import Slider from '../../components/Slider/Slider';
 import GameChat from '../../components/GameChat/GameChat';

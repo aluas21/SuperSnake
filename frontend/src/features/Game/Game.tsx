@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, use } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GameCanvas from '../../components/GameCanvas';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 import Score from '../../components/Score/Score';
 import GameOverModal from '../../components/GameOverModal/GameOverModal';
 import TimerBar from '../../components/TimerBar/TimerBar';

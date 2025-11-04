@@ -1,8 +1,8 @@
 import React from 'react';
-import AppLogo from '../../assets/app-logo.png';
-import UserIcon from '../../assets/user-icon.png';
+import AppLogo from '../assets/app-logo.png';
+import UserIcon from '../assets/user-icon.png';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../../types/userTypes';
+import { User } from '../types/userTypes';
 import { Bell, Mail } from 'lucide-react';
 
 interface HeaderProps {
@@ -34,7 +34,6 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
 
   return (
     <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-white p-4 shadow-md">
-      
       {/* Left: Logo & game name */}
       <div className="flex items-center w-[15vw] min-w-[150px]">
         <img
@@ -66,7 +65,6 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
           onClick={handleUserIconClick}
         />
       </div>
-
     </header>
   );
 };

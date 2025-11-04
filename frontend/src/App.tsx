@@ -1,11 +1,11 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './features/Home';
-import GameModes from './features/GameModes/GameModes';
+import GameModes from './features/GameModes';
 import Game from './features/Game/Game';
 import GameSettings from './features/GameSettings/GameSettings';
-import Register from './features/Register/Register';
-import Login from './features/Login/Login';
+import Register from './features/Register';
+import Login from './features/Login';
 import Profile from './features/Profile/Profile';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import PublicRoute from './components/Routes/PublicRoute';
@@ -96,7 +96,7 @@ function App() {
             <Home />
           </PrivateRoute>
         }
-      />       
+      />
       <Route
         path="/logout"
         element={

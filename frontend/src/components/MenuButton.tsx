@@ -7,7 +7,7 @@ interface MenuButtonProps {
   buttonText: string;
   buttonLink: string;
   buttonBackground: string;
-  width?: string;  // new prop: e.g., 'w-64' or '25vw'
+  width?: string; // new prop: e.g., 'w-64' or '25vw'
   height?: string; // new prop: e.g., 'h-48' or '20vh'
 }
 
@@ -17,11 +17,13 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   buttonText,
   buttonLink,
   buttonBackground,
-  width = 'w-full',   // default full width
-  height = 'h-48',    // default fixed height
+  width = 'w-full', // default full width
+  height = 'h-48', // default fixed height
 }) => {
   const navigate = useNavigate();
-  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>({});
+  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>(
+    {}
+  );
   const [backgroundClass, setBackgroundClass] = useState<string>('');
 
   useEffect(() => {
@@ -70,10 +72,9 @@ const MenuButton: React.FC<MenuButtonProps> = ({
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
-      <h2 className="text-xl font-bold break-words">{title}</h2>
-      <p className="text-gray-300 text-base break-words">{description}</p>
-      <div className="text-lg font-semibold break-words">{buttonText}</div>
-
+      <h2 className="text-xl font-bold wrap-break-word">{title}</h2>
+      <p className="text-gray-300 text-base wrap-break-word">{description}</p>
+      <div className="text-lg font-semibold wrap-break-word">{buttonText}</div>
     </div>
   );
 };

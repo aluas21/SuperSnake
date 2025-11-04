@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import { login as loginApi } from '../../services/api';
-import { UserLogin } from '../../types/userTypes';
-import { useAuth } from '../../context/AuthContext';
+import Header from '../components/Header';
+import { login as loginApi } from '../services/api';
+import { UserLogin } from '../types/userTypes';
+import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -29,10 +29,10 @@ const Login: React.FC = () => {
       const response = await loginApi(userLogin);
 
       if (response.ok) {
-        // ✅ update context and sessionStorage
+        // update context and sessionStorage
         authLogin(response.data);
 
-        // ✅ navigate to home
+        // navigate to home
         navigate('/home', { replace: true });
       } else {
         alert(response.error || 'Invalid credentials');
