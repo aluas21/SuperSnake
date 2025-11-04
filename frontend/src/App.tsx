@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './features/Home';
 import GameModes from './features/GameModes';
 import Game from './features/Game/Game';
-import GameSettings from './features/GameSettings/GameSettings';
+import GameSettings from './features/GameSettings';
 import Register from './features/Register';
 import Login from './features/Login';
 import Profile from './features/Profile/Profile';

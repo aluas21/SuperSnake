@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
-import './GameSettings.css';
-import Slider from '../../components/Slider/Slider';
-import GameChat from '../../components/GameChat/GameChat';
-import GameRoomInfo from '../../components/GameRoomInfo/GameRoomInfo';
+import Header from '../components/Header';
+import Slider from '../components/Slider';
+import GameChat from '../components/GameChat/GameChat';
+import GameRoomInfo from '../components/GameRoomInfo/GameRoomInfo';
 
 const GameSettings: React.FC = () => {
   const navigate = useNavigate();
@@ -20,54 +19,57 @@ const GameSettings: React.FC = () => {
   const speedValues = ['Slow', 'Normal', 'Fast'];
   const [speed, setSpeed] = useState('Normal');
 
+  const isOnline = gameMode.includes('online');
+
   return (
     <div>
       <Header pageTitle="Game Settings" />
-      <button className="settings__back-button" onClick={() => navigate(-1)}>
-        Back
-      </button>
+
+      {/* Main Container */}
       <div
-        className={`settings__container ${
-          gameMode.includes('online') ? 'online' : ''
+        className={`relative w-screen h-screen overflow-hidden p-12 box-border font-mono text-slate-700 flex ${
+          isOnline ? 'justify-between' : 'justify-center'
         }`}
       >
-        {' '}
-        {/* Added conditional CSS class */}
-        {gameMode.includes('online') && (
-          <div className="room-info-wrapper">
-            <GameRoomInfo
-              code="1234"
-              players={[
-                { name: 'Player1', status: 'Ready' },
-                { name: 'Player2', status: 'Joined' },
-              ]}
-            />
-          </div>
+        {/* Room Info */}
+        {isOnline && (
+          <GameRoomInfo
+            code="1234"
+            players={[
+              { name: 'Player1', status: 'Ready' },
+              { name: 'Player2', status: 'Joined' },
+            ]}
+          />
         )}
-        <div className="settings__info">
-          <h2>Settings</h2>
+
+        {/* Settings Info */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center">
+
           <Slider
             name="Apples"
             values={appleValues}
             selectedValue={apples}
             onChange={(value) => setApples(value)}
           />
-          <label className="settings__toggle">
-            <span className="settings__label-text">Walls</span>
+
+          <label className="inline-flex items-center gap-2 cursor-pointer mt-4">
+            <p className="font-mono font-bold text-slate-700 text-base mb-2">Walls</p>
             <input
+              className="w-5 h-5"
               type="checkbox"
               id="settingToggle"
               onChange={() => setWalls(walls === 'On' ? 'Off' : 'On')}
             />
           </label>
+
           <Slider
             name="Speed"
             values={speedValues}
             selectedValue={speed}
             onChange={(value) => setSpeed(value)}
           />
+
           <button
-            className="settings__ready-button"
             onClick={() => {
               const settings = {
                 gameMode: gameMode || 'Single Player',
@@ -75,15 +77,17 @@ const GameSettings: React.FC = () => {
                 walls: walls || 'Off',
                 speed: speed || 'Normal',
               };
-              // localStorage.setItem("gameSettings", JSON.stringify(settings));
               navigate('/game', { state: settings });
             }}
+            className="bg-green-300 border-none px-8 py-4 cursor-pointer font-mono font-bold text-base text-slate-700 mt-20"
           >
             Ready
           </button>
         </div>
-        {gameMode.includes('online') && (
-          <div className="chat-wrapper">
+
+        {/* Chat */}
+        {isOnline && (
+          <div className="absolute right-8 top-1/4 -translate-y-1/2 max-h-[90vh] overflow-y-auto">
             <GameChat />
           </div>
         )}

@@ -1,5 +1,4 @@
 import React from 'react';
-import './Slider.css';
 
 interface SliderProps {
   name: string;
@@ -23,8 +22,8 @@ const Slider: React.FC<SliderProps> = ({
   };
 
   return (
-    <div className="slider__wrapper">
-      <label className="slider__name">{name}</label>
+    <div className="flex flex-col items-center justify-center p-10">
+      <label className="font-mono font-bold text-slate-700 text-base mb-2">{name}</label>
       <input
         type="range"
         min={0}
@@ -32,11 +31,11 @@ const Slider: React.FC<SliderProps> = ({
         step={1}
         value={selectedIndex}
         onChange={handleChange}
-        className="slider"
+        className="slider mb-4 w-64"
       />
-      <div className="slider__labels">
+      <div className="flex justify-between w-full px-4 text-sm text-slate-600 font-mono">
         {values.map((value, index) => (
-          <span key={index} className={selectedValue === value ? 'active' : ''}>
+          <span key={index} className={selectedValue === value ? 'font-extrabold' : ''}>
             {value}
           </span>
         ))}
