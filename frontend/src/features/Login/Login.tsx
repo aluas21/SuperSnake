@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { login as loginApi } from '../../services/api';
 import { UserLogin } from '../../types/userTypes';
-import { useAuth } from '../../components/Routes/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

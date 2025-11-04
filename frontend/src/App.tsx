@@ -9,6 +9,7 @@ import Login from './features/Login/Login';
 import Profile from './features/Profile/Profile';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import PublicRoute from './components/Routes/PublicRoute';
+import Logout from './features/Logout';
 
 function App() {
   return (
@@ -77,6 +78,14 @@ function App() {
         element={
           <PrivateRoute>
             <Game />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/logout"
+        element={
+          <PrivateRoute>
+            <Logout />
           </PrivateRoute>
         }
       />
