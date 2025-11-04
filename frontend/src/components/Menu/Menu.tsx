@@ -8,6 +8,8 @@ interface MenuProps {
     buttonText: string;
     buttonLink: string;
     buttonBackground: string;
+    width?: string;
+    height?: string;
   }[];
   orientation?: 'horizontal' | 'vertical' | 'grid';
 }
@@ -45,36 +47,31 @@ const Menu: React.FC<MenuProps> = ({
   // Use propOrientation if provided, else the internal state
   const effectiveOrientation = propOrientation || orientation;
 
-  return (
-    <div
-      className={`${
-        effectiveOrientation === 'horizontal'
-          ? 'flex justify-center items-center h-screen'
-          : 'flex flex-col justify-start items-center pt-2 min-h-screen box-border'
-      }`}
-    >
-      <div
-        className={`${
-          effectiveOrientation === 'grid'
-            ? 'grid grid-cols-3 gap-4 p-4 w-full max-w-6xl'
-            : effectiveOrientation === 'horizontal'
-              ? 'flex space-x-4 p-4 w-full max-w-6xl'
-              : 'flex flex-col space-y-4 p-4 w-full max-w-2xl'
-        }`}
-      >
-        {buttons.map((btn, index) => (
-          <MenuButton
-            key={index}
-            title={btn.title}
-            description={btn.description}
-            buttonText={btn.buttonText}
-            buttonLink={btn.buttonLink}
-            buttonBackground={btn.buttonBackground}
-          />
-        ))}
-      </div>
-    </div>
-  );
+return (
+  <div
+    className={`${
+      effectiveOrientation === 'grid'
+        ? 'grid grid-cols-2 gap-8 justify-center items-center'
+        : effectiveOrientation === 'horizontal'
+        ? 'flex justify-center items-center space-x-8'
+        : 'flex flex-col justify-center items-center space-y-8'
+    }`}
+  >
+    {buttons.map((btn, index) => (
+      <MenuButton
+        key={index}
+        title={btn.title}
+        description={btn.description}
+        buttonText={btn.buttonText}
+        buttonLink={btn.buttonLink}
+        buttonBackground={btn.buttonBackground}
+        width={btn.width}
+        height={btn.height}
+      />
+    ))}
+  </div>
+);
+
 };
 
 export default Menu;

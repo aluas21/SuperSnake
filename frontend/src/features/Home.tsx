@@ -9,27 +9,35 @@ const Home: React.FC = () => {
       buttonText: 'Play',
       buttonLink: '/game-modes',
       buttonBackground: 'green', // or a color like "blue"
+      width: 'w-128',
+      height: 'h-32',
     },
     {
       title: 'SHOP',
       description: 'Buy new skins',
       buttonText: 'View',
       buttonLink: '/shop',
-      buttonBackground: 'gold',
+      buttonBackground: 'orange',
+      width: 'w-128',
+      height: 'h-32',
     },
     {
       title: 'SETTINGS',
       description: 'Customize your experience',
       buttonText: 'Open',
       buttonLink: '/settings',
-      buttonBackground: 'gray',
+      buttonBackground: 'bg-purple-400',
+      width: 'w-128',
+      height: 'h-32',
     },
     {
       title: 'EXIT',
       description: 'Logout from the game',
       buttonText: 'Logout',
       buttonLink: '/logout',
-      buttonBackground: 'red',
+      buttonBackground: 'bg-red-500',
+      width: 'w-128',
+      height: 'h-32',
     },
   ];
 

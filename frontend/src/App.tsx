@@ -82,6 +82,22 @@ function App() {
         }
       />
       <Route
+        path="/shop"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />       
+      <Route
         path="/logout"
         element={
           <PrivateRoute>
