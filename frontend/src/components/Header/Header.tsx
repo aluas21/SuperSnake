@@ -18,9 +18,9 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
 
   const handleLogoClick = () => {
     if (user === null) {
-      navigate('/home');
-    } else {
       navigate('/login');
+    } else {
+      navigate('/home');
     }
   };
 
