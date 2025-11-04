@@ -23,21 +23,26 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-white p-4 shadow-md mb-6">
-      {/* Logo and title on the left */}
-      <div className="flex items-center">
+    <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-white p-4 shadow-md">
+      
+      {/* Left: Logo & game name */}
+      <div className="flex items-center w-[15vw] min-w-[150px]">
         <img
-          className="w-20 h-20 rounded-full cursor-pointer"
+          className="w-12 h-12 rounded-full cursor-pointer mr-2"
           src={AppLogo}
           alt="Logo"
           onClick={handleLogoClick}
         />
-        <h1 className="text-xl font-bold">Super Snake</h1>
+        <span className="font-bold text-lg">Super Snake</span>
       </div>
-      <h2 className="text-lg font-semibold">{pageTitle}</h2>
 
-      {/* future user icon */}
-      <div className="flex items-center space-x-4">
+      {/* Center: Page title */}
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <h2 className="text-xl font-semibold text-center">{pageTitle}</h2>
+      </div>
+
+      {/* Right: Icons */}
+      <div className="flex items-center space-x-4 w-[15vw] min-w-[150px] justify-end">
         <Bell className="text-gray-500 hover:text-blue-500" size={32} />
         <Mail className="text-gray-500 hover:text-blue-500" size={32} />
         <img
@@ -47,25 +52,9 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
           onClick={handleUserIconClick}
         />
       </div>
+
     </header>
   );
 };
 
 export default Header;
-
-// const Header = forwardRef<HTMLDivElement, HeaderProps>(({ pageTitle }, ref) => (
-//   <header className="header" ref={ref}>
-//     {/* Logo and title on the left */}
-//     <div className="header__left">
-//       <img className="header__logo" src={AppLogo} alt="Logo" />
-//       <h1 className="header__title">Super Snake</h1>
-//     </div>
-
-//     <h2 className="header__page-title">{pageTitle}</h2>
-
-//     {/* future user icon */}
-//     <div className="header__right">
-//       <img className="header__user-icon" src={UserIcon} alt="User Icon" />
-//     </div>
-//   </header>
-// ));

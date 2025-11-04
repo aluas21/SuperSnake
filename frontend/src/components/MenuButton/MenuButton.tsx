@@ -7,6 +7,8 @@ interface MenuButtonProps {
   buttonText: string;
   buttonLink: string;
   buttonBackground: string;
+  width?: string;  // new prop: e.g., 'w-64' or '25vw'
+  height?: string; // new prop: e.g., 'h-48' or '20vh'
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
@@ -15,13 +17,19 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   buttonText,
   buttonLink,
   buttonBackground,
+  width = 'w-full',   // default full width
+  height = 'h-48',    // default fixed height
 }) => {
   const navigate = useNavigate();
-  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>(
-    {}
-  );
+  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>({});
+  const [backgroundClass, setBackgroundClass] = useState<string>('');
 
   useEffect(() => {
+    if (buttonBackground.startsWith('bg-')) {
+      setBackgroundClass(buttonBackground);
+      return;
+    }
+
     const img = new Image();
     img.src = buttonBackground;
 
@@ -45,21 +53,27 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   }, [buttonBackground]);
 
   const handleClick = () => {
+    if (buttonLink === 'handleLogout') {
+      console.log('Logout function called');
+      return;
+    }
     navigate(buttonLink, { state: { title } });
   };
 
   return (
     <div
-      className="flex flex-col justify-between p-6 rounded-lg shadow-lg cursor-pointer text-white"
-      style={backgroundStyle}
+      className={`flex flex-col justify-center items-center text-center p-6 rounded-lg shadow-lg cursor-pointer text-white
+                  transition-transform transform hover:scale-105 hover:shadow-2xl ${backgroundClass} ${width} ${height} mb-4`}
+      style={backgroundClass ? {} : backgroundStyle}
       onClick={handleClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-gray-300">{description}</p>
-      <div className="font-medium">{buttonText}</div>
+      <h2 className="text-xl font-bold break-words">{title}</h2>
+      <p className="text-gray-300 text-base break-words">{description}</p>
+      <div className="text-lg font-semibold break-words">{buttonText}</div>
+
     </div>
   );
 };

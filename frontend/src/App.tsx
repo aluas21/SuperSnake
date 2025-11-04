@@ -80,6 +80,22 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route
+        path="/shop"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
 
       {/* Optional catch-all */}
       <Route path="*" element={<Login />} />
