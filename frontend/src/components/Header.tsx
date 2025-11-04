@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-white p-4 shadow-md">
+    <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-white p-4 shadow-md z-10 box-border h-16">
       {/* Left: Logo & game name */}
       <div className="flex items-center w-[15vw] min-w-[150px]">
         <img

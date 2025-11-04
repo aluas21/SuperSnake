@@ -2,49 +2,44 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Slider from '../components/Slider';
-import GameChat from '../components/GameChat/GameChat';
-import GameRoomInfo from '../components/GameRoomInfo/GameRoomInfo';
+import GameChat from '../components/GameChat';
+import GameRoomInfo from '../components/GameRoomInfo';
 
 const GameSettings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const gameMode = location.state?.title || {};
+  const isOnline = gameMode.includes('online');
 
   const appleValues = ['1', '3', '5'];
   const [apples, setApples] = useState('1');
-
   const [walls, setWalls] = useState('Off');
-
   const speedValues = ['Slow', 'Normal', 'Fast'];
   const [speed, setSpeed] = useState('Normal');
 
-  const isOnline = gameMode.includes('online');
-
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gray-100 pt-20">
       <Header pageTitle="Game Settings" />
 
-      {/* Main Container */}
       <div
-        className={`relative w-screen h-screen overflow-hidden p-12 box-border font-mono text-slate-700 flex ${
-          isOnline ? 'justify-between' : 'justify-center'
-        }`}
+        className={`grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 px-4 py-8 font-mono text-slate-700`}
       >
-        {/* Room Info */}
-        {isOnline && (
-          <GameRoomInfo
-            code="1234"
-            players={[
-              { name: 'Player1', status: 'Ready' },
-              { name: 'Player2', status: 'Joined' },
-            ]}
-          />
+        {isOnline ? (
+          <div className="flex justify-center items-start">
+            <GameRoomInfo
+              code="1234"
+              players={[
+                { name: 'Player1', status: 'Ready' },
+                { name: 'Player2', status: 'Joined' },
+              ]}
+            />
+          </div>
+        ) : (
+          <div />
         )}
 
-        {/* Settings Info */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center">
-
+        <div className="flex flex-col items-center justify-center bg-white rounded-xl shadow-md p-8">
           <Slider
             name="Apples"
             values={appleValues}
@@ -52,10 +47,10 @@ const GameSettings: React.FC = () => {
             onChange={(value) => setApples(value)}
           />
 
-          <label className="inline-flex items-center gap-2 cursor-pointer mt-4">
-            <p className="font-mono font-bold text-slate-700 text-base mb-2">Walls</p>
+          <label className="inline-flex items-center gap-2 cursor-pointer mt-6">
+            <p className="font-bold text-base">Walls</p>
             <input
-              className="w-5 h-5"
+              className="w-5 h-5 accent-blue-500"
               type="checkbox"
               id="settingToggle"
               onChange={() => setWalls(walls === 'On' ? 'Off' : 'On')}
@@ -79,17 +74,18 @@ const GameSettings: React.FC = () => {
               };
               navigate('/game', { state: settings });
             }}
-            className="bg-green-300 border-none px-8 py-4 cursor-pointer font-mono font-bold text-base text-slate-700 mt-20"
+            className="bg-green-300 hover:bg-green-400 transition px-8 py-3 mt-16 font-bold text-base text-slate-700 rounded-md shadow"
           >
             Ready
           </button>
         </div>
 
-        {/* Chat */}
-        {isOnline && (
-          <div className="absolute right-8 top-1/4 -translate-y-1/2 max-h-[90vh] overflow-y-auto">
+        {isOnline ? (
+          <div className="flex justify-center items-start">
             <GameChat />
           </div>
+        ) : (
+          <div />
         )}
       </div>
     </div>

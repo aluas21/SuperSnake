@@ -6,8 +6,6 @@ import './Profile.css';
 import { changeProfilePicture } from '../../services/api';
 import PersonalData from '../../components/PersonalData/PersonalData';
 import Inventory from '../../components/Inventory/Inventory';
-import Friends from '../../components/Friends/Friends';
-import GamesArchive from '../../components/GamesArchive/GamesArchive';
 import { changePassword } from '../../services/api';
 import Dialog from '../../components/DialogWindow/DialogWindow';
 
@@ -174,8 +172,6 @@ const Profile: React.FC = () => {
         <div className="profile-info-panel">
           {infoPanelName === 'Personal Data' && <PersonalData />}
           {infoPanelName === 'Inventory' && <Inventory />}
-          {infoPanelName === 'Friends' && <Friends />}
-          {infoPanelName === 'Games Archive' && <GamesArchive />}
         </div>
       </div>
     </>
