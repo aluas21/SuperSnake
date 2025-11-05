@@ -14,7 +14,7 @@ const GameChat: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col font-mono bg-white rounded-xl shadow-md w-fit min-w-[320px] max-h-[400px] text-slate-700">
+    <div className="flex flex-col font-mono bg-white rounded-xl shadow-md w-fit max-w-[320px] max-h-[400px] text-slate-700">
       <h2 className="text-lg font-bold mb-2 text-center border-b border-gray-200 py-2 w-full">
         Chat
       </h2>
@@ -22,7 +22,10 @@ const GameChat: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-3 w-full max-h-[300px] border-b border-gray-200 rounded-md scroll-smooth">
         {messages.length > 0 ? (
           messages.map((msg, index) => (
-            <div key={index} className="mb-2 wrap-break-word">
+            <div
+              key={index}
+              className="mb-2 wrap-break-word border-b-2 border-gray-300 pb-1"
+            >
               {msg}
             </div>
           ))

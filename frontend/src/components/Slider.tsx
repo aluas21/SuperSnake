@@ -23,7 +23,9 @@ const Slider: React.FC<SliderProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center p-10">
-      <label className="font-mono font-bold text-slate-700 text-base mb-2">{name}</label>
+      <label className="font-mono font-bold text-slate-700 text-base mb-2">
+        {name}
+      </label>
       <input
         type="range"
         min={0}
@@ -35,7 +37,10 @@ const Slider: React.FC<SliderProps> = ({
       />
       <div className="flex justify-between w-full px-4 text-sm text-slate-600 font-mono">
         {values.map((value, index) => (
-          <span key={index} className={selectedValue === value ? 'font-extrabold' : ''}>
+          <span
+            key={index}
+            className={selectedValue === value ? 'font-extrabold' : ''}
+          >
             {value}
           </span>
         ))}

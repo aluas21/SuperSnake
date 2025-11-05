@@ -32,8 +32,8 @@ const GameRoomInfo: React.FC<RoomInfoProps> = ({ code, players }) => {
                 p.status === 'Ready'
                   ? 'text-green-600'
                   : p.status === 'Joined'
-                  ? 'text-yellow-600'
-                  : 'text-red-600'
+                    ? 'text-yellow-600'
+                    : 'text-red-600'
               }`}
             >
               {p.status}
