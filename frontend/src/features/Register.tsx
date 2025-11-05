@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import { register } from '../../services/api';
-import { UserRegistration } from '../../types/userTypes';
+import Header from '../components/Header';
+import { register } from '../services/api';
+import { UserRegistration } from '../types/userTypes';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
