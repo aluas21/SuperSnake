@@ -2,7 +2,7 @@
 
 echo "Starting full-stack project..."
 
-docker-compose up --build -d
+docker compose up --build -d
 
 echo "Frontend: http://localhost:5173"
 echo "Backend: http://localhost:8080"
