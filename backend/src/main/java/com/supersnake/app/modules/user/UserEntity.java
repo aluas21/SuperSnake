@@ -56,10 +56,6 @@ class UserEntity {
     @Column(nullable = false)
     private String userType = "USER";
 
-    private int coins = 0;
-
-    private int cash = 0;
-
     @ManyToMany
     @JoinTable(
             name = "user_friends",
