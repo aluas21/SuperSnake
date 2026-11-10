@@ -1,5 +1,9 @@
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/auth/JwtAuthenticationFilter.java
+package com.supersnake.app.modules.auth;
+========
 package com.supersnake.app.shared.security;
 
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/shared/security/JwtAuthenticationFilter.java
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

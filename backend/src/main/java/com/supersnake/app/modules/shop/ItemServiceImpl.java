@@ -1,16 +1,29 @@
 package com.supersnake.app.modules.shop;
 
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/shop/ItemService.java
+import com.supersnake.app.modules.shop.ItemConvertor;
+import com.supersnake.app.modules.shop.ItemDto;
+import com.supersnake.app.modules.shop.ItemAlreadyExistsException;
+import com.supersnake.app.modules.shop.ItemNotFoundException;
+import com.supersnake.app.modules.shop.Item;
+import com.supersnake.app.modules.shop.ItemRepository;
+========
 import com.supersnake.app.modules.shop.dto.ItemDto;
 import com.supersnake.app.shared.exception.ItemAlreadyExistsException;
 import com.supersnake.app.shared.exception.ItemNotFoundException;
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/shop/ItemServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/shop/ItemService.java
+class ItemService {
+========
 class ItemServiceImpl implements ItemService {
 
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/shop/ItemServiceImpl.java
     @Autowired
     private ItemRepository itemRepository;
 

@@ -1,4 +1,10 @@
 package com.supersnake.app.modules.user;
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/user/User.java
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+========
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/user/UserEntity.java
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -62,5 +68,11 @@ class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/user/User.java
+    private List<User> friends = new ArrayList<>();
+
+
+========
     private List<UserEntity> friends = new ArrayList<>();
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/user/UserEntity.java
 }

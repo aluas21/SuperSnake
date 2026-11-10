@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/game/GameSettingsDto.java
+package com.supersnake.app.modules.game;
+========
 package com.supersnake.app.modules.game.dto;
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/game/dto/GameSettingsDto.java
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
