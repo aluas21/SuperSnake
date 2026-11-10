@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/auth/UserWithTokenDto.java
-package com.supersnake.app.modules.auth;
-========
 package com.supersnake.app.modules.auth.dto;
->>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/auth/dto/UserWithTokenDto.java
 
 import com.supersnake.app.modules.user.dto.UserDto;
 import lombok.AllArgsConstructor;

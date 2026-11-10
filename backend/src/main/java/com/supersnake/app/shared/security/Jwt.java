@@ -1,7 +1,3 @@
-<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/auth/Jwt.java
-package com.supersnake.app.modules.auth;
-import io.jsonwebtoken.*;
-========
 package com.supersnake.app.shared.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -9,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
->>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/shared/security/Jwt.java
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import jakarta.annotation.PostConstruct;

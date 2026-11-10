@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/auth/RegisterDto.java
-package com.supersnake.app.modules.auth;
-========
 package com.supersnake.app.modules.auth.dto;
->>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/modules/auth/dto/RegisterDto.java
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

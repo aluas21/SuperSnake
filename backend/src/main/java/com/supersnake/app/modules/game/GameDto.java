@@ -1,8 +1,8 @@
 package com.supersnake.app.modules.game;
 
+import com.supersnake.app.modules.game.dto.GameSettingsDto;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Setter
