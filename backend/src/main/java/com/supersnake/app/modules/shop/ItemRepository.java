@@ -1,11 +1,11 @@
 package com.supersnake.app.modules.shop;
 
-import com.supersnake.app.modules.shop.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 interface ItemRepository extends JpaRepository<Item, Long> {
-    public Optional<Item> findByItemCode(Long itemCode);
-    // Additional query methods can be defined here if needed
+    Optional<Item> findByItemCode(Long itemCode);
 }

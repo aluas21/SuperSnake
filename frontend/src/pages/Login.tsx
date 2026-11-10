@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login: authLogin } = useAuth(); // get login function from context
+  const { login: authLogin } = useAuth();
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
@@ -29,10 +29,7 @@ const Login: React.FC = () => {
       const response = await loginApi(userLogin);
 
       if (response.ok) {
-        // update context and sessionStorage
         authLogin(response.data);
-
-        // navigate to home
         navigate('/home', { replace: true });
       } else {
         alert(response.error || 'Invalid credentials');
@@ -90,7 +87,7 @@ const Login: React.FC = () => {
           to="/register"
           className="text-gray-500 hover:underline hover:text-blue-500 mt-4 text-center"
         >
-          Don’t have an account? Register here
+          Don't have an account? Register here
         </Link>
       </div>
     </div>

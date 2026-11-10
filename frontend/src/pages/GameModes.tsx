@@ -1,11 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
 const GameModes: React.FC = () => {
-  const navigate = useNavigate();
-
   const offlineModes = [
     {
       title: 'Single Player',
@@ -53,14 +50,7 @@ const GameModes: React.FC = () => {
       <Header pageTitle="Game Modes" />
       <div className="flex flex-col items-center justify-center gap-4 min-h-[85vh] pt-[15vh]">
         <Menu buttons={offlineModes} orientation="horizontal" />
-
         <Menu buttons={onlineModes} orientation="horizontal" />
-        {/* <button
-      className="self-start mt-2 px-4 py-2 rounded hover:bg-gray-200"
-      onClick={() => navigate(-1)}
-    >
-      Back
-    </button> */}
       </div>
     </div>
   );

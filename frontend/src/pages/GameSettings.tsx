@@ -9,8 +9,8 @@ const GameSettings: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const gameMode = location.state?.title || {};
-  const isOnline = gameMode.includes('online');
+  const gameMode = location.state?.title || 'Single Player';
+  const isOnline = typeof gameMode === 'string' && gameMode.includes('online');
 
   const appleValues = ['1', '3', '5'];
   const [apples, setApples] = useState('1');
@@ -23,7 +23,7 @@ const GameSettings: React.FC = () => {
       <Header pageTitle="Game Settings" />
 
       <div
-        className={`grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 px-4 py-8 font-mono text-slate-700`}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 px-4 py-8 font-mono text-slate-700"
       >
         {isOnline ? (
           <div className="flex justify-center items-start">
@@ -64,20 +64,29 @@ const GameSettings: React.FC = () => {
             onChange={(value) => setSpeed(value)}
           />
 
-          <button
-            onClick={() => {
-              const settings = {
-                gameMode: gameMode || 'Single Player',
-                apples: apples || '1',
-                walls: walls || 'Off',
-                speed: speed || 'Normal',
-              };
-              navigate('/game', { state: settings });
-            }}
-            className="bg-green-300 hover:bg-green-400 transition px-8 py-3 mt-16 font-bold text-base text-slate-700 rounded-md shadow"
-          >
-            Ready
-          </button>
+          <div className="flex items-center justify-between gap-4 mt-16 w-full max-w-xs">
+            <button
+              onClick={() => {
+                const settings = {
+                  gameMode: gameMode || 'Single Player',
+                  apples: apples || '1',
+                  walls: walls || 'Off',
+                  speed: speed || 'Normal',
+                };
+                navigate('/game', { state: settings });
+              }}
+              className="bg-green-300 hover:bg-green-400 transition px-8 py-3 font-bold text-base text-slate-700 rounded-md shadow flex-1"
+            >
+              Ready
+            </button>
+
+            <button
+              onClick={() => navigate('/game-modes')}
+              className="bg-amber-400 hover:bg-amber-500 transition px-8 py-3 font-bold text-base text-slate-700 rounded-md shadow flex-1"
+            >
+              Back
+            </button>
+          </div>
         </div>
 
         {isOnline ? (

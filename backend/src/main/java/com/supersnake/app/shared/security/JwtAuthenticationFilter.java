@@ -1,4 +1,9 @@
+<<<<<<<< HEAD:backend/src/main/java/com/supersnake/app/modules/auth/JwtAuthenticationFilter.java
 package com.supersnake.app.modules.auth;
+========
+package com.supersnake.app.shared.security;
+
+>>>>>>>> origin/dev/mihai:backend/src/main/java/com/supersnake/app/shared/security/JwtAuthenticationFilter.java
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
+import java.util.Collections;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -24,10 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = extractToken(request);
 
         if (token != null && jwt.validateJwtToken(token)) {
-            String email = jwt.getEmailFromToken(token);
-            if (email != null) {
+            String username = jwt.getUsernameFromToken(token);
+            if (username != null) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        email, null, null);
+                        username, null, Collections.emptyList());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

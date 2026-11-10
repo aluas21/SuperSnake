@@ -1,9 +1,8 @@
 package com.supersnake.app.modules.shop;
 
-import com.supersnake.app.modules.shop.ItemDto;
-import com.supersnake.app.modules.shop.Item;
+import com.supersnake.app.modules.shop.dto.ItemDto;
 
-public class ItemConvertor {
+class ItemConvertor {
     public static ItemDto toDto(Item item) {
         if (item == null) {
             return null;

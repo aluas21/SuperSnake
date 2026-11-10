@@ -3,10 +3,9 @@ import Header from '../../components/Header';
 import UserIcon from '../../assets/user-icon.png';
 import { UserWithToken } from '../../types/userTypes';
 import './Profile.css';
-import { changeProfilePicture } from '../../services/api';
+import { changeProfilePicture, changePassword } from '../../services/api';
 import PersonalData from '../../components/PersonalData/PersonalData';
 import Inventory from '../../components/Inventory/Inventory';
-import { changePassword } from '../../services/api';
 import Dialog from '../../components/DialogWindow/DialogWindow';
 
 const Profile: React.FC = () => {
@@ -21,9 +20,8 @@ const Profile: React.FC = () => {
     const file = fileInputRef.current?.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onloadend = (e) => {
+    reader.onloadend = () => {
       const base64String = reader.result as string;
-      console.log('Selected file in base64:', base64String);
 
       user.profilePicture = base64String;
       sessionStorage.setItem('user', JSON.stringify(user));
@@ -53,7 +51,6 @@ const Profile: React.FC = () => {
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
 
   const handleChangePassword = () => {
-    // validare simplă
     if (!oldPassword || !newPassword || !confirmPassword) {
       alert('Complete all fields!');
       return;
@@ -101,11 +98,12 @@ const Profile: React.FC = () => {
           </button>
           <input
             type="file"
-            accept="image/*"
             ref={fileInputRef}
-            style={{ display: 'none' }}
             onChange={handlePictureChange}
+            accept="image/*"
+            style={{ display: 'none' }}
           />
+
           <button
             className="profile-action"
             onClick={() => setIsDialogOpen(true)}
@@ -113,65 +111,68 @@ const Profile: React.FC = () => {
             Change Password
           </button>
 
-          {/* Dialogul pentru schimbarea parolei */}
           <Dialog
             isOpen={isDialogOpen}
-            onClose={() => clearDialog()}
+            onClose={() => setIsDialogOpen(false)}
             title="Change Password"
           >
             <input
               type="password"
-              placeholder="Old password"
+              placeholder="Old Password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
             <input
               type="password"
-              placeholder="New password"
+              placeholder="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               type="password"
-              placeholder="Confirm new password"
+              placeholder="Confirm New Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-
             <button onClick={handleChangePassword}>Save</button>
+          </Dialog>
+
+          <Dialog
+            isOpen={isSuccessDialogOpen}
+            onClose={() => setIsSuccessDialogOpen(false)}
+            title="Success"
+          >
+            <p>Password changed successfully!</p>
           </Dialog>
         </div>
 
-        <div className="profile-menu">
-          <button
-            className="menu-button"
-            onClick={() => setInfoPanelName('Personal Data')}
-          >
-            Personal Data
-          </button>
-          <button
-            className="menu-button"
-            onClick={() => setInfoPanelName('Inventory')}
-          >
-            Inventory
-          </button>
-          <button
-            className="menu-button"
-            onClick={() => setInfoPanelName('Friends')}
-          >
-            Friends
-          </button>
-          <button
-            className="menu-button"
-            onClick={() => setInfoPanelName('Games Archive')}
-          >
-            Games Archive
-          </button>
-        </div>
+        <div className="profile-main">
+          <div className="profile-tabs">
+            <button
+              className={`profile-tab ${
+                infoPanelName === 'Personal Data' ? 'active' : ''
+              }`}
+              onClick={() => setInfoPanelName('Personal Data')}
+            >
+              Personal Data
+            </button>
+            <button
+              className={`profile-tab ${
+                infoPanelName === 'Inventory' ? 'active' : ''
+              }`}
+              onClick={() => setInfoPanelName('Inventory')}
+            >
+              Inventory
+            </button>
+          </div>
 
-        <div className="profile-info-panel">
-          {infoPanelName === 'Personal Data' && <PersonalData />}
-          {infoPanelName === 'Inventory' && <Inventory />}
+          <div className="profile-panel">
+            {infoPanelName === 'Personal Data' ? (
+              <PersonalData />
+            ) : (
+              <Inventory />
+            )}
+          </div>
         </div>
       </div>
     </>

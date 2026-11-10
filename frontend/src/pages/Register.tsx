@@ -15,7 +15,7 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault(); // prevents page reload when submitting
+    e.preventDefault();
 
     if (
       !firstName ||
@@ -137,10 +137,14 @@ const Register: React.FC = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white p-2 rounded cursor-pointer"
+          >
             Register
           </button>
         </form>
+
         <Link
           to="/login"
           className="text-gray-500 hover:underline hover:text-blue-500 mt-4 text-center"

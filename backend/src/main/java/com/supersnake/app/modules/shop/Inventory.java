@@ -1,12 +1,24 @@
 package com.supersnake.app.modules.shop;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "inventory")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,12 +29,9 @@ class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // One inventory belongs to one user
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false, unique = true)
+    private Long userId;
 
-    // The list of items the user owns
     @ManyToMany
     @JoinTable(
             name = "inventory_items",
@@ -35,4 +44,3 @@ class Inventory {
 
     private int cash = 0;
 }
-

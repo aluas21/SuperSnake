@@ -1,7 +1,15 @@
 package com.supersnake.app.modules.game;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,14 +18,14 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 @Table(name = "game", indexes = {
         @Index(name = "idx_user_id", columnList = "user_id"),
         @Index(name = "idx_opponent_id", columnList = "opponent_id")
 })
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 class Game {
 
     @Id
@@ -27,25 +35,22 @@ class Game {
     @Column(nullable = false, unique = true)
     private Long gameCode;
 
-    // The user who played the game
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
-    // The opponent (optional)
-    @ManyToOne
-    @JoinColumn(name = "opponent_id", nullable = true)
-    private User opponent;
+    @Column(name = "opponent_id")
+    private Long opponentId;
 
     private int score;
 
-    private int OpponentScore;
+    @Column(name = "opponent_score")
+    private int opponentScore;
 
     private LocalDateTime dateTime;
 
-    private int duration; // Duration of the game in seconds
+    private int duration;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "game_settings_id", nullable = false)
-    private GameSettings gameSettings; // Reference to the GameSettings object for this game
+    private GameSettings gameSettings;
 }

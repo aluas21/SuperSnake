@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
@@ -8,7 +9,7 @@ const Home: React.FC = () => {
       description: 'Start a new game!',
       buttonText: 'Play',
       buttonLink: '/game-modes',
-      buttonBackground: 'green', // or a color like "blue"
+      buttonBackground: 'green',
       width: 'w-128',
       height: 'h-32',
     },

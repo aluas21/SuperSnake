@@ -1,40 +1,37 @@
 package com.supersnake.app.modules.game;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
+@Table(name = "game_settings")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 class GameSettings {
-    /*
-    Create a GameSettings class which should contain gameMode, numberOfApples, walls (boolean) and the speed. The Game class should have a GameSettings object.
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
-    private String gameMode; // e.g., "1vs1", "online", "AI"
+    private String gameMode;
 
     @Column(nullable = false)
-    private int numberOfApples; // Number of apples placed on the game table
+    private int numberOfApples;
 
     @Column(nullable = false)
-    private boolean walls; // Whether walls are present in the game
+    private boolean walls;
 
     @Column(nullable = false)
-    private String speed; // Speed of the snake, e.g. "slow", "medium", "fast"
-
-    // Additional fields can be added as needed, such as difficulty level, time limit, etc.
-
+    private String speed;
 }
