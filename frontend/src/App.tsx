@@ -1,15 +1,16 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Home from './features/Home';
-import GameModes from './features/GameModes';
-import Game from './features/Game/Game';
-import GameSettings from './features/GameSettings';
-import Register from './features/Register';
-import Login from './features/Login';
-import Profile from './features/Profile/Profile';
+import Home from './pages/Home';
+import GameModes from './pages/GameModes';
+import Game from './pages/Game/Game';
+import GameSettings from './pages/GameSettings';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Profile from './pages/Profile/Profile';
+import Shop from './pages/Shop';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import PublicRoute from './components/Routes/PublicRoute';
-import Logout from './features/Logout';
+import Logout from './pages/Logout';
 
 function App() {
   return (
@@ -85,7 +86,7 @@ function App() {
         path="/shop"
         element={
           <PrivateRoute>
-            <Home />
+            <Shop />
           </PrivateRoute>
         }
       />
@@ -106,7 +107,7 @@ function App() {
         }
       />
 
-      {/* Optional catch-all */}
+      {/* Catch-all */}
       <Route path="*" element={<Login />} />
     </Routes>
   );
