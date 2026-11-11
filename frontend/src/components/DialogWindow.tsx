@@ -1,5 +1,4 @@
 import React from 'react';
-import './DialogWindow.css';
 
 interface DialogWindowProps {
   isOpen: boolean;

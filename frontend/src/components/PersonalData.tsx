@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './PersonalData.css';
-import { updateUser } from '../../services/api';
-import { User } from '../../types/userTypes';
+import { updateUser } from '../services/api';
+import { User } from '../types/userTypes';
 
 const PersonalData: React.FC = () => {
   const userWithToken = sessionStorage.getItem('user');

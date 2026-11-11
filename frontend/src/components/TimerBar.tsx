@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../TimerBar/TimerBar.css';
 
 export interface TimerBarProps {
   duration: number;

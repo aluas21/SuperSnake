@@ -1,5 +1,4 @@
 import React from 'react';
-import './Score.css';
 
 export interface ScoreProps {
   playerName: string;

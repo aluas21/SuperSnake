@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
-import GameCanvas from '../../components/game/GameCanvas';
-import Score from '../../components/game/Score';
-import GameOverModal from '../../components/game/GameOverModal';
-import TimerBar from '../../components/game/TimerBar';
-import { useSnakeEngine, COLS, ROWS } from '../../hooks/useSnakeEngine';
-import './Game.css';
+import Header from '../components/Header';
+import GameCanvas from '../components/GameCanvas';
+import Score from '../components/Score';
+import GameOverModal from '../components/GameOverModal';
+import TimerBar from '../components/TimerBar';
+import { useSnakeEngine, COLS, ROWS } from '../hooks/useSnakeEngine';
 
 const HEIGHT_PERCENTAGE = 0.85;
 
