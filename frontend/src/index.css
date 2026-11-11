@@ -1,1 +1,546 @@
 @import 'tailwindcss';
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr; /* left | middle | right */
+  gap: 2em;
+  height: 100vh;
+  padding: 2em;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+  font-family: 'Fira Code', monospace;
+  color: darkslategray;
+}
+
+/* Left column */
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture img {
+  width: 8em;
+  height: 8em;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid grey;
+}
+
+.profile-action {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 0.6em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-action:hover {
+  background-color: greenyellow;
+  color: black;
+}
+
+/* Middle column (menu) */
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-button {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 0.8em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background-color: greenyellow;
+  color: black;
+}
+
+/* Right column (info panel) */
+.profile-info-panel {
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+/*
+
+*/
+
+.game__container {
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+}
+
+.game__board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game__info {
+  display: flex;
+  flex-direction: line;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+  border-radius: 5em;
+  margin-bottom: 1em;
+}
+
+.game__progress-bar {
+  width: 100%;
+  height: 1em;
+  border-radius: 2em;
+  overflow: hidden;
+  margin: 0.5em 0.5em;
+  background-color: #808080;
+  appearance: none;
+}
+
+/* Chrome, Safari, Opera */
+.game__progress-bar::-webkit-progress-value {
+  background-color: red;
+}
+
+/* Firefox */
+.game__progress-bar::-moz-progress-bar {
+  background-color: red;
+}
+
+
+.score__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 5em;
+  padding: 1em;
+}
+
+.inventory-items {
+  height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 0.5em solid #ccc;
+  padding: 2em;
+}
+
+.game-over-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+}
+
+.game-over-modal {
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.game-over-modal button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: lightgray;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+  color: darkslategray;
+}
+
+.game-over-modal button:hover {
+  background-color: darkgray;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr; /* left | middle | right */
+  gap: 2em;
+  height: 100vh;
+  padding: 2em;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+  font-family: 'Fira Code', monospace;
+  color: darkslategray;
+}
+
+/* Left column */
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture img {
+  width: 8em;
+  height: 8em;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid grey;
+}
+
+.profile-action {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 0.6em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-action:hover {
+  background-color: greenyellow;
+  color: black;
+}
+
+/* Middle column (menu) */
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-button {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 0.8em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background-color: greenyellow;
+  color: black;
+}
+
+/* Right column (info panel) */
+.profile-info-panel {
+  background-color: #ffffff;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+
+.timer-bar {
+  width: 100%;
+  height: 1em;
+  border-radius: 2em;
+  overflow: hidden;
+  margin: 0.5em 0.5em;
+  background-color: #808080;
+  appearance: none;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  background-color: gold;
+}
+
+.score__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 5em;
+  padding: 1em;
+}
+
+.personal-data {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.personal-data__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.personal-data__update-button {
+  align-self: flex-start;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.personal-data__update-button:hover {
+  background-color: #0056b3;
+}
+
+.inventory-items {
+  height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 0.5em solid #ccc;
+  padding: 2em;
+}
+
+.game-over-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+}
+
+.game-over-modal {
+  /* background-color: white; */
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.game-over-modal button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: lightgray;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+  color: darkslategray;
+}
+
+.game-over-modal button:hover {
+  background-color: darkgray;
+}
+
+.game-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.game-chat__message {
+  margin-bottom: 10px;
+}
+
+.game-chat__input {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.game-over-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+}
+
+.game-over-modal {
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.game-over-modal button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: lightgray;
+  font-family: 'Fira Code', monospace;
+  font-weight: bolder;
+  font-size: 1em;
+  color: darkslategray;
+}
+
+.game-over-modal button:hover {
+  background-color: darkgray;
+}
+
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.dialog-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 350px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.2s ease-out;
+}
+
+.dialog-title {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialog-close {
+  margin-top: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dialog-close:hover {
+  background-color: #0056b3;
+}
+
+.dialog-body input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.dialog-body input:focus {
+  border-color: #007bff;
+}
+
+.dialog-body button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.dialog-body button:hover {
+  background-color: #0056b3;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.carousel-container {
+  display: flex;
+}
+
+.carousel {
+  display: flex;
+}
+
+.carousel img {
+  height: 64px;
+  width: 64px;
+  margin-right: 8px;
+}
+

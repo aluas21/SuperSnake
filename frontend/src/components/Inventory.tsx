@@ -1,8 +1,7 @@
 import React from 'react';
 import { DollarSign, BadgeCent } from 'lucide-react';
-import Carousel from '../Carousel/Carousel';
-import Photo from './image.png';
-import './Inventory.css';
+import Carousel from './Carousel';
+import Photo from '../assets/inventory_image_mock.png';
 
 const Inventory: React.FC = () => {
   return (

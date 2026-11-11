@@ -1,5 +1,4 @@
 import React from 'react';
-import './GameOverModal.css';
 
 export interface GameOverData {
   cause: string;

@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
-import Header from '../../components/Header';
-import UserIcon from '../../assets/user-icon.png';
-import { UserWithToken } from '../../types/userTypes';
-import './Profile.css';
-import { changeProfilePicture, changePassword } from '../../services/api';
-import PersonalData from '../../components/PersonalData/PersonalData';
-import Inventory from '../../components/Inventory/Inventory';
-import Dialog from '../../components/DialogWindow/DialogWindow';
+import Header from '../components/Header';
+import UserIcon from '../assets/user-icon.png';
+import { UserWithToken } from '../types/userTypes';
+import { changeProfilePicture, changePassword } from '../services/api';
+import PersonalData from '../components/PersonalData';
+import Inventory from '../components/Inventory';
+import Dialog from '../components/DialogWindow';
 
 const Profile: React.FC = () => {
   const user: UserWithToken = JSON.parse(
