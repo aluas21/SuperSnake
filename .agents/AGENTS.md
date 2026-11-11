@@ -55,3 +55,11 @@ Whenever any backend DTO or API endpoint contract is added or modified:
   ```bash
   docker compose up --build
   ```
+
+---
+
+## 5. Git Workflow Rules
+
+- **Branch naming**: `<issue-type>/<ticket-number>` where `issue-type` is one of: `epic`, `task`, `story`, `fix`. Example: `task/125`. **Do NOT rename branches** after creation.
+- **Commit message format**: `#<ticket-number> [<ISSUE-TYPE>] <issue-title>`. Example: `#125 [TASK] Migrate Game Canvas & Leaderboard pages to Tailwind`.
+- **One branch per issue/task**: Create a dedicated branch for each ticket; do not reuse branches across issues.

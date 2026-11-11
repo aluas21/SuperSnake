@@ -1,15 +1,14 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import GameModes from './pages/GameModes';
-import Game from './pages/Game/Game';
+import Game from './pages/Game';
 import GameSettings from './pages/GameSettings';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Profile from './pages/Profile/Profile';
+import Profile from './pages/Profile';
 import Shop from './pages/Shop';
-import PrivateRoute from './components/Routes/PrivateRoute';
-import PublicRoute from './components/Routes/PublicRoute';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import Logout from './pages/Logout';
 
 function App() {
