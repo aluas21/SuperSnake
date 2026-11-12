@@ -25,17 +25,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java 21 (Temurin)
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
-          cache: 'maven'
+          cache: 'gradle'
 
-      - name: Grant Execute Permission for Maven Wrapper
-        run: chmod +x ./mvnw
+      - name: Grant Execute Permission for Gradle Wrapper
+        run: chmod +x ./gradlew
 
       - name: Build, Test & Package Backend
-        run: ./mvnw clean test package
+        run: ./gradlew :app:clean :app:build
 
   frontend-ci:
     name: Frontend CI (Node 20 / TypeScript / Vite)
