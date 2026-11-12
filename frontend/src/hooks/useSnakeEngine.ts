@@ -113,7 +113,7 @@ export const useSnakeEngine = (
 ) => {
   const isMultiplayer = settings?.gameMode?.includes('1v1') || false;
   const numberOfApples = Number.isFinite(parseInt(settings?.apples, 10))
-    ? parseInt(settings.apples, 10) + 1
+    ? parseInt(settings.apples, 10)
     : 1;
   const areWalls = settings?.walls === 'On';
   const walls = areWalls ? setWalls() : [];
