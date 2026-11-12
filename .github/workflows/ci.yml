@@ -35,7 +35,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build, Test & Package Backend
-        run: ./gradlew clean build
+run: ./gradlew :app:clean :app:build
 
   frontend-ci:
     name: Frontend CI (Node 20 / TypeScript / Vite)
