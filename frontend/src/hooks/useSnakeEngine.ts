@@ -138,6 +138,7 @@ export const useSnakeEngine = (
   const lastTimeRef = useRef<number | null>(null);
   const opponentLastTimeRef = useRef<number | null>(null);
   const requestRef = useRef<number | null>(null);
+  const lastBonusTotal = useRef(0);
 
   const [apples, setApples] = useState<[number, number][]>(() =>
     createFirstApples([...walls, ...createSnake(INITIAL_SNAKE_LENGTH)], numberOfApples)
@@ -347,7 +348,9 @@ export const useSnakeEngine = (
   // Bonus spawning
   useEffect(() => {
     const totalApples = applesEaten + opponentApplesEaten;
-    if (totalApples > 0 && totalApples % 5 === 0 && !coin && !cash) {
+    if (totalApples > 0 && totalApples % 5 === 0 && lastBonusTotal.current !== totalApples) {
+      lastBonusTotal.current = totalApples;
+
       if (Math.random() < CASH_CHANCE) {
         setCash(createCash([...walls, ...snake, ...opponentSnake, ...apples]));
         setTimerStart(Date.now());
@@ -358,7 +361,7 @@ export const useSnakeEngine = (
         setTimerDuration(COIN_TIMEOUT);
       }
     }
-  }, [applesEaten, opponentApplesEaten, coin, cash, walls, snake, opponentSnake, apples]);
+  }, [applesEaten, opponentApplesEaten, walls, snake, opponentSnake, apples]);
 
   // Collisions between snakes
   useEffect(() => {
