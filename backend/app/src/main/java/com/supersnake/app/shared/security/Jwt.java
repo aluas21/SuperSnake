@@ -1,9 +1,9 @@
 package com.supersnake.app.shared.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
@@ -21,7 +21,7 @@ public class Jwt {
     private String jwtSecret;
 
     @Value("${jwt.expiration:3600000}")
-    private int jwtExpirationMs;
+    private long jwtExpirationMs;
 
     private SecretKey key;
 
@@ -31,25 +31,27 @@ public class Jwt {
     }
 
     public String generateToken(String username) {
+        Date now = new Date();
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .subject(username)
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + jwtExpirationMs))
+                .signWith(key)
                 .compact();
     }
 
     public String getUsernameFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key).build()
-                .parseClaimsJws(token)
-                .getBody()
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 
     public boolean validateJwtToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
             return true;
         } catch (SecurityException e) {
             System.err.println("Invalid JWT signature: " + e.getMessage());
@@ -61,6 +63,8 @@ public class Jwt {
             System.err.println("JWT token is unsupported: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.err.println("JWT claims string is empty: " + e.getMessage());
+        } catch (JwtException e) {
+            System.err.println("JWT validation failed: " + e.getMessage());
         }
         return false;
     }

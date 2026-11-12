@@ -35,7 +35,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    // Database driver (pick yours)
+    // Database driver
     //runtimeOnly 'org.postgresql:postgresql'
     runtimeOnly 'com.h2database:h2'
 
