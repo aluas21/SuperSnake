@@ -55,60 +55,66 @@ const PersonalData: React.FC = () => {
 
   return (
     <div>
-      <h2>Personal Data</h2>
+      <h2 className="text-2xl font-bold mb-6">Personal Data</h2>
       {user ? (
-        <div className="personal-data">
-          <div className="personal-data__item">
-            <label>First Name:</label>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">First Name:</label>
             <input
               type="text"
               value={newFirstName}
               onChange={(e) => setNewFirstName(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
-          <div className="personal-data__item">
-            <label>Last Name:</label>
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Last Name:</label>
             <input
               type="text"
               value={newLastName}
               onChange={(e) => setNewLastName(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
-          <div className="personal-data__item">
-            <label>Username:</label>
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Username:</label>
             <input
               type="text"
               value={newUsername}
               onChange={(e) => setNewUsername(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
-          <div className="personal-data__item">
-            <label>Email:</label>
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Email:</label>
             <input
               type="email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
-          <div className="personal-data__item">
-            <label>Date of Birth:</label>
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Date of Birth:</label>
             <input
               type="date"
               value={newDateOfBirth}
               onChange={(e) => setNewDateOfBirth(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
-          <div className="personal-data__item">
-            <label>Phone:</label>
+          <div className="flex flex-col">
+            <label className="font-semibold mb-1">Phone:</label>
             <input
               type="tel"
               value={newPhone}
               onChange={(e) => setNewPhone(e.target.value)}
+              className="w-full p-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
           </div>
 
           <button
-            className="personal-data__update-button"
+            className="self-start mt-2 px-3 py-2 bg-blue-500 text-white border-none rounded cursor-pointer hover:bg-blue-600 transition-colors"
             onClick={handleUpdateProfile}
           >
             Update Profile
