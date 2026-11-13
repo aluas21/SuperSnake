@@ -27,8 +27,11 @@ export const TimerBar: React.FC<TimerBarProps> = ({ duration, startTime }) => {
   }, [duration, startTime]);
 
   return (
-    <div className="timer-bar">
-      <div className="timer-bar-fill" style={{ width: `${width}%` }} />
+    <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden mx-2 shadow-inner border border-gray-300">
+      <div
+        className="h-full bg-amber-400 transition-all duration-75 ease-linear rounded-full"
+        style={{ width: `${width}%` }}
+      />
     </div>
   );
 };

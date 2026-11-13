@@ -156,7 +156,7 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
       ref={canvasRef}
       width={canvasWidth}
       height={canvasHeight}
-      style={{ border: '1px solid black', backgroundColor: 'lightgray' }}
+      className="border-2 border-slate-700 rounded-lg shadow-lg bg-gray-200"
     />
   );
 };
