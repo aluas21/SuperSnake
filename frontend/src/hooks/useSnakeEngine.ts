@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { GameOverData } from '../components/game/GameOverModal';
+import { GameOverData } from '../components/GameOverModal';
 
 export const ROWS = 29;
 export const COLS = 29;

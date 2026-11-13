@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Header from '../../components/Header';
-import GameCanvas from '../../components/game/GameCanvas';
-import Score from '../../components/game/Score';
-import GameOverModal from '../../components/game/GameOverModal';
-import TimerBar from '../../components/game/TimerBar';
-import { useSnakeEngine, COLS, ROWS } from '../../hooks/useSnakeEngine';
-import './Game.css';
+import Header from '../components/Header';
+import GameCanvas from '../components/GameCanvas';
+import Score from '../components/Score';
+import GameOverModal from '../components/GameOverModal';
+import TimerBar from '../components/TimerBar';
+import { useSnakeEngine, COLS, ROWS } from '../hooks/useSnakeEngine';
 
 const HEIGHT_PERCENTAGE = 0.85;
 
@@ -66,19 +65,19 @@ const Game: React.FC = () => {
   const canvasHeight = ROWS * cellSize;
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-100 flex flex-col font-mono text-slate-700">
       <Header pageTitle={`Game - ${settings.gameMode}`} ref={headerRef} />
-      <div className="game__container">
+      <div className="flex-1 flex justify-around items-center px-8 pt-20 pb-4 gap-8">
         <Score
           playerName="Player 1"
           score={applesEaten}
           coins={coinsEarned}
           cash={cashEarned}
         />
-        <div className="game__board">
-          <div className="game__info" ref={infoRef}>
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center justify-center w-full mb-3 px-2" ref={infoRef}>
             <progress
-              className="game__progress-bar"
+              className="w-full h-3 rounded-full overflow-hidden mx-2 shadow-inner border border-gray-300 accent-red-500 [&::-webkit-progress-bar]:bg-gray-200 [&::-webkit-progress-value]:bg-red-500 [&::-moz-progress-bar]:bg-red-500"
               value={(applesEaten + opponentApplesEaten) % 5}
               max={5}
             />
@@ -122,7 +121,7 @@ const Game: React.FC = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

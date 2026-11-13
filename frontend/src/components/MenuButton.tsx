@@ -7,8 +7,8 @@ interface MenuButtonProps {
   buttonText: string;
   buttonLink: string;
   buttonBackground: string;
-  width?: string; // new prop: e.g., 'w-64' or '25vw'
-  height?: string; // new prop: e.g., 'h-48' or '20vh'
+  width?: string;
+  height?: string;
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
@@ -17,13 +17,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   buttonText,
   buttonLink,
   buttonBackground,
-  width = 'w-full', // default full width
-  height = 'h-48', // default fixed height
+  width = 'w-full',
+  height = 'h-48',
 }) => {
   const navigate = useNavigate();
-  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>(
-    {}
-  );
+  const [backgroundStyle, setBackgroundStyle] = useState<React.CSSProperties>({});
   const [backgroundClass, setBackgroundClass] = useState<string>('');
 
   useEffect(() => {
@@ -34,7 +32,6 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 
     const img = new Image();
     img.src = buttonBackground;
-
     img.onload = () => {
       setBackgroundStyle({
         backgroundImage: `url(${buttonBackground})`,
@@ -64,17 +61,16 @@ const MenuButton: React.FC<MenuButtonProps> = ({
 
   return (
     <div
-      className={`flex flex-col justify-center items-center text-center p-6 rounded-lg shadow-lg cursor-pointer text-white
-                  transition-transform transform hover:scale-105 hover:shadow-2xl ${backgroundClass} ${width} ${height} mb-4`}
+      className={`flex flex-col justify-center items-center text-center p-6 rounded-lg shadow-lg cursor-pointer text-white transition-transform transform hover:scale-105 hover:shadow-2xl ${backgroundClass} ${width} ${height} mb-4`}
       style={backgroundClass ? {} : backgroundStyle}
       onClick={handleClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
-      <h2 className="text-xl font-bold wrap-break-word">{title}</h2>
-      <p className="text-gray-300 text-base wrap-break-word">{description}</p>
-      <div className="text-lg font-semibold wrap-break-word">{buttonText}</div>
+      <h2 className="text-xl font-bold break-words">{title}</h2>
+      <p className="text-gray-300 text-base break-words my-2">{description}</p>
+      <div className="text-lg font-semibold break-words">{buttonText}</div>
     </div>
   );
 };
