@@ -22,14 +22,12 @@ const Profile: React.FC = () => {
     reader.onloadend = () => {
       const base64String = reader.result as string;
 
-      user.profilePicture = base64String;
-      sessionStorage.setItem('user', JSON.stringify(user));
-      window.location.reload();
-
-      changeProfilePicture(user.username, user.profilePicture, user.token).then(
+      changeProfilePicture(user.username, base64String, user.token).then(
         (response) => {
           if (response.ok) {
-            console.log('Profile picture updated successfully');
+            user.profilePicture = base64String;
+            sessionStorage.setItem('user', JSON.stringify(user));
+            window.location.reload();
           } else {
             alert(response.error);
           }
@@ -39,9 +37,7 @@ const Profile: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleFileSelection = () => {
-    fileInputRef.current?.click();
-  };
+  const handleFileSelection = () => fileInputRef.current?.click();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [oldPassword, setOldPassword] = useState('');
@@ -58,20 +54,16 @@ const Profile: React.FC = () => {
       alert('Passwords do not match!');
       return;
     }
-
     changePassword(user.username, oldPassword, newPassword, user.token).then(
       (response) => {
         if (response.ok) {
-          console.log('Password changed successfully');
-          alert('Password changed successfully!');
+          clearDialog();
+          setIsSuccessDialogOpen(true);
         } else {
           alert(response.error);
-          return;
         }
       }
     );
-
-    clearDialog();
   };
 
   const clearDialog = () => {
@@ -79,7 +71,6 @@ const Profile: React.FC = () => {
     setNewPassword('');
     setConfirmPassword('');
     setIsDialogOpen(false);
-    setIsSuccessDialogOpen(true);
   };
 
   const [infoPanelName, setInfoPanelName] = useState('Personal Data');
@@ -87,17 +78,19 @@ const Profile: React.FC = () => {
   return (
     <>
       <Header pageTitle="Profile" />
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 h-screen p-8 box-border bg-[#f8f9fa] font-mono text-slate-700">
-        <div className="flex flex-col items-center gap-4 bg-white rounded-2xl p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] h-fit">
+      <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 min-h-screen items-start p-8 pt-24 box-border bg-[#f8f9fa] font-mono text-slate-700 w-full">
+
+        {/* Left Column: Sidebar */}
+        <div className="flex flex-col items-center gap-4 bg-white rounded-2xl p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] sticky top-24">
           <div className="mb-2">
-            <img 
-              src={profilePicture} 
-              alt="Profile picture" 
+            <img
+              src={profilePicture}
+              alt="Profile picture"
               className="w-32 h-32 rounded-full object-cover border-[3px] border-gray-500"
             />
           </div>
-          <button 
-            className="bg-gray-500 text-white border-none py-2.5 px-4 rounded-lg cursor-pointer font-bold hover:bg-green-400 hover:text-black transition-colors" 
+          <button
+            className="bg-gray-500 text-white border-none py-2.5 px-4 rounded-lg cursor-pointer font-bold hover:bg-green-400 hover:text-black transition-colors w-full"
             onClick={handleFileSelection}
           >
             Change Picture
@@ -107,21 +100,17 @@ const Profile: React.FC = () => {
             ref={fileInputRef}
             onChange={handlePictureChange}
             accept="image/*"
-            style={{ display: 'none' }}
+            className="hidden"
           />
 
           <button
-            className="bg-gray-500 text-white border-none py-2.5 px-4 rounded-lg cursor-pointer font-bold hover:bg-green-400 hover:text-black transition-colors"
+            className="bg-gray-500 text-white border-none py-2.5 px-4 rounded-lg cursor-pointer font-bold hover:bg-green-400 hover:text-black transition-colors w-full"
             onClick={() => setIsDialogOpen(true)}
           >
             Change Password
           </button>
 
-          <Dialog
-            isOpen={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            title="Change Password"
-          >
+          <Dialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} title="Change Password">
             <input
               type="password"
               placeholder="Old Password"
@@ -143,7 +132,7 @@ const Profile: React.FC = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full p-2.5 mb-2.5 border border-gray-300 rounded-md outline-none focus:border-blue-500"
             />
-            <button 
+            <button
               onClick={handleChangePassword}
               className="bg-blue-500 text-white border-none rounded-md p-2.5 cursor-pointer w-full transition-colors hover:bg-blue-600 mt-2"
             >
@@ -151,16 +140,13 @@ const Profile: React.FC = () => {
             </button>
           </Dialog>
 
-          <Dialog
-            isOpen={isSuccessDialogOpen}
-            onClose={() => setIsSuccessDialogOpen(false)}
-            title="Success"
-          >
+          <Dialog isOpen={isSuccessDialogOpen} onClose={() => setIsSuccessDialogOpen(false)} title="Success">
             <p className="text-center">Password changed successfully!</p>
           </Dialog>
         </div>
 
-        <div className="flex flex-col gap-6">
+        {/* Right Column: Main Content */}
+        <div className="flex flex-col gap-6 w-full min-w-0">
           <div className="flex gap-4 border-b border-gray-200 pb-2">
             <button
               className={`pb-2 px-2 font-bold border-b-2 transition-colors ${
@@ -180,7 +166,7 @@ const Profile: React.FC = () => {
             </button>
           </div>
 
-          <div className="bg-white rounded-2xl p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] overflow-y-auto">
+          <div className="bg-white rounded-2xl p-8 shadow-[0_0_10px_rgba(0,0,0,0.1)] w-full min-w-0 max-w-4xl">
             {infoPanelName === 'Personal Data' ? (
               <PersonalData />
             ) : (

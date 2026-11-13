@@ -5,7 +5,7 @@ import Photo from '../assets/inventory_image_mock.png';
 
 const Inventory: React.FC = () => {
   return (
-    <div>
+    <div className="w-full">
       <h2 className="text-2xl font-bold mb-4">Inventory Component</h2>
       <div className="flex items-center gap-2 mb-6">
         <BadgeCent size={48} className="text-yellow-500" />
@@ -13,7 +13,8 @@ const Inventory: React.FC = () => {
         <DollarSign size={48} className="text-green-600 ml-4" />
         <span className="text-xl font-bold"> 123 </span>
       </div>
-      <div className="h-[300px] overflow-y-auto overflow-x-hidden border-[0.5em] border-[#ccc] p-8">
+      
+      <div className="w-full max-h-[60vh] overflow-y-auto overflow-x-hidden border-2 border-gray-300 rounded-xl p-6 bg-gray-50">
         <h2 className="text-xl font-bold mb-4"> Skins </h2>
         <Carousel
           title="Snake"
@@ -40,6 +41,7 @@ const Inventory: React.FC = () => {
             'skin6.png', 'skin7.png',
           ]}
         />
+        
         <h2 className="text-xl font-bold mb-4 mt-8"> Power-ups </h2>
         <Carousel images={['powerup1.png', 'powerup2.png', 'powerup3.png']} />
       </div>

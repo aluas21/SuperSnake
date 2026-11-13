@@ -1,5 +1,4 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CarouselProps {
   title?: string;
@@ -7,37 +6,18 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ title, images }) => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const itemsToShow = 6;
-
   return (
-    <div>
-      <h3>{title}</h3>
-      <div className="carousel-container">
-        <ChevronLeft
-          size={48}
-          onClick={() => {
-            if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
-          }}
-        />
-        <div className="carousel">
-          {images
-            .slice(currentIndex, currentIndex + itemsToShow)
-            .map((imgSrc, index) => (
-              <img
-                key={index}
-                src={imgSrc}
-                alt={`Carousel item ${index + currentIndex}`}
-              />
-            ))}
-        </div>
-        <ChevronRight
-          size={48}
-          onClick={() => {
-            if (currentIndex < images.length - itemsToShow)
-              setCurrentIndex(currentIndex + 1);
-          }}
-        />
+    <div className="w-full mb-6">
+      {title && <h3 className="text-lg font-bold mb-2">{title}</h3>}
+      <div className="flex flex-row overflow-x-auto gap-3 pb-4 snap-x">
+        {images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`${title || 'Carousel'} item ${index}`}
+            className="h-16 w-16 object-cover flex-shrink-0 snap-start rounded border border-gray-200 shadow-sm"
+          />
+        ))}
       </div>
     </div>
   );

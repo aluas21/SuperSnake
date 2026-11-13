@@ -18,12 +18,11 @@ const Menu: React.FC<MenuProps> = ({
   buttons = [],
   orientation: propOrientation,
 }) => {
-  const [orientation, setOrientation] = useState<
-    'horizontal' | 'vertical' | 'grid'
-  >(propOrientation || 'horizontal');
+  const [orientation, setOrientation] = useState<'horizontal' | 'vertical' | 'grid'>(
+    propOrientation || 'horizontal'
+  );
 
   useEffect(() => {
-    // Only apply responsive behavior if no propOrientation is provided
     if (!propOrientation) {
       const updateOrientation = () => {
         if (window.innerWidth < 600) {
@@ -44,7 +43,6 @@ const Menu: React.FC<MenuProps> = ({
     }
   }, [propOrientation]);
 
-  // Use propOrientation if provided, else the internal state
   const effectiveOrientation = propOrientation || orientation;
 
   return (
@@ -53,8 +51,8 @@ const Menu: React.FC<MenuProps> = ({
         effectiveOrientation === 'grid'
           ? 'grid grid-cols-2 gap-8 justify-center items-center'
           : effectiveOrientation === 'horizontal'
-            ? 'flex justify-center items-center space-x-8'
-            : 'flex flex-col justify-center items-center space-y-8'
+          ? 'flex justify-center items-center space-x-8'
+          : 'flex flex-col justify-center items-center space-y-8'
       }`}
     >
       {buttons.map((btn, index) => (

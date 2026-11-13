@@ -10,7 +10,7 @@ const Home: React.FC = () => {
       buttonText: 'Play',
       buttonLink: '/game-modes',
       buttonBackground: 'green',
-      width: 'w-128',
+      width: 'w-64 md:w-96',
       height: 'h-32',
     },
     {
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       buttonText: 'View',
       buttonLink: '/shop',
       buttonBackground: 'orange',
-      width: 'w-128',
+      width: 'w-64 md:w-96',
       height: 'h-32',
     },
     {
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
       buttonText: 'Open',
       buttonLink: '/settings',
       buttonBackground: 'bg-purple-400',
-      width: 'w-128',
+      width: 'w-64 md:w-96',
       height: 'h-32',
     },
     {
@@ -37,13 +37,13 @@ const Home: React.FC = () => {
       buttonText: 'Logout',
       buttonLink: '/logout',
       buttonBackground: 'bg-red-500',
-      width: 'w-128',
+      width: 'w-64 md:w-96',
       height: 'h-32',
     },
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 pt-30">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 pt-24">
       <Header pageTitle="Home" />
       <Menu buttons={menuButtons} orientation="vertical" />
     </div>
