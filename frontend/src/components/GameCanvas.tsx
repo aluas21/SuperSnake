@@ -36,14 +36,14 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
     // chessboard pattern
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'white';
-    for (let x = 0; x < canvasWidth; x += 2) {
-      for (let y = 0; y < canvasHeight; y += 2) {
+    for (let x = 0; x < canvasWidth / cellSize; x += 2) {
+      for (let y = 0; y < canvasHeight / cellSize; y += 2) {
         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
-    for (let x = 1; x < canvasWidth; x += 2) {
-      for (let y = 1; y < canvasHeight; y += 2) {
+    for (let x = 1; x < canvasWidth / cellSize; x += 2) {
+      for (let y = 1; y < canvasHeight / cellSize; y += 2) {
         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
       }

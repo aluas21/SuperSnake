@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export interface TimerBarProps {
   duration: number;
@@ -6,34 +6,32 @@ export interface TimerBarProps {
 }
 
 export const TimerBar: React.FC<TimerBarProps> = ({ duration, startTime }) => {
-  const [width, setWidth] = useState(100);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!startTime) return;
+    const bar = barRef.current;
+    if (!bar) return;
 
-    let animationFrameId: number;
+    if (!startTime || duration <= 0) {
+      bar.style.transform = 'scaleX(0)';
+      return;
+    }
 
+    let id: number;
     const update = () => {
-      const elapsed = Date.now() - startTime;
-      const ratio = 1 - elapsed / duration;
-      setWidth(Math.max(0, ratio * 100));
-      if (elapsed < duration) {
-        animationFrameId = requestAnimationFrame(update);
-      }
+      const ratio = Math.min(1, Math.max(0, 1 - (Date.now() - startTime) / duration));
+      bar.style.transform = `scaleX(${ratio})`;
+      if (ratio > 0) id = requestAnimationFrame(update);
     };
-
-    update();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [duration, startTime]);
+    id = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(id);
+  }, [startTime, duration]);
 
   return (
     <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden mx-2 shadow-inner border border-gray-300">
-      <div
-        className="h-full bg-amber-400 transition-all duration-75 ease-linear rounded-full"
-        style={{ width: `${width}%` }}
-      />
+      <div ref={barRef} className="w-full h-full bg-amber-400 origin-left will-change-transform" />
     </div>
   );
 };
 
-export default TimerBar;
+export default React.memo(TimerBar);
