@@ -4,4 +4,5 @@ dist
 build
 .DS_Store
 .vscode
-package-lock.json
+package-lock.jsonbackend/.gradle/
+backend/build/

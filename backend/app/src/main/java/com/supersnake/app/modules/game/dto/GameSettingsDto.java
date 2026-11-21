@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GameSettingsDto {
-    private String gameMode;
-    private int numberOfApples;
-    private boolean walls;
-    private String speed;
+  private String gameMode;
+  private int numberOfApples;
+  private boolean walls;
+  private String speed;
 }

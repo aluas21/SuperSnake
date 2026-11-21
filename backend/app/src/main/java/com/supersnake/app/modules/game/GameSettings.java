@@ -19,19 +19,19 @@ import lombok.Setter;
 @NoArgsConstructor
 class GameSettings {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private String gameMode;
+  @Column(nullable = false)
+  private String gameMode;
 
-    @Column(nullable = false)
-    private int numberOfApples;
+  @Column(nullable = false)
+  private int numberOfApples;
 
-    @Column(nullable = false)
-    private boolean walls;
+  @Column(nullable = false)
+  private boolean walls;
 
-    @Column(nullable = false)
-    private String speed;
+  @Column(nullable = false)
+  private String speed;
 }

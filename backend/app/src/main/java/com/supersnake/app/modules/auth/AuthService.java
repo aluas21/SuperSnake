@@ -6,6 +6,7 @@ import com.supersnake.app.modules.auth.dto.UserWithTokenDto;
 import com.supersnake.app.modules.user.dto.UserDto;
 
 public interface AuthService {
-    UserDto register(RegisterDto registerDto);
-    UserWithTokenDto login(LoginDto loginDto);
+  UserDto register(RegisterDto registerDto);
+
+  UserWithTokenDto login(LoginDto loginDto);
 }
