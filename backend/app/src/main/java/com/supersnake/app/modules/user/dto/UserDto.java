@@ -12,12 +12,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class UserDto {
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String email;
-    private String profilePicture;
-    private String phone;
-    private String dateOfBirth;
-    private String userType = "USER";
+  private String firstName;
+  private String lastName;
+  private String username;
+  private String email;
+  private String profilePicture;
+  private String phone;
+  private String dateOfBirth;
+  private String userType = "USER";
 }

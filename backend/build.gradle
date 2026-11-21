@@ -1,3 +1,16 @@
 plugins {
     id 'base'
+    id 'com.diffplug.spotless' version '8.6.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+spotless {
+    java {
+        target '**/src/**/*.java'
+        targetExclude '**/build/**'
+        googleJavaFormat()
+    }
 }
