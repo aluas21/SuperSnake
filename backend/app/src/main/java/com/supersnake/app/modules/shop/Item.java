@@ -19,25 +19,25 @@ import lombok.Setter;
 @NoArgsConstructor
 class Item {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private Long itemCode;
+  @Column(nullable = false, unique = true)
+  private Long itemCode;
 
-    @Column(nullable = false)
-    private String name;
+  @Column(nullable = false)
+  private String name;
 
-    @Column(nullable = false)
-    private String type;
+  @Column(nullable = false)
+  private String type;
 
-    @Column(nullable = false)
-    private String image;
+  @Column(nullable = false)
+  private String image;
 
-    @Column(nullable = false)
-    private int priceCoins;
+  @Column(nullable = false)
+  private int priceCoins;
 
-    @Column(nullable = false)
-    private int priceCash;
+  @Column(nullable = false)
+  private int priceCash;
 }

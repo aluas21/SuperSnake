@@ -9,13 +9,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "inventory")
@@ -25,22 +24,21 @@ import java.util.List;
 @AllArgsConstructor
 class Inventory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "user_id", nullable = false, unique = true)
-    private Long userId;
+  @Column(name = "user_id", nullable = false, unique = true)
+  private Long userId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "inventory_items",
-            joinColumns = @JoinColumn(name = "inventory_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
-    private List<Item> items = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(
+      name = "inventory_items",
+      joinColumns = @JoinColumn(name = "inventory_id"),
+      inverseJoinColumns = @JoinColumn(name = "item_id"))
+  private List<Item> items = new ArrayList<>();
 
-    private int coins = 0;
+  private int coins = 0;
 
-    private int cash = 0;
+  private int cash = 0;
 }
