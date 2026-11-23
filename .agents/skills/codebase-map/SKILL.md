@@ -9,51 +9,43 @@ This skill outlines the codebase architecture, module responsibilities, director
 
 ## 1. Backend Module Architecture (`/backend`)
 
-The backend follows a Spring Boot 3 modular package structure located under `com.supersnake.app`:
+The backend follows a Spring Boot 3 modular package structure located under `com.supersnake`:
 
 ```
-backend/src/main/java/com/supersnake/app/
-├── SnakeApplication.java                # Spring Boot Entry Point (@SpringBootApplication)
-├── shared/                              # Shared cross-cutting components
-│   ├── exception/                       # Common domain exceptions
-│   └── security/                        # SecurityConfig, JWT Filter, Token Provider
-└── modules/
-    ├── auth/                            # Module: Authentication & Registration
-    │   ├── AuthController.java          # REST: /auth/login, /auth/register
-    │   ├── AuthService.java             # Public service interface
-    │   ├── AuthServiceImpl.java         # Package-private service implementation
-    │   └── dto/                         # LoginDto, RegisterDto, UserWithTokenDto
-    ├── user/                            # Module: User Profile, Coins, Stats
-    │   ├── UserController.java          # REST: /users/**
-    │   ├── UserService.java             # Public service interface
-    │   ├── UserServiceImpl.java         # Package-private service implementation
-    │   ├── UserEntity.java              # Package-private JPA Entity (@Table "users")
-    │   ├── UserRepository.java          # Package-private Spring Data Repository
-    │   ├── UserConvertor.java           # Internal entity <-> DTO mapper
-    │   └── dto/                         # UserDto, ChangePasswordDto
-    ├── game/                            # Module: Game Engine Configs & Match History
-    │   ├── Game.java                    # Package-private JPA Game Entity
-    │   ├── GameSettings.java            # Package-private JPA GameSettings Entity
-    │   ├── GameRepository.java          # Package-private Spring Data Repository
-    │   ├── GameService.java             # Public service interface
-    │   ├── GameServiceImpl.java         # Package-private service implementation
-    │   └── dto/                         # GameDto, GameSettingsDto
-    └── shop/                            # Module: Items, Skins & Inventory
-        ├── Item.java                    # Package-private JPA Item Entity
-        ├── Inventory.java               # Package-private JPA Inventory Entity
-        ├── ItemRepository.java          # Package-private Spring Data Repository
-        ├── InventoryRepository.java     # Package-private Spring Data Repository
-        ├── ItemService.java             # Public service interface
-        ├── ItemServiceImpl.java         # Package-private service implementation
-        ├── ItemConvertor.java           # Internal entity <-> DTO mapper
-        └── dto/                         # ItemDto, InventoryDto
+backend/src/main/java/com/supersnake/
+├── security/              # Cross-cutting: SecurityConfig, JWT filter & provider
+├── auth/                  # Module: Authentication & Registration
+│   ├── controller/        #   REST endpoints (/auth/**)
+│   ├── service/           #   AuthService interface + impl
+│   ├── dto/               #   LoginDto, RegisterDto, UserWithTokenDto
+│   └── exception/         #   InvalidCredentialsException
+├── user/                  # Module: User Profile, Coins, Stats
+│   ├── controller/        #   REST endpoints (/users/**)
+│   ├── service/           #   UserService interface + impl
+│   ├── db/entity/         #   UserEntity (JPA)
+│   ├── db/repository/     #   UserRepository (Spring Data)
+│   ├── mapper/            #   Entity ↔ DTO mapping
+│   ├── dto/               #   UserDto, ChangePasswordDto
+│   └── exception/         #   UserNotFoundException, UserAlreadyExistsException
+├── game/                  # Module: Game Engine Configs & Match History
+│   ├── service/           #   GameService interface + impl
+│   ├── db/entity/         #   GameEntity, GameSettingsEntity (JPA)
+│   ├── db/repository/     #   GameRepository (Spring Data)
+│   └── dto/               #   GameDto, GameSettingsDto
+└── shop/                  # Module: Items, Skins & Inventory
+    ├── service/           #   ItemService interface + impl
+    ├── db/entity/         #   ItemEntity, InventoryEntity (JPA)
+    ├── db/repository/     #   ItemRepository, InventoryRepository (Spring Data)
+    ├── mapper/            #   Entity ↔ DTO mapping
+    ├── dto/               #   ItemDto, InventoryDto
+    └── exception/         #   ItemNotFoundException, ItemAlreadyExistsException
 ```
 
 ### Backend Boundary & Encapsulation Rules:
-1. **No direct Entity references across modules**: Entities must be package-private to their module slice. Cross-module references must use primitive IDs (e.g., `userId: Long`) or DTOs.
-2. **Repositories are package-private**: Never make `@Repository` interfaces `public`. All database operations are encapsulated in their respective module service.
-3. **Service Implementations are package-private**: Expose only the service interface (`public interface UserService`) when cross-module calls are needed.
-4. **Controllers are public**: Expose REST APIs with OpenAPI annotations.
+1. **Service Implementations are package-private**: Expose only the service interface (`public interface UserService`) when cross-module calls are needed.
+2. **Controllers are public**: Expose REST APIs with OpenAPI annotations.
+3. **DTOs are public**: The only data types allowed to cross module boundaries.
+4. **Entities, Repositories, and Mappers**: Currently `public` due to sub-package layout (Java package-private does not extend to sub-packages). **Must not be imported by other modules** — this is a convention-enforced boundary.
 
 ---
 
@@ -63,47 +55,21 @@ The frontend is a React 18 / 19 single-page application built with TypeScript, V
 
 ```
 frontend/src/
-├── api/                                 # OpenAPI generated contracts
-│   ├── client.ts                        # Axios HTTP client configuration
-│   └── schema.d.ts                      # Generated TypeScript schema from backend OpenAPI
-├── components/                          # Reusable UI & Game components
-│   ├── game/                            # Canvas game engine components
-│   │   ├── GameCanvas.tsx               # HTML5 2D Canvas rendering grid, snake, apples, coins
-│   │   ├── GameOverModal.tsx            # Modal displayed upon snake collision
-│   │   ├── Score.tsx                    # Score, Coins, Cash display panel
-│   │   └── TimerBar.tsx                 # Real-time bonus duration progress bar
-│   ├── Carousel/                        # Skin/Inventory carousel slider
-│   ├── DialogWindow/                    # General dialog / modal component
-│   ├── GameChat/                        # Multiplayer room chat component
-│   ├── GameRoomInfo.tsx                 # Match room code and player status
-│   ├── Header.tsx                       # Global navigation header with avatar & title
-│   ├── Menu.tsx                         # Menu button layout grid/list
-│   ├── MenuButton.tsx                   # Interactive tile menu button
-│   ├── PersonalData/                    # User profile editing sub-component
-│   ├── Routes/                          # Protected & Public route guards
-│   └── Slider.tsx                       # Range slider configuration widget
-├── pages/                               # Route entry pages
-│   ├── Game/                            # Game page (/game)
-│   ├── Profile/                         # Profile management (/profile)
-│   ├── GameModes.tsx                    # Game mode selection (/game-modes)
-│   ├── GameSettings.tsx                 # Game options & lobby (/game-settings)
-│   ├── Home.tsx                         # Dashboard home (/home)
-│   ├── Login.tsx                        # Login page (/login)
-│   ├── Register.tsx                     # Registration page (/register)
-│   ├── Shop.tsx                         # Shop / Inventory page (/shop)
-│   └── Logout.tsx                       # Session termination page (/logout)
-├── hooks/                               # Custom hooks
-│   └── useSnakeEngine.ts                # Modular hook isolating game loop, collision, timers
-├── context/
-│   └── AuthContext.tsx                  # Global authentication state & session storage
-├── services/
-│   └── api.ts                           # API service functions wrapping Axios
-├── types/
-│   └── userTypes.ts                     # User and domain interfaces
-├── assets/                              # Static image assets (app logo, default avatar)
-├── App.tsx                              # React Router route tree
-├── main.tsx                             # Application bootstrapping
-└── index.css                            # Tailwind CSS 4 root styles
+├── api/                   # OpenAPI-generated contracts (client.ts, schema.d.ts)
+├── components/
+│   ├── game/              # Canvas game engine (GameCanvas, GameOverModal, Score, TimerBar)
+│   ├── Routes/            # PrivateRoute & PublicRoute guards
+│   ├── Carousel/          # Skin/Inventory carousel slider
+│   ├── DialogWindow/      # General dialog / modal component
+│   ├── GameChat/          # Multiplayer room chat
+│   ├── PersonalData/      # User profile editing sub-component
+│   └── ...                # Header, Menu, MenuButton, Slider
+├── pages/                 # Route entry pages (Home, Game, Profile, Shop, ...)
+├── hooks/                 # useSnakeEngine — game loop, collision, timers
+├── context/               # AuthContext — global auth state & session storage
+├── services/              # API service functions wrapping Axios
+├── types/                 # Domain type interfaces
+└── assets/                # Static images (logo, default avatar)
 ```
 
 ### Frontend Boundary Rules:
