@@ -1,0 +1,78 @@
+# Validates that the PR title and squash commit message follow the convention:
+#   #<number> [Type] [Domain] <Title>
+# Also enforces that the PR contains exactly 1 commit.
+
+name: PR Lint
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-lint:
+    name: Validate PR Title & Commit Count
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title format
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "PR title: $PR_TITLE"
+
+          # Pattern: #<number> [Type] [Domain] <Title>  or  #<number> [Type] <Title>
+          # Type: TASK, STORY, BUG, EPIC (case-insensitive)
+          # Domain: BE, FE (optional)
+          pattern='^#[0-9]+ \[(TASK|STORY|BUG|EPIC)\]( \[(BE|FE)\])? .+'
+
+          if [[ ! "$PR_TITLE" =~ $pattern ]]; then
+            echo "::error::PR title does not match the required format."
+            echo ""
+            echo "Expected format:  #<number> [Type] [Domain] <Title>"
+            echo "  Type:   TASK | STORY | BUG | EPIC"
+            echo "  Domain: [BE] | [FE] (optional for cross-cutting)"
+            echo ""
+            echo "Examples:"
+            echo "  #101 [TASK] [BE] Configure Spotless Plugin"
+            echo "  #42 [STORY] [FE] Add 2-Player Canvas Controls"
+            echo "  #7 [BUG] Fix Docker Compose Port Conflict"
+            exit 1
+          fi
+
+          echo "PR title format is valid."
+
+      - name: Check single commit
+        env:
+          COMMIT_COUNT: ${{ github.event.pull_request.commits }}
+        run: |
+          echo "Commit count: $COMMIT_COUNT"
+
+          if [ "$COMMIT_COUNT" -ne 1 ]; then
+            echo "::error::PR must contain exactly 1 commit (found $COMMIT_COUNT). Squash your commits with: git rebase -i HEAD~$COMMIT_COUNT"
+            exit 1
+          fi
+
+          echo "PR contains exactly 1 commit."
+
+      - name: Verify commit message matches PR title
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Compare commit message to PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          # Get the commit message of the single commit (first line only)
+          COMMIT_MSG=$(git log --format=%s -1 HEAD)
+          echo "Commit message: $COMMIT_MSG"
+          echo "PR title:       $PR_TITLE"
+
+          if [ "$COMMIT_MSG" != "$PR_TITLE" ]; then
+            echo "::warning::Commit message differs from PR title. Since GitHub squash-and-merge uses the PR title, ensure your PR title is correct: $PR_TITLE"
+          else
+            echo "Commit message matches PR title."
+          fi

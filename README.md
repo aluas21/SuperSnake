@@ -47,6 +47,15 @@ A modern, full-stack remake of the classic Snake game — reimagined with custom
 
 ---
 
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Git Workflow & Branching Ruleset](docs/git-workflow.md) | Branch naming, rebase workflow, PR rules, and project board conventions |
+| [System Architecture](docs/architecture.md) | Backend module boundaries, frontend structure, and API sync process |
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone the repo
